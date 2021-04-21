@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <title>保单查询</title>
+    <script src="./js/rem.js"></script>
+    <link rel="stylesheet" href="./css/PersonalCenter.css">
+    <style type="text/css">
+        body{
+            background:#fff;
+        }
+        .baodan{
+          width: 92%;
+          padding: 20px 4% .66rem 4%;
+        }
+        ul,li{
+            margin:0;
+            padding: 0;
+            list-style: none;
+        }
+        .bdbox{
+            width: 100%;
+            margin-bottom: .25rem;
+        }
+
+        .bdbox ul li{
+            display: flex;
+            font-size: 0.12rem;
+            border-bottom: 1px solid #f2f2f2;
+            padding: 8px 0;
+        }
+        .bdbox ul li span{
+            max-width: 35%;
+        }
+        .bdbox ul li p{
+            max-width: 62%;
+        }
+        .formbox{
+            width: 100%;
+            border-top:1px solid #f2f2f2;
+            border-right:1px solid #f2f2f2;
+        }
+        .spanbox{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .spanbox span{
+            width: 33%;
+            text-align: center;
+            font-size: .12rem;
+            border-bottom: 1px solid #f2f2f2;
+            border-right: 1px solid #f2f2f2;
+            padding: .06rem 0;
+        }
+        .spanbox span:nth-child(3n+3){
+            border-right: 0;
+        }
+        .spanbox span:nth-child(3n+1){
+            border-left: 1px solid #f2f2f2;
+        }
+        .spanbox p{
+            width: 100%;
+            padding: .06rem 0;
+            text-align: center;
+            font-size: .12rem;
+            border-bottom: 1px solid #f2f2f2;
+            border-left: 1px solid #f2f2f2;
+        }
+        .spanbox-section{
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: .13rem;
+        }
+        .bottDown{
+            width: 100%;
+            height: .46rem;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background: #f1f1f1;
+            font-size: .12rem;
+            color: #31BD8C;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bottImg{
+            width: .13rem;
+            margin-right: .05rem;
+        }
+        .titleBd{
+            width: 100%;
+            color: #333333;
+            font-size: .14rem;
+            text-align: center;
+            margin-bottom: .2rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>  
+    <div class="baodan">
+        <div class="titleBd">个人意外伤害综合保险<br />保险单(电子保单)</div>
+        <div class="bdbox">
+            <ul>
+                <li>
+                    <span>投保人姓名：</span>
+                    <p class="tName"></p>
+                </li>
+                <li>
+                    <span>投保人证件类型：</span>
+                    <p class="tType"></p>
+                </li>
+                <li>
+                    <span>证件号码：</span>
+                    <p class="tNum"></p>
+                </li>
+                <li>
+                    <span>投保人联系地址：</span>
+                    <p class="tAddress"></p>
+                </li>
+            </ul>
+        </div>
+        <div class="bdbox">
+            <ul>
+                <li>
+                    <span>被保险人姓名：</span>
+                    <p class="bName"></p>
+                </li>
+                <li>
+                    <span>被保险人职业类别：</span>
+                    <p class="bossType"></p>
+                </li>
+                <li>
+                    <span>被保险人证件类型：</span>
+                    <p class="bType"></p>
+                </li>
+                <li>
+                    <span>证件号码：</span>
+                    <p class="bNum"></p>
+                </li>
+                <li>
+                    <span>被保险人联系地址：</span>
+                    <p class="bAddress"></p>
+                </li>
+            </ul>
+        </div>
+        <div class="formbox">
+            <div class="spanbox">
+                <span>险别名称</span>
+                <span>交通工具</span>
+                <span>保险金额（元）</span>
+            </div>
+            <div class="conData">
+                
+            </div>
+            <div class="spanbox">  
+                <p class="zonge"></p>
+                <p class="baofei"></p>
+                <p class="qijian"></p>
+            </div>
+        </div>
+        <section class="spanbox-section"></section>
+        <div class="bottDown" onclick='getList()'><img src="../img/down.png" class="bottImg" />下载保单</div>
+    </div>
+</body>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/environment.js"></script>
+<script src="../js/toast.js"></script>
+<script type="text/javascript">
+    var urlArgs = urlParams();
+    var phoneNum = urlArgs['phone'];
+    //var phoneNum = 18500335085;
+    getInfo();
+    function getList(argument) {
+        $.ajax({
+           type: 'post',
+           url: geturl()+'/api/insurance/getUrl', 
+           data:{
+             phoneNumber: phoneNum
+           },
+           headers: {
+            "Content-Type":"application/x-www-form-urlencoded"
+           },
+           success: function(res){
+               if(res.ret_code==200){
+                  location.href=res.data.pdfUrl
+               }else{
+                  $toast.show(res.ret_msg);
+               }
+           },
+           error: function(res){
+               $toast.show(res.ret_msg);
+           },
+       })
+    }
+    var arrHe = 0;
+    function getInfo(argument) {
+        $.ajax({
+           type: 'post',
+           url: geturl()+'/api/insurance/getInfo', 
+           data:{
+             phoneNumber: phoneNum
+           },
+           headers: {
+            "Content-Type":"application/x-www-form-urlencoded"
+           },
+           success: function(res){
+               if(res.ret_code==200){
+                    var dataHtml = '';
+                    var resData = res.data.resultData[0].cvgItemList;
+                    if(resData.length>0){
+                        $('.bName').text(res.data.name);
+                        $('.bossType').text('其他');
+                        $('.bType').text('居民身份证');
+                        $('.bNum').text(res.data.resultData[0].insuredInfoList[0].idNo);
+                        $('.bAddress').text(res.data.resultData[0].insuredInfoList[0].addr);
+                        $('.tName').text(res.data.resultData[0].applicantInfo.name);
+                        $('.tType').text('纳税人识别号');
+                        $('.tNum').text(res.data.resultData[0].applicantInfo.idNo);
+                        $('.tAddress').text(res.data.resultData[0].applicantInfo.addr);
+                        $('.zonge').text('总保险金额：￥' + '元');
+                        $('.baofei').text('总保险费：￥'+ res.data.resultData[0].permium+ '元');
+                        $('.qijian').text('保险期间：'+res.data.resultData[0].startDate + '-'+res.data.resultData[0].endDate);
+                        $('.spanbox-section').text('签单日期：'+res.data.resultData[0].issueTm);
+                        for(var i=0;i<resData.length;i++){
+                            // 3 航空  5 水路 6 铁路
+                            if(resData[i].traffic==3){
+                                dataHtml+='<div class="spanbox"><span>'+resData[i].cvrgNme+'</span><span>航空</span><span>'+resData[i].amt+'万</span></div>';
+                            }else if(resData[i].traffic==5){
+                                dataHtml+='<div class="spanbox"><span>'+resData[i].cvrgNme+'</span><span>水路</span><span>'+resData[i].amt+'万</span></div>';
+                            }else if(resData[i].traffic==6){
+                                dataHtml+='<div class="spanbox"><span>'+resData[i].cvrgNme+'</span><span>铁路</span><span>'+resData[i].amt+'万</span></div>';
+                            }else{
+                                dataHtml+='<div class="spanbox"><span>'+resData[i].cvrgNme+'</span><span>--</span><span>'+resData[i].amt+'万</span></div>';
+                            }
+                            
+                            arrHe+=resData[i].amt;
+                        }
+                        $('.zonge').text('总保险金额：￥' +arrHe+'元');
+                        $('.conData').html(dataHtml);
+                    }else{
+                        $toast.show('暂无保险信息');
+                        timer();
+                    }  
+               }else{
+                  $toast.show(res.ret_msg);
+                  timer();
+               }
+           },
+           error: function(res){
+               $toast.show(res.ret_msg);
+               timer();
+           },
+       })
+    }
+    function timer(){
+        return setTimeout(()=>{
+          location.href = "./PersonalCenter.html";
+        },2000)
+    }
+    function urlParams() {
+        var args=new Object();
+        var query=location.search.substring(1);//获取查询串
+        var pairs=query.split("?");//在逗号处断开
+        for(var i=0;i<pairs.length;i++){
+            var pos=pairs[i].indexOf('=');//查找name=value
+            if(pos==-1)   continue;//如果没有找到就跳过
+            var argname=pairs[i].substring(0,pos);//提取name
+            var value=pairs[i].substring(pos+1);//提取value
+            args[argname]=unescape(value);//存为属性
+        }
+        return args;
+    }
+</script>
+</html>

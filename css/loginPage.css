@@ -1,0 +1,110 @@
+*{
+    margin: 0;
+    padding:0;
+    font-family: "Microsoft YaHei";
+}
+#app {
+    /* background: plum; */
+    -webkit-overflow-scrolling: touch; /*使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建一个新的堆栈上下文 */
+    line-height: normal;
+    font-size: .32rem;
+    font-family: PingFangSC-Regular, -apple-system-font, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif
+}
+#bind-woCard{
+    position: relative;
+    margin: 0 auto;
+    padding-top: 0.35rem;
+    width: 9.5rem;
+    text-align: left;
+    /* background: pink; */
+} 
+body,html{ overflow-x: hidden;/*溢出了元素的内容区-剪辑div元素的左/右边缘内容 */}
+body {
+    max-width: 10.24rem;
+    margin: 0 auto
+}
+html { font-size: 10vw }
+@media screen and (min-width:768px){
+    html {
+        font-size: 76.8px
+        /* font-size: 100.8px */
+    }
+}
+/*--------------------------------------------*/
+#bind-woCard>.bind-head{
+    width:100%;
+    text-align: center;
+    margin:0 auto;
+    margin-top:0.91rem;
+    font-size:0.55rem;
+    color:#2BBB89; 
+}
+#bind-woCard>.bind-input{
+    width:100%;
+    height:1.3rem;
+    /* background:pink;    */
+    border-bottom: 0.02rem solid #D8D8D8;
+}
+#bind-woCard>.bind-input2{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    height:1.2rem;   
+    margin-top:1rem;
+    border-bottom: 0.02rem solid #D8D8D8;
+} 
+#bind-woCard>.bind-input>input,
+#bind-woCard>.bind-input2>input{
+    width:76%;
+    height:63%;
+    display: inline-block;
+    color:#666666; 
+    /* background:palevioletred;  */
+    font-size:0.37rem;
+    outline:none; /*获取焦点时外边框不变色 */
+    border:none;
+    margin-top: 0.35rem;
+    margin-left: 0.20rem;
+}
+#bind-woCard>.bind-input>input{
+    width:90%;
+}
+#bind-woCard>.bind-input2>span{
+    width:2.2rem;
+    /* background: plum; */
+    height:0.66rem;
+    font-size:0.20rem;
+    margin-top: 0.4rem;
+    line-height: 0.66rem;
+    border-left: 0.02rem solid #D8D8D8;
+}
+#bind-woCard>.bind-input2>span>button{
+    border:none;
+    outline:none; 
+    width:92%;
+    height:0.50rem;
+    background:#FFFFFF;
+    color:#B3B3B3;
+    font-size:0.28rem;
+    margin-left:0.2rem;
+}
+#bind-woCard>.state{
+    height:0.80rem; 
+    margin-left: 0.06rem;
+    color:#FF0000;
+    font-size:0.23rem;
+}
+#bind-woCard>.state>span{
+    display: inline-block;
+    margin-top:0.16rem;
+}
+#bind-woCard>.bind-next-type>button{
+    width:100%;
+    height:1.3rem;
+    font-size:0.40rem;
+    border:none;
+    color: #FFFFFF;
+    margin:0 auto;
+    background:linear-gradient(90deg,rgba(43,187,137,1) 0%,rgba(29,192,124,1) 100%);
+    border-radius:0.16rem;  
+}

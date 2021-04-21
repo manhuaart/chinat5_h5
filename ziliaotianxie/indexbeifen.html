@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width,initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>资料填写</title>
+    <link rel="stylesheet" href="./index.css?v=202005261000">
+</head>
+<body>
+    
+    <div id="box">
+        <div class="title">根据国家实名制要求，请准确的提供身份信息</div>
+        <!-- <p id="namered" class="title1"></p> -->
+        <div id="light" class="white_content">
+        </div>
+        <div class="input_block">
+            <label for="name" class="label">姓名</label>
+            <input type="text" placeholder="请输入姓名" class="input" vlaue='' id="nameValue">
+            <!-- <p id="namered" style="display: flex;" class="redError">姓名格式不正确</p> -->
+        </div>
+        <div class="input_block">
+            <label for="idCord" class="label">身份证</label>
+            <input type="text" placeholder="请输入身份证" class="input" id="idCardNoValue">
+            <!-- <p class="redError" style="display: flex;">姓名格式不正确</p> -->
+        </div>
+        <div class="input_block">
+            <label for="phone" class="label">联系电话</label>
+            <input type="text" placeholder="请输入联系电话" class="input" id="phoneValue">
+            <!-- <p class="redError" style="display: flex;">姓名格式不正确</p> -->
+        </div>
+        <!-- <div class="title">请选择号码</div> -->
+        <div class="input_block codeNum">
+            <label for="" class="label">号码归属省</label>
+            <select class="provinceTarget inputEle selectTag select_block" id="province1">
+                <option data-index="-1" value="省份">号码归属省份</option>
+            </select>
+        </div> 
+        <div class="input_block codeNum">
+            <label for="" class="label">号码归属市</label>
+            <select class="cityTarget inputEle selectTag select_block" id="cityItem">
+                <option data-index="-1" value="城市">号码归属市</option>
+            </select>
+        </div>
+        <div class="input_block">
+            <label for="" class="label">选择套餐</label>
+            <a href="javascript:void(0);" class="btn-info btn-lg active textbox" role="button" id="real1" style="color: #000;font-size: 12px;"></a>
+            <input type="hidden" id="goosId">
+        </div>
+        <div class="input_block">
+            <label for="" class="label">选择号码</label>
+            <a href="javascript:void(0);" class="btn-info btn-lg active textbox textimg" role="button" id="real" alt="model test picture" style="color: #000000";></a>
+        </div>
+        <div class="rema">
+            <div>
+                请填写配送地址<span class="remark">（支持全国配送，新疆、西藏仅限省内配送）</span>
+            </div>
+        </div>
+        <div class="input_block">
+            <label for="" class="label">所在省</label>
+            <select name="province" id="province" class="select_block" onchange="doProvAndCityRelation();">
+                <option id="choosePro" value="-1">请选择您所在省份</option>
+            </select>
+        </div>
+        <div class="input_block">
+            <label for="" class="label">所在市(区)</label>
+            <select id="citys" name="city" onchange="doCityAndCountyRelation();" class="select_block">
+                <option id='chooseCity' value='-1'>请选择您所在城市</option>
+            </select>
+        </div>
+        <div class="input_block">
+            <label for="" class="label">所在区县</label>
+            <select id="county" name="county" class="select_block">
+                　<option id='chooseCounty' value='-1'>请选择您所在区/县</option>
+            </select>
+        </div>
+        <div class="input_block">
+            <label for="address" class="label">详细地址</label>
+            <input type="text" placeholder="街道/镇+村/小区/写字楼+门牌号" class="input" id="detailedAddress">
+            <!-- <p class="redError" style="display: flex;">姓名格式不正确</p> -->
+        </div>
+        <!-- <form action="" onSubmit="return defaultagree(this)" -->
+            <div style="display: flex; margin: 1rem 0;">
+                <input type="checkbox" class="check" onClick="check()" id="ch">
+                <div class="agree">
+                    我已阅读并同意
+                    <a href="../UnicomAccessProtocol.html" class="agreement">《客户入网服务协议及业务协议》</a>
+                </div>
+            </div>
+            <div class="btn" >
+                <!-- <button onclick="submit()" id="buttonSubmit" disabled>立即提交，免费送货上门</button> -->
+                <input type="button" value="立即提交，免费送货上门" disabled onclick="submit()" id="xz">
+            </div>
+        <!-- </form> -->
+        
+        <div class="remarks">
+            请保持联系号码畅通，我们可能随时与您联系。本次为阶段性优惠活动，数量有限，联系电话无人接听或恶意下单情况，将不予发货。
+        </div>
+        <!-- //套餐模态框 -->
+        <div class="motai" id="mo1">
+            <span class="close" id="close1">×</span>
+            <div class="motaikuang">
+                <h5 class="qxzhm">请您选择套餐</h5>
+                <div class="qnxztc" id="qnxztc">
+                </div>
+            </div>
+        </div>
+        <!-- 选择号码模态框代码 -->
+        <div class="motai" id="mo">
+            <span class="close" id="close">×</span>
+            <div class="motaikuang">
+                <h5 class="qxzhm">请选择号码</h5>
+                <div class="search">
+                    <input type="text" placeholder="生日、意义数字等备份"  id="myInput" value=""/>
+                    <button onclick="myFunction()">搜索</button>
+                </div>
+                <div class="xzphone" id="selectPhoneNumber">
+                </div>
+                <h4 id="forAnotherBatch">换一批</h4>                   
+            </div>
+        </div>
+    </div>
+</body>
+<script src='../js/environment.js'></script>
+<script src="./city.js"></script>
+<script src="./picker.min.js"></script>
+<script src="./cityList.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="./jquery.jsonp.js"></script>
+<script src="./placeOfOwnership.js"></script>
+<script>
+    
+    if(localStorage.getItem('provinceCodes') || localStorage.getItem('cityCodes')){
+        $('.codeNum').hide()
+    }else{
+        $('.codeNum').show()
+    }
+
+    var unSelected = "#B3B3B3";
+    var selected = "#000000";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    });
+    //var apiHost='http://me-api.chinat5.com';
+    // var apiHost='http://wlcx-provider.chinat5.com';  //线上地址
+
+    // 立即提交接口
+    function check(){
+    //判断checkbox有没有被选中
+    if(document.getElementById("ch").checked==true)
+    {
+    document.getElementById("xz").disabled="";//给e799bee5baa6e997aee7ad94e4b893e5b19e31333264646537BUTTON按钮的disabled属性赋值
+    document.getElementById("xz").style.color='white'
+    // document.getElementById("xz").style.baxkground=''
+    $('#xz').css('background','linear-gradient(90deg,rgba(43,187,137,1) 0%,rgba(29,192,124,1) 100%)')
+    }else
+    {
+    document.getElementById("xz").disabled="disabled";
+    document.getElementById("xz").style.color='grey'
+    $('#xz').css('background','#dddddd')
+    }
+    }
+    function submit(){  
+        var provinceWhere=$('#province  option:selected').val()
+        var postCityCode=$('#citys  option:selected').val()
+        var postDistrictCode=$('#county  option:selected').val()
+        var certName=$('#nameValue').val();
+        var certNo=$('#idCardNoValue').val();
+        var contactNum=$('#phoneValue').val();
+        var cent = document.getElementById("selectPhoneNumber");
+
+        if(localStorage.getItem('provinceCodes')){
+            var numberProvince=localStorage.getItem('provinceCodes')
+        }else{
+            var numberProvince=$('#province1  option:selected').val()
+        }
+        if(localStorage.getItem('cityCodes')){
+            var NumberCity=localStorage.getItem('cityCodes')
+        }else{
+            var NumberCity=$('#cityItem  option:selected').val()
+        }
+        // var numberProvince=$('#province1  option:selected').val()
+        // var NumberCity=$('#cityItem  option:selected').val()
+
+        var province=$('#province  option:selected').val()
+        var citys=$('#citys  option:selected').val()
+        var chooseCounty=$('#chooseCounty  option:selected').val()
+        var phoneNum=$("#real").text()
+        var goosId=$('#goosId').val()
+        var postAddr=$('#detailedAddress').val();
+        var len=$("input[type=checkbox]:checked()");
+        var submit=document.getElementById("buttonSubmit");
+        var loading = '<div id="loading"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504002746731&di=a7d82714e2b6a150ecb6ab45d2dc73b9&imgtype=0&src=http%3A%2F%2Falcastongallery.com.au%2Fassets%2Fimages%2Fajax-loader.gif"></div>';
+        var str=location.href; //取得整个地址栏
+        var num=str.indexOf("#") 
+        if(str.substr(num+1)==''){
+            alert('非法请求')
+        }else{
+            str=str.substr(num+1);
+            var nameValue = $('#nameValue').val();
+            if(!(/^[\u4E00-\u9FA5]{2,4}$/.test(nameValue))){
+                // $("#namered").html('姓名格式有误！请重新输入')
+                document.getElementById("light").style.display="block";
+                $("#light").html('姓名格式有误！请重新输入')
+                setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                return false;
+            }else{
+                var idCardNoValue = $('#idCardNoValue').val();
+                if(!(/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9X]$/.test(idCardNoValue))){
+                    document.getElementById("light").style.display="block";
+                    $("#light").html('身份证号码格式有误')
+                    setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                    return false;
+                }else{
+                    var phoneValue = $('#phoneValue').val();
+                    var goosId=$('#goosId').val() 
+                    if(!(/^(13[0-9]\d{8}|15[0-9]\d{8}|17[0-9]\d{8}|18[0-9]\d{8})$/.test(phoneValue))){
+                        document.getElementById("light").style.display="block";
+                        $("#light").html('手机号格式有误！请重新输入')
+                        setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                        return false;
+                    }else{
+                        if(province==''){
+                            document.getElementById("light").style.display="block";
+                            $("#light").html('所在省不能为空')
+                            setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                            return false;
+                        }else{
+                            if(citys==''){
+                                document.getElementById("light").style.display="block";
+                                $("#light").html('所在市不能为空')
+                                setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                                return false;
+                            }else{
+                                $("#namered").html('')
+                                if(chooseCounty==''){
+                                    document.getElementById("light").style.display="block";
+                                    $("#light").html('所在区不能为空')
+                                    setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                                    return false;
+                                }else{
+                                    if(postAddr== ''){
+                                        document.getElementById("light").style.display="block";
+                                        $("#light").html('详细地址输入有误')
+                                        setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                                    }else{
+                                            $.ajax({
+                                                type:"POST",
+                                                url: geturl()+"/api/card/preOrder/subOrder",
+                                                async:true,
+                                                beforeSend:function(){
+                                                    $('body').append($(loading));
+                                                },
+                                                complete:function(){
+                                                    $('#loading').remove();
+
+                                                },
+                                                data:{
+                                                    "goodsId":goosId,
+                                                    "provinceCode":numberProvince,
+                                                    "cityCode":NumberCity,
+                                                    "phoneNum":phoneNum,
+                                                    "certName":certName,
+                                                    "certNo":certNo,
+                                                    "contactNum":contactNum,
+                                                    "postProvinceCode":provinceWhere,
+                                                    "postCityCode":postCityCode,
+                                                    "postDistrictCode":postDistrictCode,
+                                                    "postAddr":postAddr,
+                                                    "merchantReferrerCode": localStorage.getItem('merchantIdswd'), 
+                                                },
+                                                success:function(data){
+                                                    if(data.rspCode == '0'){
+                                                        var phoneNum=JSON.stringify(data.body.phoneNum)
+                                                        var goodsName=JSON.stringify(data.body.goodsName)
+                                                        window.location.href="./successfulApplication.html?"+"phoneNum="+phoneNum+"&goodsName="+goodsName;
+                                                    }else{
+                                                        alert(data.rspDesc)
+                                                        // alert('111')
+                                                    }
+                                                }
+                                            })
+                                        // }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+         //取得所有参数   stringvar.substr(start [, length ]
+            
+        // }
+    }
+    //号码归属地
+    var province1="";
+    var cityItem="";
+    function loadCityData(){
+        for(var i=0;i<jsonList.length;i++){
+            provice1="<option data-index="+i+" value='"+jsonList[i].code+"'>"+jsonList[i].provice+"</option>";
+            $("#province1").append(provice1); 
+        }
+    }
+
+    $(function(){
+        loadCityData();
+        $("#province1").change(function(){
+            $("#cityItem").empty();
+            var opt=$("#province1 option:selected").attr("data-index");
+            if(opt == "-1"){
+                cityItem="<option data-index='-1' value='城市'>城市</option>";
+                $("#cityItem").append(cityItem);
+            }else{
+                var length=jsonList[opt].cityItem.length;
+            
+                for(var j=0;j<length;j++){
+                    cityItem="<option data-index="+j+" value="+jsonList[opt].cityItem[j].code+">"+jsonList[opt].cityItem[j].provice+"</option>";
+                    $("#cityItem").append(cityItem);
+                }
+            }
+            
+
+        });
+        
+        
+    })
+//更新省份和城市
+function updateLocationInfo(proviceName,cityName){
+    
+    var pIndex = -1;
+    for(var i=0;i<jsonList.length;i++){
+        if(jsonList[i].provice.indexOf(proviceName) != -1){
+            pIndex = i;
+            $("#province1").empty();
+            for(var j=0;j<jsonList.length;j++){
+                provice="<option data-index="+j+" value='"+jsonList[j].provice+"'>"+jsonList[j].provice+"</option>";
+                if(j == pIndex){
+                    provice="<option data-index="+j+" selected value='"+jsonList[j].provice+"'>"+jsonList[j].provice+"</option>";    
+                }
+                $("#province1").append(provice);
+            }
+            
+            $("#cityItem").empty();
+            var cLen=jsonList[pIndex].cityItem.length;
+            
+            for(var w=0;w<cLen;w++){
+                cityItem="<option data-index="+w+" value="+jsonList[pIndex].cityItem[w]+">"+jsonList[pIndex].cityItem[w]+"</option>";
+                if(jsonList[pIndex].cityItem[w] == cityName){
+                    cityItem="<option data-index="+w+" selected value="+jsonList[pIndex].cityItem[w]+">"+jsonList[pIndex].cityItem[w]+"</option>";
+                }
+                $("#cityItem").append(cityItem);
+            }
+            
+            
+            break;
+        }
+    }
+    
+    
+}
+
+    //省市区
+    $(function() {
+      var sb = new StringBuffer();
+      $.each(cityJson,
+        function(i, val) {
+          if (val.item_code.substr(2, 4) == '0000') {
+            sb.append("<option value='" + val.item_code + "'>" + val.item_name + "</option>");
+          }
+        });
+      $("#choosePro").after(sb.toString());
+    
+    }); // 省值变化时 处理市
+    function doProvAndCityRelation() {
+      var city = $("#citys");
+      var county = $("#county");
+      if (city.children().length > 1) {
+        city.empty();
+      }
+      if (county.children().length > 1) {
+        county.empty();
+      }
+      if ($("#chooseCity").length === 0) {
+        city.append("<option id='chooseCity' value='-1'>请选择您所在城市</option>");
+      }
+      if ($("#chooseCounty").length === 0) {
+        county.append("<option id='chooseCounty' value='-1'>请选择您所在区/县</option>");
+      }
+      var sb = new StringBuffer();
+      $.each(cityJson,
+        function(i, val) {
+          if (val.item_code.substr(0, 2) == $("#province").val().substr(0, 2) && val.item_code.substr(2, 4) != '0000' && val.item_code.substr(4, 2) == '00') {
+            sb.append("<option value='" + val.item_code + "'>" + val.item_name + "</option>");
+          }
+        });
+      $("#chooseCity").after(sb.toString());
+    } // 市值变化时 处理区/县
+    function doCityAndCountyRelation() {
+      var cityVal = $("#citys").val();
+      var county = $("#county");
+      if (county.children().length > 1) {
+        county.empty();
+      }
+      if ($("#chooseCounty").length === 0) {
+        county.append("<option id='chooseCounty' value='-1'>请选择您所在区/县</option>");
+      }
+      var sb = new StringBuffer();
+      $.each(cityJson,
+        function(i, val) {
+          if (cityVal == '110100' || cityVal == "120100" || cityVal == "310100" || cityVal == "500100") {
+            if (val.item_code.substr(0, 3) == cityVal.substr(0, 3) && val.item_code.substr(4, 2) != '00') {
+              sb.append("<option value='" + val.item_code + "'>" + val.item_name + "</option>");
+            }
+          } else {
+            if (val.item_code.substr(0, 4) == cityVal.substr(0, 4) && val.item_code.substr(4, 2) != '00') {
+              sb.append("<option value='" + val.item_code + "'>" + val.item_name + "</option>");
+            }
+          }
+        });
+      $("#chooseCounty").after(sb.toString());
+    
+    }
+    
+    function StringBuffer(str) {
+      var arr = [];
+      str = str || "";
+      var size = 0; // 存放数组大小
+      arr.push(str);
+      // 追加字符串
+      this.append = function(str1) {
+        arr.push(str1);
+        return this;
+      };
+      // 返回字符串
+      this.toString = function() {
+        return arr.join("");
+      };
+      // 清空 
+      this.clear = function(key) {
+        size = 0;
+        arr = [];
+      };
+      // 返回数组大小 
+      this.size = function() {
+        return size;
+      };
+      // 返回数组 
+      this.toArray = function() {
+        return buffer;
+      };
+      // 倒序返回字符串 
+      this.doReverse = function() {
+        var str = buffer.join('');
+        str = str.split('');
+        return str.reverse().join('');
+      };
+    }
+    document.body.addEventListener('touchStart',function(){},false)
+    // 模态框js代码
+    var motai=document.getElementById('mo')
+    var moimg=document.getElementById("moimg")
+    var realimg=document.getElementById("real")
+    var realimg1=document.getElementById("real1")
+    var caption=document.getElementById("caption")
+    var motai1=document.getElementById('mo1')
+    //渲染选择手机号码
+    let newArray = [];
+    let pageCode = 0;
+    var iteratorNumberCode = function(pageCode){
+        var cent = document.getElementById("selectPhoneNumber");
+        cent.innerHTML='';
+            if((pageCode+1)<=newArray.length){
+                for(var i = 0; i < newArray[pageCode].length; i++) {
+                cent.innerHTML += "<p class='phone-data'>" +newArray[pageCode][i] + "</p>";
+            }
+        }
+    }
+    // 换一批
+    forAnotherBatch.onclick=function(){
+        // pageCode = 0;
+        pageCode++;
+        if(pageCode==newArray.length){
+            document.getElementById("selectPhoneNumber").innerHTML=""
+            pageCode--;
+            document.getElementById("light").style.display="block";
+            $("#light").html('请点击搜索查找更多数据')
+            setTimeout("light.style.display='none'",5000); //定时关闭弹出层
+
+            return false;
+        }else{
+            iteratorNumberCode(pageCode);
+        }      
+    }
+    function myFunction() {
+        var input=document.getElementById('myInput').value;
+        searchPhone(input)
+    }
+    function searchPhone(searchValue){
+        // var numberProvince=$('#province1  option:selected').val()
+        // var NumberCity=$('#cityItem  option:selected').val()
+        if(localStorage.getItem('provinceCodes')){
+            var numberProvince=localStorage.getItem('provinceCodes')
+        }else{
+            var numberProvince=$('#province1  option:selected').val()
+        }
+        if(localStorage.getItem('cityCodes')){
+            var NumberCity=localStorage.getItem('cityCodes')
+        }else{
+            var NumberCity=$('#cityItem  option:selected').val()
+        }
+        var goosId=$('#goosId').val() 
+        $.ajax({
+                        type:"POST",
+                        url: geturl()+"/api/card/preOrder/selectionNumber",
+                        data:{
+                            "provinceCode":numberProvince,
+                            "cityCode":NumberCity,
+                            "goodsId":goosId,
+                            "searchValue":searchValue || 1,
+                        },
+                        success:function(body){
+                            var array=body.body.numArray;
+                            var splitLen = body.body.splitLen;
+                            if(newArray.length>0){
+                                newArray=[];
+                            }
+                            let splitIndex= 0;
+
+                            var tempArray=[];
+                            for(splitIndex;splitIndex<array.length;splitIndex++){
+                                if(splitIndex%splitLen==0){
+                                    tempArray.push(array[splitIndex]);
+                                }
+                            }
+                            let i = 0;
+                            var ii = 0;
+                            var temp = [];
+                            for(i;i<tempArray.length;i++){
+                                    ii = ii+1;
+                                    if(ii%10==0){
+                                        temp.push(tempArray[i]);  
+                                        newArray.push(temp);
+                                        temp = [];
+                                    }else
+                                    temp.push(tempArray[i]);                                
+                            }
+                            if(newArray.length>0){
+                                iteratorNumberCode(0);
+                            }
+                            $('.phone-data').bind('click',function(){
+                                $('#real').text($(this).text())
+                                $('html,body').removeClass('ovfHiden');
+                                motai.style.display="none";
+                            });
+                        }
+                    })
+    }
+    realimg.onclick=function(){
+        var numberProvince=$('#province1  option:selected').val()
+        var NumberCity=$('#cityItem  option:selected').val()
+        var nameValue = $('#nameValue').val();
+            if(!(/^[\u4E00-\u9FA5]{2,4}$/.test(nameValue))){
+                document.getElementById("light").style.display="block";
+                $("#light").html('姓名格式有误！请重新输入')
+                setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                return false;
+            }else{
+                var idCardNoValue = $('#idCardNoValue').val();
+                if(!(/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9X]$/.test(idCardNoValue))){
+                    document.getElementById("light").style.display="block";
+                    $("#light").html('身份证号码格式有误')
+                    setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                    return false;
+                }else{
+                    var phoneValue = $('#phoneValue').val();
+                    var goosId=$('#goosId').val() 
+                    if(!(/^(13[0-9]\d{8}|15[0-9]\d{8}|17[0-9]\d{8}|18[0-9]\d{8})$/.test(phoneValue))){
+                        document.getElementById("light").style.display="block";
+                        $("#light").html('手机号格式有误！请重新输入')
+                        setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                        return false;
+                        }else{
+                            if(numberProvince==''){
+                                document.getElementById("light").style.display="block";
+                                $("#light").html('号归属省不能为空')
+                                setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                                return false;
+                            }else{
+                                if(NumberCity==''){
+                                    document.getElementById("light").style.display="block";
+                                    $("#light").html('号码归属市不能为空')
+                                    setTimeout("light.style.display='none'",2000); //定时关闭弹出层
+                                    return false;
+                                }else{
+                                    $('html,body').addClass('ovfHiden'); //使网页不可滚动
+                                    $("#myInput").val('');
+                                    motai.style.display="block";
+                                    searchPhone(1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+    var span=document.getElementById("close");
+    span.onclick=function(){
+        $('html,body').removeClass('ovfHiden'); //使网页恢复可滚
+        motai.style.display="none";
+    }
+    //选择套餐模态框
+    var qztc=document.getElementById('qnxztc')
+    // var qztcp=qztc.getElementsByTagName('p')
+    var choicePackage=document.getElementById('real1')
+    var dataJson=[
+            {'id':982003109153,"name":'尝鲜版：月功能费29元 语音100分钟 全国流量3G'},
+            // {'id':982003114519,"name":'尝鲜版：月功能费29元 语音100分钟 全国流量3G'}, //线上数据
+            {'id':982003109149,"name":'基础版：月功能费68元 语音600分钟 全国流量10G'},
+            {'id':982003109150,"name":'Plus版：月功能费139元 语音500分钟 全国流量30G'},
+            {'id':982003109151,"name":'至尊版：月功能费249元 语音1000分钟 全国流量80G'}
+        ]
+    if(localStorage.getItem('cardMealIds')){
+        var datas = JSON.parse(localStorage.getItem('cardMealIds'));
+        if(datas.length==1){
+            qztc.innerHTML = "<p id="+datas[0].goods_id+" class='data_class active'>" +datas[0].goods_name + "</p>";
+            $('#real1').text(datas[0].goods_name);
+            $('#goosId').val(datas[0].goods_id);
+        }else if(datas.length==0){
+            qztc.innerHTML = "<p id="+dataJson[0].id+" class='data_class active'>" +dataJson[0].name + "</p>";
+            for(var i=1;i<data.length;i++){
+                qztc.innerHTML += "<p id="+dataJson[i].id+" class='data_class'>" +dataJson[i].name + "</p>";
+                // $('#merchantReferrerCode').val(data[i].id)        
+            }
+        }else{
+            for(var i=0;i<datas.length;i++){
+                qztc.innerHTML += "<p id="+datas[i].goods_id+" class='data_class'>" +datas[i].goods_name + "</p>";
+                // $('#merchantReferrerCode').val(data[i].id)        
+            }
+        }
+    }else{
+        qztc.innerHTML = "<p id="+dataJson[0].id+" class='data_class active'>" +dataJson[0].name + "</p>";
+        for(var i=1;i<dataJson.length;i++){
+            qztc.innerHTML += "<p id="+dataJson[i].id+" class='data_class'>" +dataJson[i].name + "</p>";
+            // $('#merchantReferrerCode').val(data[i].id)        
+        }
+    }
+    
+    
+    realimg1.onclick=function(){
+        motai1.style.display="block" 
+        var qztcp1=qztc.getElementsByTagName('p');
+        // var qztcp=document.getElementById('data[i].id');
+        var motai=document.getElementById('mo')
+        $('.data_class').bind('click',function(){
+
+            $(this).addClass("active").siblings().removeClass("active");
+            $('#real1').text($(this).text())
+            $('#goosId').val($(this).attr('id'))
+            motai1.style.display="none";
+        });
+    }
+    var span=document.getElementById("close1");
+    span.onclick=function(){
+        motai1.style.display="none";
+    }
+    //得到手机屏幕的宽度
+    let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    //得到html的Dom元素
+    let htmlDom = document.getElementsByTagName('html')[0];
+    //设置根元素字体大小
+    htmlDom.style.fontSize = htmlWidth / 20 + 'px';
+    var nameEl = document.getElementById('sel_city');
+    var first = []; /* 省，直辖市 */
+    var second = []; /* 市 */
+    var third = []; /* 镇 */
+    var selectedIndex = [0, 0, 0]; /* 默认选中的地区 */
+
+    var checked = [0, 0, 0]; /* 已选选项 */
+    function creatList(obj, list) {
+        
+        obj.forEach(function (item, index, arr) {
+            var temp = new Object();
+            temp.text = item.name;
+            temp.value = index;
+            list.push(temp);
+        })
+    }
+    function initSeletList(){
+		//遍历placesMap这个Json对象,根据key：value对创建place对象，并根据地区类型分类 
+		for (var key in placesMap){
+			var pl=new place(key,placesMap[key]);
+			var ty=pl.PlaceType();
+			if(ty=="p"){
+				provinces.push(pl);
+			}
+			if(ty=="c"){
+				cities.push(pl);
+			}
+			if(ty=="d"){
+				districts.push(pl);
+			}
+		}
+		//初始化省下拉选择列表
+		for(var i=0;i<provinces.length;i++){
+			var op=document.createElement("option");
+			op.text=provinces[i].Name;
+			op.value=provinces[i].ProvinceCode();
+			document.getElementById("province").appendChild(op);
+		}	
+	}
+
+    creatList(city, first);
+    var province = [];
+    if (city[selectedIndex[0]].hasOwnProperty('sub')) {
+        creatList(city[selectedIndex[0]].sub, second);
+    } else {
+        second = [{ text: '', value: 0 }];
+    }
+
+    if (city[selectedIndex[0]].sub[selectedIndex[1]].hasOwnProperty('sub')) {
+        creatList(city[selectedIndex[0]].sub[selectedIndex[1]].sub, third);
+    } else {
+        third = [{ text: '', value: 0 }];
+    }
+    var picker = new Picker({
+        
+        data: [first, second, third],
+        selectedIndex: selectedIndex,
+        title: '地址选择'
+    });
+
+    picker.on('picker.select', function (selectedVal, selectedIndex) {
+        var text1 = first[selectedIndex[0]].text;
+        var text2 = second[selectedIndex[1]].text;
+        var text3 = third[selectedIndex[2]] ? third[selectedIndex[2]].text : '';
+
+        nameEl.innerText = text1 + ' ' + text2 + ' ' + text3;
+    });
+
+    picker.on('picker.change', function (index, selectedIndex) {
+        if (index === 0) {
+            firstChange();
+        } else if (index === 1) {
+            secondChange();
+        }
+
+        function firstChange() {
+            second = [];
+            third = [];
+            checked[0] = selectedIndex;
+            var firstCity = city[selectedIndex];
+            if (firstCity.hasOwnProperty('sub')) {
+                creatList(firstCity.sub, second);
+
+                var secondCity = city[selectedIndex].sub[0]
+                if (secondCity.hasOwnProperty('sub')) {
+                    creatList(secondCity.sub, third);
+                } else {
+                    third = [{ text: '', value: 0 }];
+                    checked[2] = 0;
+                }
+            } else {
+                second = [{ text: '', value: 0 }];
+                third = [{ text: '', value: 0 }];
+                checked[1] = 0;
+                checked[2] = 0;
+            }
+
+            picker.refillColumn(1, second);
+            picker.refillColumn(2, third);
+            picker.scrollColumn(1, 0)
+            picker.scrollColumn(2, 0)
+        }
+
+        function secondChange() {
+            third = [];
+            checked[1] = selectedIndex;
+            var first_index = checked[0];
+            if (city[first_index].sub[selectedIndex].hasOwnProperty('sub')) {
+                var secondCity = city[first_index].sub[selectedIndex];
+                creatList(secondCity.sub, third);
+                picker.refillColumn(2, third);
+                picker.scrollColumn(2, 0)
+            } else {
+                third = [{ text: '', value: 0 }];
+                checked[2] = 0;
+                picker.refillColumn(2, third);
+                picker.scrollColumn(2, 0)
+            }
+        }
+
+    });
+</script>
+</html>

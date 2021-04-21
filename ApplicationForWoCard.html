@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>云沃链卡</title>
+    <link rel="stylesheet" href="./css/ApplicationForWoCard.css?v=1000">
+</head> 
+<body>  
+<div class="boxcon">
+    <div class="boximg">
+        <img src="img/se.png" />
+    </div>
+    <div class="boximg">
+        <img src="img/sd.png" />
+        <div class="video">
+            <video class="videoc" src="https://wx.chinat5.com/assets/1602838840216387.mp4" preload="metadata" width="100%" height="180"  controls="controls" poster="img/video.png">
+            </video>
+        </div>
+    </div>
+    <div class="boximg">
+        <img src="img/sc.png" />
+        <div class="block_home_slider">
+            <div id="home_slider" class="flexslider">
+                <ul class="slides">
+                    <li>
+                        <img src="img/s1.png" alt="" />
+                    </li>
+                    <li>
+                        <img src="img/s2.png" alt="" />
+                    </li>
+                    <li>
+                        <img src="img/s4.png" alt="" />
+                    </li>
+                </ul>
+            </div>                       
+        </div>
+    </div>
+    <div class="boximg">
+        <img src="img/sbb.png" />
+    </div>
+    <div class="boximg">
+        <img src="img/sa.png" />
+        <div class="block_home_slider1">
+            <div id="home_slider1" class="flexslider">
+                <ul class="slides">
+                    <li>
+                        <img src="img/d1.png" alt="" />
+                    </li>
+                    <!-- <li>
+                        <img src="img/d1.png" alt="" />
+                    </li> -->
+                </ul>
+            </div>                       
+        </div>
+    </div>
+    <div class="shenqing">
+        <img src="img/sq.png" onclick="seturl()"  />
+    </div>
+</div>
+</body>
+<script src="./js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="./js/jquery.flexslider-min.js"></script>
+<script type="text/javascript">
+    var pdata = '';
+    var strUrl = window.location.href;
+    //var strUrl = 'http://wx.chinat5.com/ziliaotianxie/index.html#%7B%22cardMealId%22%3A%5B%7B%22goods_name%22%3A%22%E5%B0%9D%E9%B2%9C%E7%89%88%EF%BC%9A%E6%9C%88%E5%8A%9F%E8%83%BD%E8%B4%B929%E5%85%83+%E8%AF%AD%E9%9F%B3100%E5%88%86%E9%92%9F+%E5%85%A8%E5%9B%BD%E6%B5%81%E9%87%8F3G%22%2C%22goods_id%22%3A%22982003114519%22%7D%2C%7B%22goods_name%22%3A%22Plus%E7%89%88%EF%BC%9A%E6%9C%88%E5%8A%9F%E8%83%BD%E8%B4%B9139%E5%85%83+%E8%AF%AD%E9%9F%B3500%E5%88%86%E9%92%9F+%E5%85%A8%E5%9B%BD%E6%B5%81%E9%87%8F30G%22%2C%22goods_id%22%3A%22982003114522%22%7D%2C%7B%22goods_name%22%3A%22%E8%87%B3%E5%B0%8A%E7%89%88%EF%BC%9A%E6%9C%88%E5%8A%9F%E8%83%BD%E8%B4%B9249%E5%85%83+%E8%AF%AD%E9%9F%B31000%E5%88%86%E9%92%9F+%E5%85%A8%E5%9B%BD%E6%B5%81%E9%87%8F80G%22%2C%22goods_id%22%3A%22982003114524%22%7D%5D%2C%22merchantId%22%3A%22Dva9nVevW2M16DcsPWFr7PnJQ%2Ffo4ZxG2GjmFIR5m0UvM7fmYe%2BSmCX%2BjinRKoGwc5FZqxRSuIUe%5Cr%5CnQivtJBD3iD2Y4dee3uMVfY58Dy4oqdinvvR4nzbZZz%2BQ%2FIZkkLso%22%2C%22provinceCode%22%3A%22%22%2C%22cityCode%22%3A%22%22%2C%22refererOrderId%22%3A%22%22%7D';
+    var strUrlNew = decodeURIComponent(strUrl);
+    console.log(strUrlNew)
+    var numUrl=strUrlNew.indexOf("#");
+    console.log(numUrl);
+    if(numUrl!= -1){
+        pdata=strUrlNew.substr(numUrl+1);
+        console.log(pdata)
+    }  
+    function seturl(){
+      location.href='./ziliaotianxie/channel.html#'+pdata;
+    }
+    $(function () {
+        $('#home_slider').flexslider({
+            animation : 'slide',
+            controlNav : true,
+            directionNav : true,
+            animationLoop : true,
+            useCSS : false,
+            slideshow: true,               
+            slideshowSpeed: 7000, 
+        });
+        $('#home_slider1').flexslider({
+            animation : 'slide',
+            controlNav : true,
+            directionNav : true,
+            animationLoop : true,
+            useCSS : false,
+            slideshow: true,               
+            slideshowSpeed: 7000, 
+        });
+    });
+</script>
+</html>
+<style>
+  
+</style>

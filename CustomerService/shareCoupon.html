@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>分享有礼</title>
+    <script src="./js/rem.js"></script>
+    <link rel="stylesheet" href="./css/PersonalCenter.css">
+    <style type="text/css">
+        body{
+            background: linear-gradient(to right,#f67c01,#f46000);
+        }
+        .sharebox{
+            width: 100%;
+            position: relative;
+        }
+        .sharebox img{
+            width: 100%;
+        }
+        .phonepox{
+            width: 60%;
+            height: .35rem;
+            background: rgba(0,0,0,.2);
+            position: absolute;
+            left: 20%;
+            top: 2.6rem;
+            z-index: 999;
+            border-radius:6px;
+            overflow: hidden;
+        }
+        .phonepox li{
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2% 0 4%;
+            width: 94%;
+            color: #fff;
+            line-height: .35rem;
+            font-size: .14rem;
+        }
+        ul,li{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="sharebox">
+        <img src="../img/kyd.jpg" />
+        <div class="phonepox">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+<script src='../js/environment.js'></script>
+<script src='../js/toast.js'></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    var urlArgs = urlParams();
+    var fxLink = urlArgs['shareLink'];
+    function timer(opj){
+        $(opj).find('ul').animate({
+            marginTop : "-.35rem"  
+            },500,function(){  
+            $(this).css({marginTop : "0"}).find("li:first").appendTo(this);  
+        })  
+    }
+    $(function(){ 
+        var txData = [
+            {phone: "131****5628",price: '50'},
+            {phone: "130****5683",price: '100'},
+            {phone: "186****6375",price: '50'},
+            {phone: "185****5269",price: '100'},
+            {phone: '130****1273',price: '150'},
+            {phone: '186****9156',price: '50'},
+            {phone: '185****9023',price: '50'},
+            {phone: '131****5628',price: '50'},
+            {phone: '185****7960',price: '100'},
+            {phone: '186****9156',price: '50'},
+            {phone: '156****3592',price: '200'},
+            {phone: '186****7150',price: '50'},
+            {phone: '185****1683',price: '50'},
+        ];
+        var liHtml = '';
+        for(var i=0;i<txData.length;i++){
+            liHtml += '<li><font>'+txData[i].phone.substr(0,3)+ '****'+txData[i].phone.substr(7,4)+'</font><span>刚刚提现'+txData[i].price+'元！</span></li>'
+        }
+        $('.phonepox ul').html(liHtml);
+        var num = $('.phonepox').find('li').length;
+        if(num > 1){
+           var time=setInterval('timer(".phonepox")',3500);
+        }
+    });
+    var dataStr = window.location.href.split('#')[0]
+  
+    share();
+    function share(){
+        $.ajax({
+           type: 'GET',
+           url: geturl()+'/api/wx/wxSignature?url='+ dataStr,
+           success: function(res){
+              if(res.rspCode==0){
+                 wx.config({
+                  debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                  appId: res.body.appId, // 必填，公众号的唯一标识
+                  timestamp: res.body.timestamp, // 必填，生成签名的时间戳
+                  nonceStr: res.body.nonceStr, // 必填，生成签名的随机串
+                  signature: res.body.signature,// 必填，签名
+                  jsApiList: ['updateAppMessageShareData','updateTimelineShareData'] // 必填，需要使用的JS接口列表
+                });
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                    wx.checkJsApi({ // 判断当前客户端版本是否支持指定JS接口
+                    jsApiList: [
+                      'updateAppMessageShareData',    // 分享到朋友圈接口
+                      'updateTimelineShareData',
+                    ],
+                    success: function (res) { // 以键值对的形式返回，可用true，不可用false。如：{"checkResult":{"scanQRCode":true},"errMsg":"checkJsApi:ok"}
+                      //分享给朋友
+                        wx.updateAppMessageShareData({ 
+                            title: '全民话费疯狂砍降到0元，嗨到爆', // 分享标题
+                            desc: '分享给别人就能赚取高额话费，返现金额满50元可提现', // 分享描述
+                            link: fxLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: 'http://wx.chinat5.com/img/share.png', // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        }) 
+                        //分享到朋友圈
+                        wx.updateTimelineShareData({ 
+                            title: '全民话费疯狂砍降到0元，嗨到爆', // 分享标题
+                            link: fxLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: 'http://wx.chinat5.com/img/share.png', // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        })
+                    },
+                    fail: function (res) { // 检测getNetworkType该功能失败时处理
+                      
+                    }
+                  })
+                  
+                });
+              }else{
+                $toast.show(res.rspDesc);
+              }
+           },
+           error: function(res){
+                
+           },
+       })
+        
+    }
+    function urlParams() {
+        var args=new Object();
+        var query=location.search.substring(1);//获取查询串
+        var pairs=query.split("?");//在逗号处断开
+        for(var i=0;i<pairs.length;i++){
+            var pos=pairs[i].indexOf('=');//查找name=value
+            if(pos==-1)   continue;//如果没有找到就跳过
+            var argname=pairs[i].substring(0,pos);//提取name
+            var value=pairs[i].substring(pos+1);//提取value
+            args[argname]=unescape(value);//存为属性
+        }
+        return args;
+    }
+</script>
+</html>
+  

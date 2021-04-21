@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>订单管理</title>
+    <link rel="stylesheet" href="./css/OrderManagement.css?v=1000">
+     <script src="./js/rem.js"></script>
+</head>
+<body> 
+    <div id="header">重新查询<img src="./img/sx.png"></div>   
+    <div class="list_box">
+
+    </div>
+</body>
+<script src="./js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+    if(!localStorage.getItem('OrderFind_token')){
+         location.href='OrderFind.html'
+    }
+    var orderDetails=JSON.parse(localStorage.getItem('orderDetails'));
+    console.log(orderDetails)  
+    var StandStr = "";
+    orderDetails.forEach((e) => {
+            var createTime=e.createTime
+            var d = new Date(createTime);
+            var times=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
+        StandStr += '<div class="list_box-per"><section>收货人：'+e.contactName+'</section><div><font>套餐：</font><p>'+e.goodsName+'</p></div><div><font>购买机号：</font><p>'+e.phoneNumber+'</p></div><div><font>号码归属地：</font><p>'+e.placeOwnership+'</p></div><div><font>收货地址：</font><p>'+e.address+'</p></div><div><font>联系电话：</font><p>'+e.contactNumber+'</p></div><div><font>订购时间：</font><p>'+times+'</p></div><div><font>订单号：</font><p>'+e.orderNo+'</p></div><div><font>订单状态：</font><p>'+e.state+'</p></div><div><font>保单状态：</font><p>'+e.insuranceState+'</p></div></div>';
+    })
+    $(".list_box").html(StandStr);
+    $("#header").click(function(){
+          localStorage.removeItem('orderDetails')
+          localStorage.removeItem('OrderFind_token')          
+          location.href = "OrderFind.html";
+    })
+</script>
+</html>

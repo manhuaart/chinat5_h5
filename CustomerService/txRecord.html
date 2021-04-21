@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>兑换记录</title>
+    <script src="./js/rem.js"></script>
+    <link rel="stylesheet" href="./css/PersonalCenter.css">
+    <style type="text/css">
+        body{
+            background:rgba(246,245,245,1);
+        }
+    </style>
+</head>
+<body>
+    <div class="recdBox">
+        <div class="recd">
+
+        </div>
+    </div>
+</body>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/environment.js"></script>
+<script src="../js/toast.js"></script>
+<script type="text/javascript">
+    getList();
+    var dataStr = {
+        limit: 100,
+        page: 1,
+    }
+    function getList(argument) {
+        $.ajax({
+           type: 'GET',
+           url: geturl2()+'/api/spread/order?limit=100&page=1&type=extract', 
+           headers: {
+            "Authorization": localStorage.getItem('TokenA')
+           },
+           // data: JSON.stringify(dataStr),
+           success: function(res){
+               var listHtml = '';
+               if(res.status==200){
+                    if(res.data.list.length>0){
+                        for(var i=0;i<res.data.list.length;i++){
+                            if(res.data.list[i].child.length>0){
+                                for(var j=0;j<res.data.list[i].child.length;j++){
+                                    listHtml += '<div class="recdCon"><section><font>订单号：</font><span>'+res.data.list[i].child[j].orderId+'</span></section><section><font>金额：</font><span>'+res.data.list[i].child[j].number+'</span></section><section><font>时间：</font><span>'+res.data.list[i].child[j].time+'</span></section><section><font>状态：</font><span>成功</span></section></div>';
+                                }
+                            }else{
+                                $toast.show('没有查询到记录');
+                            }
+                        }
+                        $('.recd').html(listHtml)
+                    }else{
+                        $toast.show('没有查询到记录');
+                    }
+                      
+               }else{
+                  if(res.msg==null){
+                    $toast.show('没有查询到记录');
+                  }else{
+                    $toast.show(res.msg);
+                  }
+               }
+           },
+           error: function(res){
+                $toast.show('网络错误');
+           },
+       })
+    }
+</script>
+</html>

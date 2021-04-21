@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>资料填写</title>
+    <link rel="stylesheet" href="./DataFilling.css">
+</head>
+<body>
+    <div id="box">
+        <div class="titleimg"><img src="./black.png" alt="" id="img"><p>资料填写</p></div>
+        <div class="title">根据国家实名制要求，请准确的提供身份信息</div>
+        <div id="light" class="white_content">
+        </div>
+        <div class="input_block">
+            <label for="name" class="label">姓名</label>
+            <input type="text" placeholder="请输入姓名" class="input" vlaue='' id="nameValue">
+        </div>
+        <div class="input_block">
+            <label for="idCord" class="label">身份证</label>
+            <input type="text" placeholder="请输入身份证" class="input" id="idCardNoValue">
+        </div>
+        <div class="input_block">
+            <label for="phone" class="label">联系电话</label>
+            <input type="text" placeholder="请输入联系电话" class="input" id="phoneValue">
+        </div>
+        <div class="input_block">
+            <label for="" class="label">号码归属省份</label>
+            <select class="provinceTarget inputEle selectTag select_block" id="province1">
+                <option data-index="-1" value="省份">请选择号码归属省份</option>
+            </select>
+        </div> 
+        <div class="input_block">
+            <label for="" class="label">号码归属市(区)</label>
+            <select class="cityTarget inputEle selectTag select_block" id="cityItem">
+                <option data-index="-1" value="城市">请选择号码归属市(区)</option>
+            </select>
+        </div>
+        <div class="rema">
+            <div>
+                请填写配送地址<span class="remark">（支持全国配送，新疆、西藏仅限省内配送）</span>
+            </div>
+        </div>
+        <div class="input_block">
+            <label for="" class="label">所在省份</label>
+            <select name="province" id="province" class="select_block" onchange="doProvAndCityRelation();">
+                <option id="choosePro" value="-1">请选择您所在省份</option>
+            </select>
+        </div>
+        <div class="input_block">
+            <label for="" class="label">所在市(区)</label>
+            <select id="citys" name="city" onchange="doCityAndCountyRelation();" class="select_block">
+                <option id='chooseCity' value='-1'>请选择您所在城市</option>
+            </select>
+        </div>
+        <div class="input_block">
+            <label for="" class="label">所在区县</label>
+            <select id="county" name="county" class="select_block">
+                <option id='chooseCounty' value='-1'>请选择您所在区/县</option>
+            </select>
+        </div>
+        <div class="input_block">
+            <label for="address" class="label">详细地址</label>
+            <input type="text" placeholder="街道/镇+村/小区/写字楼+门牌号" class="input" id="detailedAddress">
+        </div>
+            <div style="display: flex; margin: 1rem 0;">
+                <input type="checkbox" class="check" id="ch">
+                <div class="agree">
+                    我已阅读并同意
+                    <a href="../UnicomAccessProtocol.html" class="agreement">《客户入网服务协议及业务协议》</a>
+                </div>
+            </div>
+            <div class="btn">
+                <input type="button" value="立即提交，免费送货上门" disabled id="xz">
+            </div>
+        <div class="remarks">
+            请保持联系号码畅通，我们可能随时与您联系。本次为阶段性优惠活动，数量有限，联系电话无人接听或恶意下单情况，将不予发货。
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="./placeOfOwnership.js"></script>
+<script src="./cityList.js"></script>
+<script>
+     var unSelected = "#B3B3B3";
+     var selected = "#ffffff";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    });
+    //得到手机屏幕的宽度
+    let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    //得到html的Dom元素
+    let htmlDom = document.getElementsByTagName('html')[0];
+    //设置根元素字体大小
+    htmlDom.style.fontSize = htmlWidth / 20 + 'px';
+     //号码归属地
+     var province1="";
+    var cityItem="";
+    function loadCityData(){
+        for(var i=0;i<jsonList.length;i++){
+            provice1="<option data-index="+i+" value='"+jsonList[i].code+"'>"+jsonList[i].provice+"</option>";
+            $("#province1").append(provice1); 
+        }
+    }
+
+    $(function(){
+        loadCityData();
+        $("#province1").change(function(){
+            $("#cityItem").empty();
+            var opt=$("#province1 option:selected").attr("data-index");
+            if(opt == "-1"){
+                cityItem="<option data-index='-1' value='城市'>城市</option>";
+                $("#cityItem").append(cityItem);
+            }else{
+                var length=jsonList[opt].cityItem.length;
+            
+                for(var j=0;j<length;j++){
+                    cityItem="<option data-index="+j+" value="+jsonList[opt].cityItem[j].code+">"+jsonList[opt].cityItem[j].provice+"</option>";
+                    $("#cityItem").append(cityItem);
+                }
+            }
+            
+
+        });
+        
+        
+    })
+    //更新省份和城市
+function updateLocationInfo(proviceName,cityName){
+    
+    var pIndex = -1;
+    for(var i=0;i<jsonList.length;i++){
+        if(jsonList[i].provice.indexOf(proviceName) != -1){
+            pIndex = i;
+            $("#province1").empty();
+            for(var j=0;j<jsonList.length;j++){
+                provice="<option data-index="+j+" value='"+jsonList[j].provice+"'>"+jsonList[j].provice+"</option>";
+                if(j == pIndex){
+                    provice="<option data-index="+j+" selected value='"+jsonList[j].provice+"'>"+jsonList[j].provice+"</option>";    
+                }
+                $("#province1").append(provice);
+            }
+            
+            $("#cityItem").empty();
+            var cLen=jsonList[pIndex].cityItem.length;
+            
+            for(var w=0;w<cLen;w++){
+                cityItem="<option data-index="+w+" value="+jsonList[pIndex].cityItem[w]+">"+jsonList[pIndex].cityItem[w]+"</option>";
+                if(jsonList[pIndex].cityItem[w] == cityName){
+                    cityItem="<option data-index="+w+" selected value="+jsonList[pIndex].cityItem[w]+">"+jsonList[pIndex].cityItem[w]+"</option>";
+                }
+                $("#cityItem").append(cityItem);
+            }
+            
+            
+            break;
+        }
+    }
+    
+    
+}
+//省市区
+$(function() {
+      //load city.json
+    
+      var sb = new StringBuffer();
+      $.each(cityJson,
+        function(i, val) {
+          if (val.item_code.substr(2, 4) == '0000') {
+            sb.append("<option value='" + val.item_code + "'>" + val.item_name + "</option>");
+          }
+        });
+      $("#choosePro").after(sb.toString());
+    
+    }); // 省值变化时 处理市
+    function doProvAndCityRelation() {
+      var city = $("#citys");
+      var county = $("#county");
+      if (city.children().length > 1) {
+        city.empty();
+      }
+      if (county.children().length > 1) {
+        county.empty();
+      }
+      if ($("#chooseCity").length === 0) {
+        city.append("<option id='chooseCity' value='-1'>请选择您所在城市</option>");
+      }
+      if ($("#chooseCounty").length === 0) {
+        county.append("<option id='chooseCounty' value='-1'>请选择您所在区/县</option>");
+      }
+      var sb = new StringBuffer();
+      $.each(cityJson,
+        function(i, val) {
+          if (val.item_code.substr(0, 2) == $("#province").val().substr(0, 2) && val.item_code.substr(2, 4) != '0000' && val.item_code.substr(4, 2) == '00') {
+            sb.append("<option value='" + val.item_code + "'>" + val.item_name + "</option>");
+          }
+        });
+      $("#chooseCity").after(sb.toString());
+    } // 市值变化时 处理区/县
+    function doCityAndCountyRelation() {
+      var cityVal = $("#citys").val();
+      var county = $("#county");
+      if (county.children().length > 1) {
+        county.empty();
+      }
+      if ($("#chooseCounty").length === 0) {
+        county.append("<option id='chooseCounty' value='-1'>请选择您所在区/县</option>");
+      }
+      var sb = new StringBuffer();
+      $.each(cityJson,
+        function(i, val) {
+          if (cityVal == '110100' || cityVal == "120100" || cityVal == "310100" || cityVal == "500100") {
+            if (val.item_code.substr(0, 3) == cityVal.substr(0, 3) && val.item_code.substr(4, 2) != '00') {
+              sb.append("<option value='" + val.item_code + "'>" + val.item_name + "</option>");
+            }
+          } else {
+            if (val.item_code.substr(0, 4) == cityVal.substr(0, 4) && val.item_code.substr(4, 2) != '00') {
+              sb.append("<option value='" + val.item_code + "'>" + val.item_name + "</option>");
+            }
+          }
+        });
+      $("#chooseCounty").after(sb.toString());
+    
+    }
+    function StringBuffer(str) {
+      var arr = [];
+      str = str || "";
+      var size = 0; // 存放数组大小
+      arr.push(str);
+      // 追加字符串
+      this.append = function(str1) {
+        arr.push(str1);
+        return this;
+      };
+      // 返回字符串
+      this.toString = function() {
+        return arr.join("");
+      };
+      // 清空 
+      this.clear = function(key) {
+        size = 0;
+        arr = [];
+      };
+      // 返回数组大小 
+      this.size = function() {
+        return size;
+      };
+      // 返回数组 
+      this.toArray = function() {
+        return buffer;
+      };
+      // 倒序返回字符串 
+      this.doReverse = function() {
+        var str = buffer.join('');
+        str = str.split('');
+        return str.reverse().join('');
+      };
+    }
+</script>
+</html>

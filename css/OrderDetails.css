@@ -1,0 +1,91 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color:#EDEDED;
+    font-family:PingFangSC-Medium,PingFang SC;
+}
+span{
+    background-color:#FDFDFD; 
+}
+#box{
+    width:100%;
+    height:4.67rem; 
+    border-bottom-left-radius:0.13rem;
+    border-bottom-right-radius:0.13rem;    
+    background-color:#FDFDFD;
+}
+#box>.consignee{
+    height:0.22rem;
+    line-height:0.22rem;
+    font-size:0.16rem;
+    background-color:#FDFDFD;
+    font-weight:500;
+    margin-left:0.12rem;
+    padding-top:0.3rem;
+}
+#box>.package{
+    height:0.26rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top:0.3rem;
+    margin-left:0.12rem;  
+    background-color: #FDFDFD;       
+}
+#box>.package>span:nth-of-type(1){
+    font-size:0.12rem;
+    line-height: 0.26rem;
+    font-weight:500;
+    background-color:#FDFDFD;
+}
+#box>.package>span:nth-of-type(2){
+    width:2.86rem;
+    background:rgba(117,83,236,1);
+    border-radius:0.27rem; 
+    color: #FFFFFF;
+    font-weight:400;
+    text-align: center;
+    line-height:0.26rem;
+    font-size:0.12rem;
+    margin-right:0.12rem;
+}
+/* --------------------------- */
+#box>#phoneNumber,
+#box>.numberPlace,
+#box>.receivingAddress,
+#box>#contactNumber,
+#box>.OrderTime,
+#box>.orderNumber,
+#box>.orderStatus{
+    height:0.26rem;
+    display: flex;
+    margin-top:0.15rem;
+    margin-left:0.12rem;  
+    background-color: #FDFDFD;       
+}
+#box>#phoneNumber>span:nth-of-type(1),
+#box>.numberPlace>span:nth-of-type(1),
+#box>.receivingAddress>span:nth-of-type(1),
+#box>#contactNumber>span:nth-of-type(1),
+#box>.OrderTime>span:nth-of-type(1),
+#box>.orderNumber>span:nth-of-type(1),
+#box>.orderStatus>span:nth-of-type(1){
+    width:0.72rem;
+    font-size:0.12rem;
+    line-height: 0.26rem;
+    font-weight:500;
+    background-color:#FDFDFD;
+}
+#box>#phoneNumber>span:nth-of-type(2),
+#box>.numberPlace>span:nth-of-type(2),
+#box>.receivingAddress>span:nth-of-type(2),
+#box>#contactNumber>span:nth-of-type(2),
+#box>.OrderTime>span:nth-of-type(2),
+#box>.orderNumber>span:nth-of-type(2),
+#box>.orderStatus>span:nth-of-type(2){
+    font-weight:400;
+    text-align: center;
+    line-height:0.26rem;
+    font-size:0.12rem;
+    margin-left:0.13rem;  
+    background-color:#FDFDFD;    
+}

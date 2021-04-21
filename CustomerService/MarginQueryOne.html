@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>余量查询</title>
+</head>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+ <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<script src="./js/rem.js"></script>
+<link rel="stylesheet" href="./css/MarginQueryOne.css">
+<body>
+    <div class="MarginQuery">
+        <div class="UnboundUser">未绑定用户</div>
+        <div class="margin-top">
+            <div class="topp">
+                <div class="left">
+                    <p>当前可用余额</p>
+                    <span>88元</span>
+                    <button>充话费</button>
+                </div>
+                <div class="right">
+                    <p>当前可用余额</p>
+                    <span>88元</span>
+                    <button>充话费</button>
+                </div>
+            </div>
+            <div class="margin-bottom">
+                <p>你暂未绑定沃卡号码，请完成绑定后进行查询</p>
+                <div>
+                    <button>申请沃卡</button>
+                    <button>点击绑定</button>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="cont-max">
+                <div class="top">
+                    <img src="./img/bianzu.png" alt="">
+                    <p>热门功能</p>
+                </div>
+                <div class="dingdan">
+                    <div>
+                        <img src="./img/zhangdan.png" alt="">
+                        <h5>历史账单</h5>
+                        <p>查询往月账单</p>
+                    </div>
+                    <div>
+                        <img src="./img/xiangdan.png" alt="">
+                        <h5>通话详单</h5>
+                        <p>查询通话记录</p>
+                    </div>
+                    <div>
+                        <img src="./img/chaxun.png" alt="">
+                        <h5>更多查询</h5>
+                        <p>查询通话记录</p>
+                    </div>
+                </div>
+                <div class="black" id="btn">
+                    <div class="left">
+                        <img src="./img/person.png" alt="">
+                        <p>登录手机营业厅</p>
+                    </div>
+                    <div class="right">
+                        <p>去查询</p>
+                        <img src="./img/black.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>发票信息</p>
+            <p>|</p>
+            <p>充值记录</p>
+        </div>
+    </div>
+    <script src="../js/jquery-1.12.4.js"></script>
+    <script>
+        $("#btn").click(function(event){
+            window.location.href="https://android.myapp.com/myapp/detail.htm?apkName=com.sinovatech.unicom.ui&ADTAG=mobile";
+        })
+    </script>
+</body>
+
+</html>

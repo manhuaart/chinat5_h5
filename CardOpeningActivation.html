@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>激活卡</title>
+</head>
+<body>
+    <div>激活卡页面
+    </div>
+</body>
+</html>
+<script src="./js/jquery-1.12.4.js"></script>
+<script>
+    // function getCode(){
+    //     this.code = ''
+    //     var local =window.location.href
+    //     var appid = 'wxd9ca0fbe08c37378' 
+    //     this.code = this.getUrlCode().code // 截取code
+    //     var codeurl='code'
+    //     var snsapibase='snsapi_base'
+    //     var state='123'
+    //     if (this.code == null || this.code === '') { // 如果没有code，则去请求
+    //         window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?'+'appid='+appid+'&redirect_uri='+local+'&response_type='+codeurl+'&scope='+snsapibase+'&state='+state+'#wechat_redirect'
+    //     } else {
+    //         //通过获取到的code，调用后台的接口，取得openID
+    //         // this.getOpenId(code)
+    //     }
+    // }
+    // function getUrlCode() { // 截取url中的code方法
+    //     var url = location.search
+    //     this.winUrl = url
+    //     var theRequest = new Object()
+    //     if (url.indexOf("?") != -1) {
+    //         var str = url.substr(1)
+    //         var strs = str.split("&")
+    //         for(var i = 0; i < strs.length; i ++) {
+    //             theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1])
+    //         }
+    //     }
+    //     return theRequest
+    // }
+    // if(!window.localStorage.getItem('openId')){ // 如果缓存localStorage中没有微信openId，则需用code去后台获取
+    //         this.getCode()
+    // } else {
+    //         // 别的业务逻辑
+    // }
+    // var a=new getCode();
+    // var code=a.code;
+    // var urlState='https://m.10010.com/jh?u=OPENID%26c=CHANNEL'
+    // var wlc='wlcxk'
+    // window.location.href='http://wlcx-provider.chinat5.com/api/card/activation?'+'channel='+wlc+'&code='+code+'&state='+urlState
+
+
+    function urlParams() {
+        var args=new Object();
+        var query=location.search.substring(1);//获取查询串
+        var pairs=query.split("&");//在逗号处断开
+        for(var i=0;i<pairs.length;i++){
+            var pos=pairs[i].indexOf('=');//查找name=value
+            if(pos==-1)   continue;//如果没有找到就跳过
+            var argname=pairs[i].substring(0,pos);//提取name
+            var value=pairs[i].substring(pos+1);//提取value
+            args[argname]=unescape(value);//存为属性
+        }
+        return args;
+    }
+    var urlArgs = urlParams();
+    var code = urlArgs['code'];
+    var urlState='https://m.10010.com/jh?u=OPENID%26c=CHANNEL';
+    var wlc='wlcxk';
+    var local =window.location.href;
+    var appid = 'wxd9ca0fbe08c37378';
+    var codeurl='code';
+    var snsapibase='snsapi_base';
+    var state='123';
+    if(code && code!=null){
+        window.location.href='http://wlcx-provider.chinat5.com/api/card/activation?'+'channel='+wlc+'&code='+code+'&state='+urlState
+    }else{
+        window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?'+'appid='+appid+'&redirect_uri='+local+'&response_type='+codeurl+'&scope='+snsapibase+'&state='+state+'#wechat_redirect'
+    }
+</script>

@@ -1,0 +1,37 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-size: 16px;
+}
+.FreeFlowPrivilege{
+    width: 100%;
+    height:auto;
+}
+.mianliu{
+    width: 100%;
+    height: 0.36rem;
+    border-bottom: solid 0.5px #DBDBDB;
+}
+.mianliu>P{
+    line-height: 0.36rem;
+    font-size: 0.13rem;
+    color: #333333;
+    font-weight: bold;
+    margin-left: 0.13rem;
+}
+.content{
+    margin-left: 0.12rem;
+    font-size: 0.12rem;
+    color: #787878;
+    margin-top: 0.16rem;
+    margin-bottom: 0.24rem;
+}
+.table{
+    width: 100%;
+    height: auto;
+}
+.table>img{
+    width: 3.75rem;
+}

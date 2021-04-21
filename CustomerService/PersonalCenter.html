@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>个人中心</title>
+    <script src="./js/rem.js"></script>
+    <link rel="stylesheet" href="./css/PersonalCenter.css?v=20200917">
+    <style type="text/css">
+        .nobind{
+            display: block;
+        }
+        .bind{
+            display: none;
+        }
+        .shenqing{
+            display: block;
+        }
+        .sharepox{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="phonecenter">
+        <div class="nobind">
+            <div class="nophone">
+                <div class="img"><img class="imgSrcs" /></div>
+                <div class="cont">
+                    <p>未绑定号码</p>
+                    <p>绑定沃卡，享受云沃链卡专属特权</p>
+                </div>
+            </div>
+            <div class="btn">
+                <button id="bind_now">立即绑定</button> 
+            </div>
+        </div>
+        <div class="topstop bind">
+            <div class="nophoneStr">
+                <div class="img"><img class="imgSrc" /></div>
+                <p class="phone textL">18701452592</p> 
+                <div class="bankuai">
+                    <section>
+                        <div class="bantop">
+                            <font>商城可用补贴券</font>
+                            <span class="price">0</span>
+                        </div>
+                        <!-- <i>进入商城</i> -->
+                    </section>
+                    <section class="sec1">
+                        <div class="bantop">
+                            <font class="baFont">积分兑换</font>
+                            <span class="coupon">0</span>
+                        </div>
+                        <i class="txred">兑换记录</i>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="pads">
+            <div class="back">
+                <img src="../img/c1.png" class="shenqing" />
+                <img src="../img/c2.png" class="sharepox" /> 
+            </div>
+            <div class="yewu">
+                <p>业务办理</p>
+                <ul>
+                    <li class="lif"><img src="./img/opencard.png"><a>开卡管理</a></li>
+                    <li class="lis"><img src="./img/person1.png"><a>客服中心</a></li>
+                    <li class="lid"><img src="../img/c3.png"><a>申请云沃链卡</a></li>
+                    <li class="lib"><img src="../img/c4.png"><a>保险查询</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mask">
+            <div class="clise">
+                <div class="fontBott">
+                    <div>选择提现金额</div>
+                    <div class="radioBox">
+                        <!-- <label  class="radio">
+                            <span class="radio-bg"></span>
+                            <input type="radio" name="sex" value="50" checked="checked" /> 50
+                            <span class="radio-on"></span>
+                        </label> -->
+                    </div>
+                    <div class="ftBtn">确认体现</div>
+                </div>
+            </div>
+        </div>
+        <div class="maskcon">
+            <div class="boxView">
+                <div class="titl">云沃链卡未申请！去申请？</div>
+                <div class="boxViews">
+                    <span class="cancelWoka">取消</span>
+                    <span class="goWoka">确定</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/environment.js"></script>
+<script src="../js/toast.js"></script>
+<script type="text/javascript">
+    var timeDate = Date.parse(new Date());
+    var reUrl = 'https://wlmall-api.chinat5.com/api/wechat/user/auth?no='+timeDate;
+    var appid = 'wxd9ca0fbe08c37378';
+    var priceArray = [50,100,150,200,250,300];
+    var urlArgs = urlParams();
+    var wxToken = "Bearer " + urlArgs['token'];
+    var shareLink = '';
+    localStorage.setItem('TokenB', urlArgs['token']); 
+    localStorage.setItem('TokenA', wxToken); 
+    if(!wxToken || wxToken== 'Bearer undefined'){
+        location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+reUrl+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+    }else{
+        getUserInfo();
+    }
+    $('.shenqing').click(function(){
+        location.href = "../ziliaotianxie/index.html";
+    })
+    $('.lid').click(function(){
+        location.href = "../ziliaotianxie/index.html";
+    })
+    $("#bind_now").click(function(){
+        location.href = "../BindWoCard.html";
+    }) 
+    $(".lif").click(function(){
+        location.href = "../OrderList.html";
+    }) 
+    $(".lis").click(function(){
+        location.href = "./CustomerService.html";
+    })
+    $(".lib").click(function(){
+        location.href = "./Insurance.html?phone=" + $('.phone').text();
+    })
+    $(".txred").click(function(){
+        location.href = "./txRecord.html";
+    })
+    $('.baFont').click(function(){
+        if($('.coupon').text()/10 >=50){
+            $('.mask').show();
+            $('.fontBott').animate({bottom:'0'});
+        }else{
+            $toast.show('亲，满50才能提现！')
+        }
+    })
+    $('.clise').click(function(e){
+        e.stopPropagation()
+        $('.fontBott').animate({bottom:'-3.6rem'});
+        $('.mask').hide();
+    })
+    var radioHtml = '';
+    for(var i=0; i<priceArray.length;i++){
+        radioHtml +='<label  class="radio"><span class="radio-bg"></span><input type="radio" name="sex" value="'+priceArray[i]+'" checked="checked" /> '+priceArray[i]+'<span class="radio-on"></span></label>';
+    }
+    $('.radioBox').html(radioHtml)
+    var priceStr = $(".radioBox input[name='sex']:checked").val();
+    $('.fontBott').on('click', function(e){
+        e.stopPropagation();
+        priceStr = $(".radioBox input[name='sex']:checked").val();
+        console.log(priceStr)
+    })
+    var dataStr = {
+        extractType: 'weixin',
+        money: priceStr
+    }
+    $('.ftBtn').click(function(){
+        
+        $.ajax({
+           type: 'POST',
+           url: geturl2()+'/api/extract/cash',
+           headers: {
+            'Content-Type': 'application/json',
+           },
+
+           data: JSON.stringify(dataStr),
+           success: function(res){
+               if(res.status==200){
+                  location.href = "./txSucc.html";
+               }else{
+                   $toast.show(res.msg);
+               }
+           },
+           error: function(res){
+                $toast.show(res.responseJSON.msg);
+           },
+       })
+        
+    })
+    function urlParams() {
+        var args=new Object();
+        var query=location.search.substring(1);//获取查询串
+        var pairs=query.split("?");//在逗号处断开
+        for(var i=0;i<pairs.length;i++){
+            var pos=pairs[i].indexOf('=');//查找name=value
+            if(pos==-1)   continue;//如果没有找到就跳过
+            var argname=pairs[i].substring(0,pos);//提取name
+            var value=pairs[i].substring(pos+1);//提取value
+            args[argname]=unescape(value);//存为属性
+        }
+        return args;
+    }
+    
+    function getWxUserToken(){
+        $.ajax({
+           type: 'get',
+           url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+reUrl+'&response_type=code&scope=snsapi_userinfo&state='+timeDate,
+           success: function(res){
+                // localStorage.setItem('wxToken', res.data.token);
+                // getUserInfo();
+           }
+       })
+    }
+    var dataTk={
+            token: wxToken
+        }
+    function getUserInfo(){
+        $.ajax({
+           type: 'GET',
+           url:geturl2()+'/api/userinfo',
+           headers: {
+            "Authorization": wxToken
+           },
+           data:{},
+           success: function(res){
+                if(res.status==200){
+                    if(res.data.phone){
+                        $('.bind').show();
+                        $('.nobind').hide();
+                        $('.sharepox').show();
+                        $('.shenqing').hide();
+                        $('.lib').show();
+                        $('.lid').show();
+                    }else{
+                        $('.nobind').show();
+                        $('.bind').hide()
+                        $('.sharepox').hide();
+                        $('.shenqing').show();
+                        $('.lid').hide();
+                        $('.lib').hide();
+                    }
+                    $('.phone').text(res.data.phone);
+                    $('.price').text(res.data.newUserCouponAmount);
+                    $('.imgSrc').attr('src',res.data.avatar);
+                    $('.imgSrcs').attr('src',res.data.avatar);
+                    $('.coupon').text(res.data.brokeragePrice*10);
+                    getShare(res.data.phone);
+                }else{
+                    $.toast(res.msg);
+                }
+           }
+       })
+    }
+    function getShare(phone){
+        $.ajax({
+           type: 'GET',
+           url: geturl()+'/api/card/generateSharingLinks?newPhoneNum='+phone,
+           success: function(res){
+                if(res.rspCode==0){
+                    shareLink = res.body.applyOrderUrl;
+                    if(shareLink&& shareLink!='null'){
+                        $('.sharepox').show()
+                    }else{
+                        $('.sharepox').hide()
+                    }
+                }else{
+                    $('.maskcon').show();
+                }
+           }
+       })
+    }
+    $('.sharepox').click(function(){
+        location.href='./shareCoupon.html?shareLink='+shareLink;
+    })
+    $(".cancelWoka").click(function(){
+        $(".maskcon").hide();
+    })
+    $(".goWoka").click(function(){
+        location.href = "../ziliaotianxie/index.html"; 
+    })
+</script>
+</html>
+  

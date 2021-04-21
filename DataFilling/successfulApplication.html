@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <div class="title"><img src="./black.png" alt="" id="img"><p>申请结果</p></div>
+        <div class="sqcg">申请成功！</div>
+        <div class="wxts">温馨提示</div>
+        <div class="content">
+            <p>您已完成云沃链5G卡申请</p>
+            <p>中国联通工作人员会尽快联系您为您办理上门开卡业务</p>
+            <p>收到云沃链卡后请至”云沃链卡助手“公众号激活</p>
+            <p>激活后系统将自动发送“天使2020公益线上演唱会”直播链接</p>
+            <p>用中国联通云沃链手机号登录后即可观看演出</p>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    //得到手机屏幕的宽度
+    let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    //得到html的Dom元素
+    let htmlDom = document.getElementsByTagName('html')[0];
+    //设置根元素字体大小
+    htmlDom.style.fontSize = htmlWidth / 20 + 'px';
+    var img2=document.getElementById("img")
+    img2.onclick=function(){
+        window.location.href = '../ApplicationForWoCard.html';
+    }
+</script>
+<style>
+    *{
+        padding: 0%;
+        margin: 0%;
+    }
+    body{
+        background:url('./background.jpg') no-repeat;
+    } 
+    .box {
+        height: 100vh;
+        width: 100%;
+        background: rgba(102, 102, 102, 1);
+    }
+    .title {
+    height: 2.8rem;
+    display: flex;
+    }
+    .title>img{
+        margin-left: 0.75rem;
+        width: 0.7rem;
+        height: 0.9rem;
+        margin-top: 0.9rem;
+        margin-right: 0.7rem;
+    }
+    .title>p{
+        color: white;
+        font-size: 0.875rem;
+        line-height: 2.8rem;
+    }
+    .sqcg{
+        margin-top: 7rem;
+        margin-left: 3.4rem;
+        width: 11.95rem;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+        height: 2.05rem;
+        background:rgba(255,255,255,1);
+        box-shadow:0px 2px 4px 0px rgba(16,164,105,0.73);
+        border-radius:1.2rem;
+        font-size: 1rem;
+        color:black;
+        text-align: center;
+        line-height: 2.05rem;
+    }
+    .wxts{
+        margin-top:1.3rem;
+        margin-left: 3.4rem;
+        width: 11.95rem;
+        height: 2.05rem;
+        line-height: 2.05rem;
+        font-size: 0.9rem;
+        color:white;
+        text-align: center;
+        font-weight:550;
+    }
+    .content>p{
+        color: white;
+        font-size: 0.55rem;
+        text-align: center;
+        line-height: 1.2rem;
+    }
+</style>
+</html>

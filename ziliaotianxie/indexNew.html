@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>云沃链卡</title>
+    <link rel="stylesheet" href="./indexNew.css?v=2020072207">
+    <link rel="stylesheet" href="../css/swiper.min.css">
+</head>
+<body>
+    <div class="box">
+        <img src="../img/nbg11.png" class="imgbox" />
+        <div class="pox">
+            <div class="poxTop">
+                <img src="../img/nbg22.png" class="imgbox" />
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <a><img src="../img/tc1.png"></a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a><img src="../img/tc2.png"></a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a><img src="../img/tc3.png"></a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a><img src="../img/tc4.png"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ncon">
+                <div class="phonepox">
+                    <img src="../img/ton.png" />
+                    <ul>
+                        
+                    </ul>
+                    <font>已有13456人申请</font>
+                </div>
+                <div class="inputbox">
+                    <div class="ipbox">
+                        <section>
+                            <font>归属地（可选择）:</font>
+                            <p id="shengshi" onclick="selectPro()">请选择号码归属地</p>
+                        </section>
+                        <img src="../img/dingwei.png" class="ipimg" />
+                        <div class="masks">
+                            <div class="boxpox">
+                                <div class="boxCon">
+                                    <ul id="provice">
+                                        <li onclick ="changCity()"></li>
+                                    </ul>
+                                    <ul id="city">
+                                        <li></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ipx">
+                        <span id="animats">
+                            <img src="../img/tan.png" class="ipcimg" />请选择您的归属地哦！
+                        </span>
+                    </div>
+                    <div class="ipbox">
+                        <section>
+                            <font>套餐（可选择）:</font>
+                            <p id="real1">请选择套餐</p>
+                            <input type="hidden" id="goosId">
+                        </section>
+                        <img src="../img/qh.png" class="ipimgs" />
+                        <!-- //套餐模态框 -->
+                        <div class="motai" id="mo1">
+                            <div class="motaikuang">
+                                <img src="../img/bz.png" class="imgClose" id="close1" />
+                                <h5 class="qxzhm">请您选择套餐</h5>
+                                <div class="qnxztc" id="qnxztc">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ipx">
+                        <span id="animat">
+                            <img src="../img/tan.png" class="ipcimg" />请选择您的套餐哦！
+                        </span>
+                    </div>
+                    <div class="ipsox serShow">
+                        <input type="text" name="" placeholder="请输入您喜欢的数字" onkeyup="this.value=this.value.replace(/[^\d.]/g,'');" maxlength="4" id="myInput" />
+                        <font onclick="myFunction()">搜索</font>
+                    </div>
+                    <div class="daFont serShow"></div>
+                </div>
+                <div id='mo'>
+                    <div class="list" id="selectPhoneNumber">
+                        <!-- <section onclick='showList()'>
+                            <font>16688884926</font>
+                            <span>
+                                <i>￥600</i>
+                                <a>限时免费</a>
+                            </span>
+                        </section> -->
+                    </div>
+                </div>
+                <div class="noData">亲，没有查询到，换个类型帮您找！</div>
+                <div class="huan huanShow">
+                    <font id="forAnotherBatch">换一批</font>
+                </div>
+            </div>
+            <img src="../img/bgbotts.png" class="img100" />
+        </div>
+        <div class="mask">
+            <div class="mkCon">
+                <img src="../img/bz.png" class="imgClose" onclick="hideList()" />
+                <section>已选择<span id="real"></span><font id='diqu'></font></section>
+                <section>已选择<span id='taocan'></span></section>
+                <div class="mkConDiv">根据国家手机号卡实名要求，请如实填写以下信息，以便我们及时 为您送到。</div>
+                <article>
+                    <span></span>收货地址
+                </article>
+                <div class="formBox">
+                    <span>
+                        <font>所在地区</font>
+                        <a id="Address" onclick="selectAddress()">请选择省/市/区</a>
+                        <img src="../img/black.png" onclick="selectAddress()"  class="formBoximg1" />
+                    </span>
+                    <div class="masks1">
+                        <div class="boxpox1">
+                            <div class="ulbox">
+                                <ul id="province"></ul>
+                                <ul id="citys"></ul>
+                                <ul id="county"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <span>
+                        <input type="text" id="detailedAddress" placeholder="请输入详细地址（*街道*门牌号*小区）" maxlength="50" name="" />
+                        <img src="../img/bz1.png"  class="formBoximg2" />
+                    </span>
+                </div>
+                <article>
+                    <span></span>收货人信息
+                </article>
+                <div class="formBox">
+                    <span>
+                        <font>联系电话</font>
+                        <input type="tel" name="" onkeyup="this.value=this.value.replace(/[^\d.]/g,'');" maxlength="11" placeholder="请输入联系电话，并保持畅通" class="iput1" id="phoneValue" />
+                    </span>
+                    <span>
+                        <font>姓名</font>
+                        <input type="text" name="" maxlength="10" id="nameValue" placeholder="请输入姓名（已加密）" class="iput1" />
+                    </span>
+                    <span>
+                        <font>身份证</font>
+                        <input type="text" name="" id="idCardNoValue" maxlength="18" placeholder="请输入身份证号（已加密）" class="iput1" />
+                    </span>
+                </div>
+                <div class="btnbox">
+                    <font onclick="submit()">0元领取，包邮到家</font>
+                </div>
+                <div class="mkConDiv align">请保持联系号码畅通，我们可能随时与您联系，电话无人接听或恶意下单 将不给予发货。</div>
+            </div>
+        </div>
+        <img src="../img/btn.png" class="imgbott" />
+        <div class="mkask">
+            <div class="lhao">
+                <p>亲，正在自动定位...</p>
+                <section>
+                    <span onclick="selectPro()">切换归属地</span>
+                    <span onclick="selectHaoma()">去挑选我的靓号</span>
+                </section>
+            </div>
+        </div>
+        <div class="lodaing">
+            <div class="imgLoad">
+                <img src="../img/load.gif" />
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../js/swiper.min.js"></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src='../js/environment.js'></script>
+<script src='../js/toast.js'></script>
+<script src="cityList.js"></script>
+<script src="jquery.jsonp.js"></script>
+<script src="placeOfOwnership.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=lRRyy6qoBwnAgj3w4ugGFqoSsWC8du3v"></script>
+<script>
+    localStorage.setItem('cardMealIds', ''); 
+    localStorage.setItem('merchantIdswd', '');
+    localStorage.setItem('provinceCodes', '');
+    localStorage.setItem('cityCodes', ''); 
+    localStorage.setItem('phoneNum', '');
+    localStorage.setItem('goodsName', '');
+    localStorage.setItem('applyOrderUrl', '');
+    var channelAppid = '';
+    var strUrl = window.location.href;
+    //var strUrl = 'http://wx.chinat5.com/ziliaotianxie/index.html#%7B%22cardMealId%22%3A%5B%7B%22goods_name%22%3A%22%E5%B0%9D%E9%B2%9C%E7%89%88%EF%BC%9A%E6%9C%88%E5%8A%9F%E8%83%BD%E8%B4%B929%E5%85%83+%E8%AF%AD%E9%9F%B3100%E5%88%86%E9%92%9F+%E5%85%A8%E5%9B%BD%E6%B5%81%E9%87%8F3G%22%2C%22goods_id%22%3A%22982003114519%22%7D%2C%7B%22goods_name%22%3A%22Plus%E7%89%88%EF%BC%9A%E6%9C%88%E5%8A%9F%E8%83%BD%E8%B4%B9139%E5%85%83+%E8%AF%AD%E9%9F%B3500%E5%88%86%E9%92%9F+%E5%85%A8%E5%9B%BD%E6%B5%81%E9%87%8F30G%22%2C%22goods_id%22%3A%22982003114522%22%7D%2C%7B%22goods_name%22%3A%22%E8%87%B3%E5%B0%8A%E7%89%88%EF%BC%9A%E6%9C%88%E5%8A%9F%E8%83%BD%E8%B4%B9249%E5%85%83+%E8%AF%AD%E9%9F%B31000%E5%88%86%E9%92%9F+%E5%85%A8%E5%9B%BD%E6%B5%81%E9%87%8F80G%22%2C%22goods_id%22%3A%22982003114524%22%7D%5D%2C%22merchantId%22%3A%22Dva9nVevW2M16DcsPWFr7PnJQ%2Ffo4ZxG2GjmFIR5m0UvM7fmYe%2BSmCX%2BjinRKoGwc5FZqxRSuIUe%5Cr%5CnQivtJBD3iD2Y4dee3uMVfY58Dy4oqdinvvR4nzbZZz%2BQ%2FIZkkLso%22%2C%22provinceCode%22%3A%22%22%2C%22cityCode%22%3A%22%22%2C%22refererOrderId%22%3A%22%22%7D';
+    var strUrlNew = decodeURIComponent(strUrl);
+    console.log(strUrlNew)
+    var numUrl=strUrlNew.indexOf("#") ;
+    if(numUrl!= -1){
+        var pdata=strUrlNew.substr(numUrl+1);
+        if(pdata){
+            var pdatas = JSON.parse(pdata);
+            var card = JSON.stringify(pdatas.cardMealId)
+            if(pdatas.cardMealId){
+                localStorage.setItem('cardMealIds', card); 
+                if(pdatas.cardMealId.length>=2){
+                    var tcHtmls= '';
+                    for(var i=0;i<pdatas.cardMealId.length; i++){
+                        if(pdatas.cardMealId[i].goods_id=="982003114519"){
+                            tcHtmls+='<div class="swiper-slide" idv="'+pdatas.cardMealId[i].goods_id+'"><a><img src="../img/tc1.png"></a></div>';
+                        }
+                        if(pdatas.cardMealId[i].goods_id=="982003114520"){
+                            tcHtmls+='<div class="swiper-slide" idv="'+pdatas.cardMealId[i].goods_id+'"><a><img src="../img/tc2.png"></a></div>';
+                        }
+                        if(pdatas.cardMealId[i].goods_id=="982003114522"){
+                            tcHtmls+='<div class="swiper-slide" idv="'+pdatas.cardMealId[i].goods_id+'"><a><img src="../img/tc3.png"></a></div>';
+                        }
+                        if(pdatas.cardMealId[i].goods_id=="982003114524"){
+                            tcHtmls+='<div class="swiper-slide" idv="'+pdatas.cardMealId[i].goods_id+'"><a><img src="../img/tc4.png"></a></div>';
+                        }
+                        
+                    }
+                    $('.swiper-wrapper').html(tcHtmls);
+                }else if(pdatas.cardMealId.length==1){
+                    $('.poxTop').hide();
+                }else{
+                    $('.poxTop').show();
+                }
+            }
+            if(pdatas.merchantId){
+                localStorage.setItem('merchantIdswd', pdatas.merchantId);
+            }
+            if(pdatas.provinceCode && pdatas.provinceCode!='null'){
+                console.log(pdatas.provinceCode)
+                localStorage.setItem('provinceCodes', pdatas.provinceCode);
+            }
+            if(pdatas.cityCode && pdatas.cityCode!='null'){
+                console.log(pdatas.cityCode)
+                localStorage.setItem('cityCodes', pdatas.cityCode); 
+            } 
+            if(pdatas.refererOrderId){
+                channelAppid = pdatas.refererOrderId
+            }
+        }
+    }
+    if(!localStorage.getItem('provinceCodes')|| !localStorage.getItem('cityCodes')){
+        //百度定位
+        var geolocation=new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus()==BMAP_STATUS_SUCCESS){
+                var lat=r.address.lat;//当前经度
+                var lng=r.address.lng;//当前纬度
+                var province=r.address.province.replace('市','').replace('省','').replace('自治区','').replace('壮族','').replace('维吾尔族','').replace('藏族','').replace('回族',''); //返回当前省份
+                var city=r.address.city.replace('市','');//返回当前城市
+                fuZzy(jsonList,province,city);
+            }
+        })
+    }else{
+        $('.mkask').hide();
+        taocan();
+    }
+    
+    function fuZzy(list,pro,cit){
+        var reg = new RegExp(pro);
+        var rec = new RegExp(cit)
+        for(var i=1;i<list.length;i++){
+            if(reg.test(list[i].provice)){
+                console.log(list[i].code);
+                proviceCode= list[i].code;
+                localStorage.setItem('provinceCodes',list[i].code);
+            }
+            if(list[i].code==proviceCode){
+                var cityItem = jsonList[i].cityItem;
+                for(var j=0;j<cityItem.length;j++){
+                    if(rec.test(cityItem[j].provice)){
+                        console.log(cityItem[j].code)
+                        cityCode =cityItem[j].code;
+                        $('.lhao p').text('亲，当前号码归属地为'+pro+'-'+cit+'，若需切换请点击切换归属地！');
+                        $('#shengshi').text(pro+cit);
+                        localStorage.setItem('cityCodes',cityItem[j].code);
+                    }
+                }
+                break;
+            }
+        }
+        taocan();
+    }
+    //选择套餐模态框
+    function taocan(){
+        var qtcHtml = '';
+        if(localStorage.getItem('cardMealIds')){
+            var datas = JSON.parse(localStorage.getItem('cardMealIds'));
+            if(datas.length==1){
+                qtcHtml+= "<p id="+datas[0].goods_id+" class='data_class active'>" +datas[0].goods_name + "</p>";
+                $('#qnxztc').html(qtcHtml);
+                $('#real1').text(datas[0].goods_name);
+                $('#goosId').val(datas[0].goods_id);
+            }else if(datas.length==0){
+                qtcHtml = "<p id="+dataJson[0].id+" class='data_class active'>" +dataJson[0].name + "</p>";
+                for(var i=1;i<dataJson.length;i++){
+                    qtcHtml += "<p id="+dataJson[i].id+" class='data_class'>" +dataJson[i].name + "</p>";      
+                };
+                $('#qnxztc').html(qtcHtml);
+            }else{
+                for(var i=0;i<datas.length;i++){
+                    qtcHtml += "<p id="+datas[i].goods_id+" class='data_class'>" +datas[i].goods_name + "</p>";      
+                }
+                $('#qnxztc').html(qtcHtml);
+            }
+        }else{
+            qtcHtml = "<p id="+dataJson[0].id+" class='data_class active'>" +dataJson[0].name + "</p>";
+            for(var i=1;i<dataJson.length;i++){
+                qtcHtml += "<p id="+dataJson[i].id+" class='data_class'>" +dataJson[i].name + "</p>";      
+            }
+            $('#qnxztc').html(qtcHtml);
+        }
+    }
+    var gDu = $('.poxTop').height() + $('.imgbox').height();
+    $('.imgbott').hide();
+    $('.serShow').hide();
+    $('.huanShow').hide();
+    $('.noData').hide();
+    getScoll();
+    function getScoll(){
+        $(document).scroll(function() {
+            var dh=$(window).height();//网页可视区高度
+            var hidtop=$(document).scrollTop();//网页被卷去的高度
+            if(hidtop>gDu ){
+                $(".imgbott").fadeIn()
+            }else{
+                $(".imgbott").fadeOut()
+            }
+        });
+    }
+    $(".imgbott").on("click",function(){
+       $('html,body').animate({scrollTop:gDu},500);
+    })
+    $('.formBoximg2').click(function(){
+        $toast.show('请输入详细准确的地址，字数不少于6字（例如；*街道…），且不能包含特殊符号（例如：？/（）等，可以输入小写-号）');
+    })
+    //滑块
+    window.onload = function() {
+        var swiper = new Swiper('.swiper-container',{
+            autoplay:true,
+            speed:4000,
+            autoplayDisableOnInteraction : false,
+            loop:true,
+            centeredSlides : true,
+            slidesPerView:2,
+            onInit:function(swiper){
+                swiper.slides[2].className="swiper-slide swiper-slide-active";//第一次打开不要动画
+            },
+            onSlideChangeEnd : function(swiperHere) {   
+                console.log(swiperHere.activeIndex)
+            },
+        });
+    }
+    //获奖滚动
+    function timer(opj){
+        $(opj).find('ul').animate({
+            marginTop : "-2rem"  
+            },500,function(){  
+            $(this).css({marginTop : "0"}).find("li:first").appendTo(this);  
+        })  
+    }
+    function selectHaoma(){
+        $('.mkask').hide();
+        if($('#goosId').val()){
+            $('.daFont font').removeClass('ft1');
+            $('.daFont font:first-child').addClass('ft1');
+            myFunction();
+        }
+    }
+    $(function(){ 
+        var txData = [
+            {phone: "131****5628",price: '潘**抢得靓号'},
+            {phone: "130****5683",price: '李**抢得靓号'},
+            {phone: "186****6375",price: '王**抢得靓号'},
+            {phone: "185****5269",price: '刘**抢得靓号'},
+            {phone: '130****1273',price: '李**抢得靓号'},
+            {phone: '186****9156',price: '张**抢得靓号'},
+            {phone: '185****9023',price: '王**抢得靓号'},
+            {phone: '131****5628',price: '李**抢得靓号'},
+            {phone: '185****7960',price: '周**抢得靓号'},
+            {phone: '186****9156',price: '李**抢得靓号'},
+            {phone: '156****3592',price: '赵**抢得靓号'},
+            {phone: '186****7150',price: '程**抢得靓号'},
+            {phone: '185****1683',price: '贾**抢得靓号'},
+        ];
+        var liHtml = '';
+        for(var i=0;i<txData.length;i++){
+            liHtml += '<li><font>'+txData[i].price+''+txData[i].phone+'</font><span></span></li>'
+        }
+        $('.phonepox ul').html(liHtml);
+        var num = $('.phonepox').find('li').length;
+        if(num > 1){
+           var time=setInterval('timer(".phonepox")',3500);
+        }
+    });
+    $('.list').on('click','section', function(e){
+        $('.mask').show();
+        $('.mkCon').animate({'bottom': '0'},"normal");
+        // unScroll();
+    });
+    function hideList(num){
+        $('.mkCon').animate({'bottom': '-100vh'},"slow");
+        $('.mask').hide();
+        // removeUnScroll();
+    };
+    ///号码归属地选择开始
+    ///
+    var proviceCode; //省code
+    var cityCode;//市code
+    var proviceName;
+    var cityName;
+    
+    
+    //初始化省
+    function initProvice(){
+        var proviceHtml='';
+        for(var i=0;i<jsonList.length;i++){
+            
+            if(i==0){
+                proviceCode = jsonList[i].code;
+                proviceName = jsonList[i].provice;
+                proviceHtml += '<li data-index="'+jsonList[i].code+'" class="actives" >'+jsonList[i].provice+'</li>';
+            }else{
+                proviceHtml += '<li data-index="'+jsonList[i].code+'" >'+jsonList[i].provice+'</li>';
+            }
+        }
+        console.log(proviceCode);
+        $('#provice').html(proviceHtml);
+        initCity()
+    }
+    //初始化市
+    function initCity(){
+        for(var i=0;i<jsonList.length;i++){
+            if(jsonList[i].code==proviceCode){
+                var ctiyHtml = '';
+                var cityItem = jsonList[i].cityItem;
+                for(var j=0;j<cityItem.length;j++){
+                    ctiyHtml += '<li data-index="'+cityItem[j].code+'">'+cityItem[j].provice+'</li>';
+                    if(j==0){
+                        cityCode = jsonList[i].code;
+                    }
+                }
+                console.log(cityCode)
+                $('#city').html(ctiyHtml);
+                break;
+            }
+        }
+    }
+    
+    function selectPro(){
+        $('.masks').show();    
+        $('.mkask').hide();
+       // console.log($('#provice li').attr('data-index'));
+        initProvice();
+        $('.boxCon').animate({'right': '0'});
+        unScroll();
+    }
+    $('#provice').on('click','li', function(e){
+        proviceCode = $(this).attr('data-index');
+        $('#provice li').removeClass('actives');
+        $(this).addClass('actives');
+        console.log($(this).text());
+        proviceName = $(this).text();
+        e.stopPropagation();
+        console.log(proviceCode);
+        
+        initCity();
+    })
+
+    $('#city').on('click','li', function(event){
+        cityCode = $(this).attr('data-index');
+        $('#city li').removeClass('actives');
+        $(this).addClass('actives');
+        cityName = $(this).text();
+        console.log(cityCode);
+        $('#shengshi').text(proviceName + '-'+ cityName);
+        $('.masks').hide();
+        $('.boxCon').animate({'right': '-60%'});
+        event.stopPropagation();
+        removeUnScroll();
+        localStorage.setItem('provinceCodes', proviceCode);
+        localStorage.setItem('cityCodes', cityCode);
+        if($('#goosId').val()){
+            $('.daFont font').removeClass('ft1');
+            $('.daFont font:first-child').addClass('ft1');
+            myFunction();
+        }
+    })
+    
+    $('.boxpox').click(function(e){
+        $('.masks').hide();
+
+        console.log(proviceCode);
+        console.log(cityCode);
+        proviceCode = localStorage.getItem('provinceCodes');
+        cityCode = localStorage.getItem('cityCodes');
+
+        console.log(proviceCode);
+        console.log(cityCode);
+        $('.boxCon').animate({'right': '-60%'});
+        removeUnScroll();
+    })
+    //禁止滚动条滚动
+    function unScroll(){
+        var top = $(document).scrollTop();
+        //console.log(top);
+        $(document).on('scroll', function(event) {
+            event.preventDefault();
+            $(document).scrollTop(top);
+        });
+    };
+    //恢复滚动条滚动
+    function removeUnScroll(){
+         $(document).off('scroll');
+         getScoll();
+    };
+    // 号码归属地选择结束///////
+    // 
+    // 
+    
+    //省市区配送地址
+    //
+    var proCode;
+    var citCode;
+    var couCode;
+    var proName;
+    var citName;
+    var couName;
+    function selectAddress(){
+        $('.masks1').show();  
+        $('.ulbox').animate({'right': '0'});   
+        unScroll();
+    }
+    $('.boxpox1').click(function(e){
+        $('.masks1').hide();
+        $('.ulbox').animate({'right': '-60%'});
+        proCode = localStorage.getItem('proCode');
+        citCode = localStorage.getItem('citCode');
+        couCode = localStorage.getItem('couCode');
+        console.log(proCode+'-'+citCode+'-'+couCode);
+        removeUnScroll();
+    })
+    $("#province").on('click','li',function(e){
+        $("#province li").removeClass('activesd');
+        $(this).addClass('activesd');
+        proName = $(this).text();
+        proCode = $(this).attr('value');
+        console.log(proCode);
+        e.stopPropagation();
+        doProvAndCityRelation($(this).attr('value'));
+    });
+    $("#citys").on('click','li',function(e){
+        $("#citys li").removeClass('activesd');
+        $(this).addClass('activesd');
+        citName = $(this).text();
+        citCode = $(this).attr('value');
+        console.log(citCode);
+        e.stopPropagation();
+        doCityAndCountyRelation($(this).attr('value'))
+    })
+    $("#county").on('click','li',function(e){
+        $("#county li").removeClass('activesd');
+        $(this).addClass('activesd');
+        couName = $(this).text();
+        couCode = $(this).attr('value');
+        console.log(couCode);
+        $('.masks1').hide();
+        $('#Address').text(proName+'-'+citName+'-'+couName);
+        $('.ulbox').animate({'right': '-60%'});
+        localStorage.setItem('proCode',proCode);
+        localStorage.setItem('citCode',citCode);
+        localStorage.setItem('couCode',couCode);
+        e.stopPropagation();
+        removeUnScroll();
+    })
+    getListAdress();
+    function getListAdress(){
+      var ulPro = '';
+      for(var i=0;i<cityJson.length; i++){
+         if(i==0){
+            proCode = cityJson[i].item_code;
+            proName = cityJson[i].item_name;
+            if (cityJson[i].item_code.substr(2, 4) == '0000') {
+                ulPro += '<li value=' + cityJson[i].item_code + '  class="activesd">'+ cityJson[i].item_name +'</li>'
+            }
+         }else{
+            if (cityJson[i].item_code.substr(2, 4) == '0000') {
+                ulPro += '<li value=' + cityJson[i].item_code + ' >'+ cityJson[i].item_name +'</li>'
+            }
+         }
+         
+      }
+      $('#province').html(ulPro)
+      doProvAndCityRelation(proCode);
+    } // 省值变化时 处理市
+    function doProvAndCityRelation(e) {
+      var city = $("#citys");
+      var county = $("#county");
+      var ulCity = '';
+      var lival = e;
+      console.log(lival)
+      if (city.children().length > 1) {
+        city.empty();
+      }
+      if (county.children().length > 1) {
+        county.empty();
+      }
+      
+      $.each(cityJson,
+        function(i, val) {
+          if (val.item_code.substr(0, 2) == lival.substr(0, 2) && val.item_code.substr(2, 4) != '0000' && val.item_code.substr(4, 2) == '00') {
+            ulCity += '<li value=' + val.item_code + '>' + val.item_name + '</li>';
+            
+          }
+        });
+
+      $("#citys").html(ulCity);
+      $("#citys li:first-child").addClass('activesd');
+      citCode = $("#citys li:first-child").attr('value');
+      console.log(citCode);
+      citName = $("#citys li:first-child").text()
+     doCityAndCountyRelation(citCode);
+    } // 市值变化时 处理区/县
+    function doCityAndCountyRelation(e) {
+      var cityVal = e.toString();
+      var ulCoun = '';
+      var county = $("#county");
+      if (county.children().length > 1) {
+        county.empty();
+      }
+
+      $.each(cityJson,
+        function(i, val) {
+          if (cityVal == '110100' || cityVal == "120100" || cityVal == "310100" || cityVal == "500100") {
+            if (val.item_code.substr(0, 3) == cityVal.substr(0, 3) && val.item_code.substr(4, 2) != '00') {
+              ulCoun+='<li value=' + val.item_code + '>' + val.item_name + '</li>'
+            }
+          } else {
+            if (val.item_code.substr(0, 4) == cityVal.substr(0, 4) && val.item_code.substr(4, 2) != '00') {
+              ulCoun+='<li value=' + val.item_code + '>' + val.item_name + '</li>'
+            }
+          }
+        });
+      
+        $("#county").html(ulCoun);
+    }
+    //省市区配送地址
+    
+    
+    //选择套餐
+    $('#real1').click(function(){
+        if(localStorage.getItem('provinceCodes')){
+            var numberProvince=localStorage.getItem('provinceCodes')
+        }else{
+            var numberProvince=proviceCode
+        }
+        if(localStorage.getItem('cityCodes')){
+            var NumberCity=localStorage.getItem('cityCodes')
+        }else{
+            var NumberCity=cityCode
+        }
+        if(!numberProvince || !NumberCity||$('#shengshi').text()=='请选择号码归属地'){
+            $toast.show('请选择号码归属地');
+        }else{
+            console.log($('#shengshi').text())
+            $('#mo1').show();
+            $('.motaikuang').animate({'bottom': '0'});
+            $('.data_class').bind('click',function(){
+                $(this).addClass("active").siblings().removeClass("active");
+                $('#real1').text($(this).text())
+                $('#goosId').val($(this).attr('id'))
+                $('#mo1').hide();
+                $('.motaikuang').animate({'bottom': '-45vh'});
+                $('.serShow').show();
+                $('.daFont font').removeClass('ft1');
+                $('.daFont font:first-child').addClass('ft1');
+                myFunction();
+            });
+        }
+        
+    })
+    $('#close1').click(function(){
+        $('.motaikuang').animate({'bottom': '-40vh'});
+        $('#mo1').hide();
+    });
+    $('#selectPhoneNumber').on('click', 'section', function(){
+        $('#selectPhoneNumber section').removeClass('s1');
+        $(this).addClass('s1');
+        $('#real').text($(this).find('font').text());
+        $('#diqu').text($('#shengshi').text());
+        $('#taocan').text($('#real1').text());
+    })
+    
+    //渲染选择手机号码
+    let newArray = [];
+    let pageCode = 0;
+    var reg1 = new RegExp("(\\d)((?!\\1)\\d)\\1\\2", "g");//ABAB
+    var reg2 = new RegExp("(\\d)\\1\\1((?!\\1)\\d)", "g");//AAAB
+    var reg3 = new RegExp("(\\d)\\1((?!\\1)\\d)\\2((?!\\1)\\d)\\3", "g");//AABBCC
+    var reg4 = new RegExp('(.)\\1{1}', "g");//AA
+    var reg5 = new RegExp("(\\d)\\1((?!\\1)\\d)\\2", "g");//AABB
+    var reg6 = new RegExp("(\\d)((?!\\1)\\d)\\2[\\d]", "g");//ABBA
+    var reg7 = new RegExp("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}\\d", "g");
+    var reg8 = new RegExp("[\\d](?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}\\d[\\d](?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}\\d$", "g");
+    var reg9 = new RegExp("\\d（[0-9]）（？！\\1）（[0-9]）\\2{2}\\d", "g");
+    var iteratorNumberCode = function(pageCode){
+        var centHtml = '';
+        if((pageCode+1)<=newArray.length){
+            $('.huanShow').show();
+            for(var i = 0; i < newArray[pageCode].length; i++) {
+                var dateDfr = newArray[pageCode][i].toString();
+                // if (dateDfr.match(reg1)!=null) {
+                //    centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg1),'<e style="color:#ff6600;">'+dateDfr.match(reg1)+'</e>') +  "</font></section>"
+                //     console.log(dateDfr);
+                // }else{
+                //     centHtml +="<section><font>" +dateDfr.replace($('#myInput').val(),'<e style="color:#ff6600;">'+$('#myInput').val()+'</e>') +  "</font></section>"
+                // }
+                
+                if (dateDfr.match(reg9)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg9),'<e style="color:#ff6600;">'+dateDfr.match(reg9)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }else if (dateDfr.match(reg8)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg8),'<e style="color:#ff6600;">'+dateDfr.match(reg8)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }else if (dateDfr.match(reg7)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg7),'<e style="color:#ff6600;">'+dateDfr.match(reg7)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }else if (dateDfr.match(reg1)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg1),'<e style="color:#ff6600;">'+dateDfr.match(reg1)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }else if(dateDfr.match(reg2)!=null){
+                    centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg2),'<e style="color:#ff6600;">'+dateDfr.match(reg2)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }else if(dateDfr.match(reg3)!=null){
+                    centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg3),'<e style="color:#ff6600;">'+dateDfr.match(reg3)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }else if(dateDfr.match(reg4)!=null){
+                    centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg4),'<e style="color:#ff6600;">'+dateDfr.match(reg4)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }else if(dateDfr.match(reg5)!=null){
+                    centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg5),'<e style="color:#ff6600;">'+dateDfr.match(reg5)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                } else{
+                    centHtml +="<section><font>" +dateDfr.replace($('#myInput').val(),'<e style="color:#ff6600;">'+$('#myInput').val()+'</e>') +  "</font></section>"
+                }
+            }
+            $("#selectPhoneNumber").html(centHtml);
+            $('.noData').hide();
+            $('.serShow').show();
+        }else{
+            $('.serShow').show();
+            $('.huanShow').hide();
+            $('.noData').show();
+        }
+    }
+
+    var daStr = ['全部','ABAB','AABB','AAAB','ABC','AA'];
+    var fontHtml = '';
+    for(var i=0;i<daStr.length;i++){
+        
+        fontHtml+='<font>'+daStr[i]+'</font>'
+    }
+    $('.daFont').html(fontHtml);
+    $('.daFont font:first-child').addClass('ft1');
+    $('.daFont').on('click','font',function(){
+        $('.daFont font').removeClass('ft1');
+        $(this).addClass('ft1');
+        var centHtml = '';
+        for(var i = 0; i < newArray[pageCode].length; i++) {
+            var dateDfr = newArray[pageCode][i].toString();
+            $("#selectPhoneNumber").empty();
+            if($(this).text()=='ABAB'){
+                if (dateDfr.match(reg1)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg1),'<e style="color:#ff6600;">'+dateDfr.match(reg1)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }
+            }
+            if($(this).text()=='AABB'){
+                if (dateDfr.match(reg5)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg5),'<e style="color:#ff6600;">'+dateDfr.match(reg5)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }
+            }
+            if($(this).text()=='AAAB'){
+                if (dateDfr.match(reg2)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg2),'<e style="color:#ff6600;">'+dateDfr.match(reg2)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }
+            }
+            if($(this).text()=='ABC'){
+                if (dateDfr.match(reg7)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg7),'<e style="color:#ff6600;">'+dateDfr.match(reg7)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }
+            }
+            if($(this).text()=='AA'){
+                if (dateDfr.match(reg4)!=null) {
+                   centHtml +="<section><font>" +dateDfr.replace(dateDfr.match(reg4),'<e style="color:#ff6600;">'+dateDfr.match(reg4)+'</e>') +  "</font></section>"
+                    console.log(dateDfr);
+                }
+            }
+        }
+        $("#selectPhoneNumber").html(centHtml);
+        if($(this).text()=='全部'){
+            pageCode = 0;
+            iteratorNumberCode(pageCode);
+        }
+    })
+    // 换一批
+    $('#forAnotherBatch').click(function(){
+        // pageCode = 0;
+        $('.daFont font').removeClass('ft1');
+        $('.daFont font:first-child').addClass('ft1');
+        pageCode++;
+        console.log(pageCode);
+        if(pageCode==newArray.length){
+            pageCode--;
+            $toast.show('请点击搜索查找更多数据');
+            $('.daFont font').removeClass('ft1');
+            return false;
+        }else{
+            iteratorNumberCode(pageCode);
+        } 
+    })
+             
+    
+    var searchTypes = '';
+    function myFunction() {
+        var input= $('#myInput').val();
+        $('.daFont font').removeClass('ft1');
+        $('.daFont font:first-child').addClass('ft1');
+        if(input.length>=4){
+            searchTypes = '02'
+        }else{
+            searchTypes = ''
+        }
+        searchPhone(input)
+    }
+    function searchPhone(searchValue){
+        if(localStorage.getItem('provinceCodes')){
+            var numberProvince=localStorage.getItem('provinceCodes')
+        }else{
+            var numberProvince=proviceCode;
+        }
+        if(localStorage.getItem('cityCodes')){
+            var NumberCity=localStorage.getItem('cityCodes')
+        }else{
+            var NumberCity=cityCode;
+        }
+        var goosId=$('#goosId').val();
+        $('.lodaing').show();
+        $.ajax({
+            type:"POST",
+            url: geturl()+"/api/card/preOrder/selectionNumber",
+            //url: "http://wlcx-provider.chinat5.com/api/card/preOrder/selectionNumber",
+            data:{
+                provinceCode:numberProvince,
+                cityCode:NumberCity,
+                goodsId: goosId,
+                searchType: searchTypes,
+                searchValue:searchValue,
+            },
+            success:function(body){
+                if(body.rspCode!=0){
+                    if(body.rspCode=='T1'){
+                        $('.lodaing').hide();
+                        $toast.show('没有查询到号码');
+                        $("#selectPhoneNumber").empty();
+                    }else if(body.rspCode=='T9'){
+                        $('.lodaing').hide();
+                        $toast.show(body.rspDesc);
+                        $("#selectPhoneNumber").empty();
+                    }else{
+                        $('.lodaing').hide();
+                        $toast.show(body.rspDesc);
+                        $("#selectPhoneNumber").empty();
+                        $('.serShow').hide();
+                        $('.noData').show();
+                        $('.huan').hide();
+                    }    
+                }else{
+                    $('.lodaing').hide();
+                    pageCode = 0;
+                    $('#mo').show();
+                    var array=body.body.numArray;
+                    var splitLen = body.body.splitLen;
+                    if(newArray.length>0){
+                        newArray=[];
+                    }
+                    let splitIndex= 0;
+
+                    var tempArray=[];
+                    for(splitIndex;splitIndex<array.length;splitIndex++){
+                        if(splitIndex%splitLen==0){
+                            tempArray.push(array[splitIndex]);
+                        }
+                    }
+                    let i = 0;
+                    var ii = 0;
+                    var temp = [];
+                    
+                    for(i;i<tempArray.length;i++){
+                            ii = ii+1;
+                            if(ii%10==0){
+                                temp.push(tempArray[i]);  
+                                newArray.push(temp);
+                                temp = [];
+                            }else{
+
+                                temp.push(tempArray[i]);
+                            }
+                                                            
+                    }
+                    if(newArray.length<10){
+                        newArray.push(temp);
+                    }
+                    if(newArray.length>0){
+                        iteratorNumberCode(0);
+                    }
+                    $('.phone-data').bind('click',function(){
+                        $('#real').text($(this).text())
+                        $('#mo').hide();
+                    });
+                }
+                
+            }
+        })
+    }
+    // 立即提交接口
+    function submit(){  
+        var provinceWhere=proCode
+        var postCityCode=citCode
+        var postDistrictCode=couCode
+        var certName=$('#nameValue').val();
+        var certNo=$('#idCardNoValue').val();
+        var contactNum=$('#phoneValue').val();
+        var merNodata = 'thU+NIRYI0skxSIr3zqZUeZLsYJ8Yn93EL7NlCodT69by5lj6xbDJD+TLUFSBABMiRtFBWaRXJtU\r\nlgC6VPJKfnvxYebnMFxWHfwl0VhzKMU=';
+        if(localStorage.getItem('provinceCodes')){
+            var numberProvince=localStorage.getItem('provinceCodes')
+        }else{
+            var numberProvince= proviceCode
+        }
+        if(localStorage.getItem('cityCodes')){
+            var NumberCity=localStorage.getItem('cityCodes')
+        }else{
+            var NumberCity=cityCode
+        }
+        var testMsg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9X]$/;
+        var phoneMsg = /^(13[0-9]\d{8}|15[0-9]\d{8}|17[0-9]\d{8}|18[0-9]\d{8})$/;
+        var phoneNum=$("#real").text()
+        var goosId=$('#goosId').val()
+        var postAddr=$('#detailedAddress').val();
+        var str=location.href; //取得整个地址栏
+        var num=str.indexOf("#") 
+        if(str.substr(num+1)==''){
+            alert('非法请求')
+        }else{
+            str=str.substr(num+1);
+            var nameValue = $('#nameValue').val();
+            if(!$("#Address").text() || $("#Address").text() =='请选择省/市/区'){
+                $toast.show('请选择省/市/区');
+                return false;
+            }else if(!$('#detailedAddress').val()){
+                $toast.show('请填写详细地址');
+                return false;
+            }else if(!phoneMsg.test($('#phoneValue').val())){
+                var goosId=$('#goosId').val();
+                $toast.show('联系电话格式有误！请重新输入');
+                return false;         
+            }else if(!(/^[\u4E00-\u9FA5]{2,4}$/.test(nameValue))){
+                $toast.show('姓名格式有误！请重新输入');
+                return false;
+            }else if(!testMsg.test($('#idCardNoValue').val())){
+                $toast.show('身份证号码格式有误');
+                return false;
+            }else if(!numberProvince){
+                $toast.show('请选择号码归属地');
+                return false;
+            }else if(!goosId){
+                $toast.show('请选择套餐');
+                return false;
+            }else if(!$("#real").text() || $("#real").text()=="请选择号码"){
+                $toast.show('请选择号码');
+                return false;
+            }else{
+                $('.lodaing').show();
+                $.ajax({
+                    type:"POST",
+                    url: geturl()+"/api/card/preOrder/subOrder",
+                    data:{
+                        "goodsId":goosId,
+                        "provinceCode":numberProvince,
+                        "cityCode":NumberCity,
+                        "phoneNum":phoneNum,
+                        "certName":certName,
+                        "certNo":certNo,
+                        "contactNum":contactNum,
+                        "postProvinceCode":provinceWhere,
+                        "postCityCode":postCityCode,
+                        "postDistrictCode":postDistrictCode,
+                        "postAddr":postAddr,
+                        "refererOrderId": channelAppid,
+                        "merchantReferrerCode": localStorage.getItem('merchantIdswd') || merNodata, 
+                    },
+                    success:function(data){
+                        if(data.rspCode == 0){
+                            $('.lodaing').hide();
+                            var phoneNum=data.body.phoneNum
+                            var goodsName=data.body.goodsName
+                            var applyOrderUrl=data.body.applyOrderUrl
+                            localStorage.setItem('phoneNum', phoneNum);
+                            localStorage.setItem('goodsName', goodsName);
+                            localStorage.setItem('applyOrderUrl', applyOrderUrl);
+                            window.location.href="./successfulApplication.html?";
+                        }else{
+                            $('.lodaing').hide();
+                            $toast.show(data.rspDesc);
+                        }
+                    },
+                    error:function(err){
+                        $('.lodaing').hide();
+                    }
+                })
+            }
+        }
+    }
+
+    
+</script>
+</html>

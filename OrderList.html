@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>开卡管理</title>
+
+    <style type="text/css">
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      html{
+        font-size: 16px;
+      }
+      i,em{
+        font-style: normal;
+      }
+      #box{
+        width: 92%;
+        background: #fff;
+        padding: 15px 4%;
+      }
+      .toplist{
+        width: 96%;
+        padding: 10px 2% 20px 2%;
+        background: #fff;
+        box-shadow: 0 2px 6px 2px rgba(160,160,160,0.12);
+      }
+      .toplist_span{
+        color: #14BB95;
+        margin-right: 5px;
+      }
+      .top{
+        font-size: 0.875rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .sec{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+        align-items: center;
+      }
+      .sec span{
+        width: 80%;
+        border: 1px dashed #14BB95;
+        height: 16px;
+        border-radius: 20px;
+      }
+      .sec span{
+        width: 80%;
+        border: 1px dashed #14BB95;
+        height: 16px;
+        border-radius: 20px;
+        display: flex;
+        position: relative;
+      }
+      .sec span.sp1{
+        border: 1px dashed #8D72EF;
+      }
+      .sec span i{
+        height: 18px;
+        border-radius: 20px;
+        background: #14BB95;
+        margin-top: -1px;
+        margin-left: -1px;
+        font-size: .625rem;
+      }
+      .sec span em{
+        color: #fff;
+        line-height: 16px;
+        font-size: .625rem;
+        position: absolute;
+        left: 1%;
+        top: 0;
+      }
+      .sec span i.i1{
+        background: #7553EC;
+
+      }
+      .sec font{
+        border-radius:13px;
+        border:1px solid rgba(245,175,81,1);
+        font-size: .625rem;
+        height: 16px;
+        padding: 0 8px;
+        line-height: 16px;
+        color: #F5AF51;
+      }
+      .kh{
+        font-size: .812rem;
+      }
+      .kh font{
+        margin-right: 5px;
+      }
+      .topcon{
+        margin-top: 20px;
+      }
+      .mbott{
+        margin-top: 15px;
+      }
+      .top_font{
+        background: #F5AF51;
+        color: #fff;
+        padding: 2px 10px;
+        font-size: 14px;
+        font-weight: normal;
+        border-radius: 2px;
+      }
+    </style>
+</head>
+<body> 
+   <div id="box">
+        <div class="toplist">
+            <div class="top"><section>总订单数：<span class="toplist_span"></span>个订单</section><font class="top_font">退出</font></div>
+            <div class="wx-pinpai"></div>
+        </div> 
+        <div class="toplist mbott">
+            <div class="top">套餐占比</div>
+            <div class="tcan"></div>
+        </div>                               
+   </div>
+</body>
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src='./js/environment.js'></script>
+<script type="text/javascript">
+    if(localStorage.getItem('token') && localStorage.getItem('merchantId')){
+       orderList();
+    }else{
+      location.href='loginPage.html'
+    }
+    
+    function orderList(){
+
+      $.ajax({
+          url: geturl()+"/api/card/statistics",
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "token": localStorage.getItem('token')
+          },
+          data:{
+            merchantId:localStorage.getItem('merchantId')
+          },
+          dataType:"json",
+          type:"post", 
+          success:function(res){
+              var reshtml = '';
+              var reshtmlt = '';
+              if(res.rspCode=="1001"){
+                 location.href='loginPage.html'  //登录失效请重新登录
+              }
+              if(res.rspCode==0){
+                  for(var i=0; i<res.body.state.length; i++) {
+                      var tWidth = res.body.state[i].nums/res.body.total*100 + '%';
+                      reshtml += '<div class="topcon"><span class="kh">'+res.body.state[i].mark+'：<font>'+res.body.state[i].nums+'</font>张</span><section class="sec"><span><i style="width: '+tWidth+';" id='+res.body.state[i].nums+'></i><em>'+res.body.state[i].nums+'</em></span><font onclick="checkdetail('+res.body.state[i].state+')">详情</font></section></div>';
+                      
+                      
+                      
+                }
+                $('.wx-pinpai').html(reshtml);
+                for(var i=0; i<res.body.meal.length; i++) {
+                      var tWidths = res.body.meal[i].nums/res.body.total*100 + '%';
+                      reshtmlt += '<div class="topcon"><span class="kh">'+res.body.meal[i].goodsName+'</span><section class="sec"><span class="sp1"><i class="i1" style="width: '+tWidths+';"></i><em>'+res.body.meal[i].nums+'</em></span><font onclick="checkdetails('+res.body.meal[i].goodsId+')">详情</font></section></div>';
+                      
+                }
+                $('.tcan').html(reshtmlt);
+                $('.toplist_span').text(res.body.total)
+              }else{
+                
+              }
+          },
+          complete:function(){
+
+          },
+          error:function(){
+              
+          }
+      })
+    }
+    $('.top_font').click(function(){
+      localStorage.setItem('token', '') 
+      localStorage.setItem('merchantId', '')
+      location.href='loginPage.html'
+    })
+    function checkdetail(t){
+      console.log(t)
+      localStorage.setItem('state', t);
+      localStorage.setItem('cardMealId', '');
+      location.href="OrderDetail.html"
+    }
+    function checkdetails(t){
+      localStorage.setItem('state', '');
+      localStorage.setItem('goodsId', t);
+      if(localStorage.getItem('goodsId')=='982003109153'){
+        localStorage.setItem('cardMealId', 1);
+      }else if(localStorage.getItem('goodsId')=='982003109149'){
+        localStorage.setItem('cardMealId', 2);
+      }else if(localStorage.getItem('goodsId')=='982003109150'){
+        localStorage.setItem('cardMealId', 3);
+      }else{
+        localStorage.setItem('cardMealId', 4);
+      }
+
+      console.log(t)
+      location.href="OrderDetail.html"
+    }
+</script>
+</html>

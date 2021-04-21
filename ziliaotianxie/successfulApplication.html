@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>申请结果</title>
+</head>
+<style type="text/css">
+    .adbox{
+        width: 100%;
+        position: relative;
+        margin-top: -20px;
+    }
+    .boxKa{
+        width: 100%;
+        position: relative;
+    }
+    .adbox img{
+        width: 100%;
+    }
+    .adbox img.img2{
+        width: 75px!important;
+        height: 20px!important;
+        position: absolute;
+        left: 20px;
+        bottom: 10px;
+
+    }
+    #animats{
+        animation:mymove 3s infinite;
+        -webkit-animation:mymove 3s infinite; /*Safari and Chrome*/
+        animation-direction:alternate;/*轮流反向播放动画。*/
+        animation-timing-function: ease-in-out; /*动画的速度曲线*/
+        /* Safari 和 Chrome */
+        -webkit-animation:mymove 3s infinite;
+        -webkit-animation-direction:alternate;/*轮流反向播放动画。*/
+        -webkit-animation-timing-function: ease-in-out; /*动画的速度曲线*/
+    }
+    @keyframes mymove{
+        0%{
+        transform: scale(.9);  /*开始为原始大小*/
+        }
+        25%{
+            transform: scale(1); /*放大1.1倍*/
+        }
+        50%{
+            transform: scale(.9);
+        }
+        75%{
+            transform: scale(1);
+        }
+
+    }
+    .imgka{
+        width: 100%;
+        display: block;
+    }
+    .ndeng{
+        width: 17px;
+        height: 17px;
+        margin-right: 5px;
+    }
+    .spandeng{
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        color: #666;
+    }
+    .backgrond{
+        width: 98%;
+        background: #F3F3F3;
+        padding: 6px 0 6px 2%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0;
+    }
+    .backgrond div{
+        width: 74%;
+        font-size: 12px;
+        color: #666;
+        align-items: center;
+    }
+    .str_wrap {
+        overflow:hidden;
+        width:100%;
+        font-size:12px;
+        position:relative;
+        -moz-user-select: none;
+        user-select: none;  
+        white-space:nowrap;
+    }
+
+    .str_wrap.str_active {
+        background:#f1f1f1;
+    }
+    .str_move { 
+        white-space:nowrap;
+        position:absolute; 
+        top:0; 
+        left:0;
+        cursor:move;
+    }
+    .str_move_clone {
+        display:inline-block;
+        vertical-align:top;
+        position:absolute; 
+        left:100%;
+        top:0;
+    }
+    .str_vertical .str_move_clone {
+        left:0;
+        top:100%;
+    }
+    .str_down .str_move_clone {
+        left:0;
+        bottom:100%;
+    }
+    .str_vertical .str_move,
+    .str_down .str_move {
+        white-space:normal;
+        width:100%;
+    }
+    .str_static .str_move,
+    .no_drag .str_move,
+    .noStop .str_move{
+        cursor:inherit;
+    }
+    .conpoxboxs{
+        width: 94%;
+        padding: 0 3%;
+    }
+    .xq{
+        width: 100%;
+    }
+    .xspanbox{
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        color: #333;
+    }
+    .xspan{
+        width: 3px;
+        height: 12px;
+        background: linear-gradient(180deg, #FD7979 0%, #FF8430 100%);
+        border-radius: 2px;
+        margin-right: 5px;
+    }
+    .tcbox{
+        width: 100%;
+        margin-top: 10px;
+        background: url(../img/bgc.png) no-repeat left bottom;
+        background-size: 100%;
+        padding-bottom: 40px;
+    }
+    .tcbox section{
+        width: 100%;
+        display: flex;
+        font-size: 12px;
+        background: #fff;
+        border-bottom: .5px solid rgba(236,236,236,.8);
+    }
+    .tcbox section:last-child{
+        border-bottom: none;
+    }
+    .tcbox section article{
+        width: 50%;
+        display: flex;
+        align-items: center;
+    }
+    .tcbox section article i{
+        background: #f3f3f3;
+        width: 36%;
+        padding: 6px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-style: normal;
+    }
+    .tcbox section article p{
+        width: 60%;
+        text-align: center;
+        padding: 0 2%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .tcbox section span{
+        background: #f3f3f3;
+        width: 18%;
+        padding: 6px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .tcbox section font{
+        font-size: 10px;
+        width: 80%;
+        padding: 5px 0;
+        padding-left: 2%;
+        color: #333;
+    }
+    .tipsbox{
+        width: 100%;
+        display: flex;
+        margin-top: -15px;
+    }
+    .tipsbox img{
+        width: 17px;
+        height: 17px;
+        margin-right: 10px;
+        font-size: 12px;
+    }
+    .tipsbox p{
+        font-size: 12px;
+        color: #666;
+    }
+    .backBtn{
+        position: absolute;
+        left: 0;
+        top: 10px;
+        display: none;
+    }
+    .backBtn img{
+        width: 73px;
+        height: 25px;
+    }
+</style>
+<body>
+    <div class="boxKa">
+        <img src="../img/nban.png" class="imgka" />
+        <div class="backBtn" onclick="gotoShop()"><img src="../img/ssbtn.png" /></div>
+        <div class="conpoxboxs">
+            <div class="backgrond">
+                <span class="spandeng">
+                    <img src="../img/ndeng.png" class="ndeng" />温馨提示：
+                </span>
+                <div class="str_wrap str5">亲爱的沃卡小主，系统已赠送1万元补贴券和一份价值50万一年的意外保险，收到卡后即可领取！</div>
+            </div>
+            <div class="xq">
+                <div class="xspanbox"><span class="xspan"></span>手机卡详情</div>
+                <div class="tcbox">
+                    <section>
+                        <span>手机号</span>
+                        <font id="phone"></font>
+                    </section>
+                    <section>
+                        <span>套餐</span>
+                        <font id="taocan"></font>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="adbox">
+            <img src="../img/nad.png" />
+            <img src="../img/nino.png" class="img2" id="animats" onclick="showShare()" />
+        </div>
+        <div class="conpoxboxs">
+            <div class="xq">
+                <div class="xspanbox" style="margin-top: 20px;"><span class="xspan"></span>投保信息（赠送）</div>
+                <div class="tcbox">
+                    <section>
+                        <article>
+                            <i>被保人</i>
+                            <p class="beibaoren"></p>
+                        </article>
+                        <article>
+                            <i>投保人</i>
+                            <p class="toubaoren"></p>
+                        </article>
+                    </section>
+                    <section>
+                        <article>
+                            <i>保费</i>
+                            <p class="baofei"></p>
+                        </article>
+                        <article>
+                            <i>保额</i>
+                            <p class="baoe"></p>
+                        </article>
+                    </section>
+                    <section>
+                        <article>
+                            <i>年限</i>
+                            <p class="nianxian"></p>
+                        </article>
+                        <article>
+                            <i>投保时间</i>
+                            <p class="shijian"></p>
+                        </article>
+                    </section>
+                </div>
+            </div>
+            <div class="tipsbox">
+                <img src="../img/nicon.png" />
+                <p class="infoBx"></p>
+            </div>
+        </div>
+        <div class="mask">
+            <div class="jtbox">
+                <img src="../img/jt.png" class="imgs0" />
+                <img src="../img/tk.png" class="imgs1" />
+                <img src="../img/close.png" class="imgs2" />
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+<script src='../js/environment.js'></script>
+<script src='../js/toast.js'></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/jquery.liMarquee.js"></script>
+<script>
+    $('.str5').liMarquee({  
+        hoverstop: false
+    });
+    var ua = navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+        //ios的ua中无miniProgram，但都有MicroMessenger（表示是微信浏览器）
+        wx.miniProgram.getEnv((res)=>{
+           if (res.miniprogram) {
+            $('.mask').hide();
+               console.log("在小程序里");
+            $('.backBtn').show()
+           } else {
+               console.log("不在小程序里");
+           }
+        })
+    }else{
+        console.log('不在微信里');
+    }
+    function gotoShop(){
+        //switchTab
+        //navigateTo
+        wx.miniProgram.switchTab({
+    　　　　url: '/pages/user/User/index',
+    　　});
+    }
+    var dataIns = JSON.parse(localStorage.getItem('insurance'))
+    $('#phone').text(localStorage.getItem('phoneNum'));
+    $('#taocan').text(localStorage.getItem('goodsName'));
+    $('.beibaoren').text(dataIns.name);
+    $('.toubaoren').text(dataIns.policyHolder);
+    $('.baofei').text(dataIns.permium + '元');
+    $('.baoe').text(dataIns.insuredAmount + '万');
+    $('.nianxian').text(dataIns.year + '年');
+    $('.shijian').text(dataIns.startDate);
+    $('.infoBx').text(dataIns.remark);
+    $('.imgs2').click(function(){
+        $('.mask').hide();
+    })
+    var dataStr = window.location.href.split('#')[0]
+    function showShare(){
+        $('.mask').show();
+    }
+    share();
+    function share(){
+        $.ajax({
+           type: 'GET',
+           url: geturl()+'/api/wx/wxSignature?url='+ dataStr,
+           success: function(res){
+              if(res.rspCode==0){
+                 wx.config({
+                  debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                  appId: res.body.appId, // 必填，公众号的唯一标识
+                  timestamp: res.body.timestamp, // 必填，生成签名的时间戳
+                  nonceStr: res.body.nonceStr, // 必填，生成签名的随机串
+                  signature: res.body.signature,// 必填，签名
+                  jsApiList: ['updateAppMessageShareData','updateTimelineShareData'] // 必填，需要使用的JS接口列表
+                });
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                    wx.checkJsApi({ // 判断当前客户端版本是否支持指定JS接口
+                    jsApiList: [
+                      'updateAppMessageShareData',    // 分享到朋友圈接口
+                      'updateTimelineShareData',
+                    ],
+                    success: function (res) { // 以键值对的形式返回，可用true，不可用false。如：{"checkResult":{"scanQRCode":true},"errMsg":"checkJsApi:ok"}
+                      //分享给朋友
+                        wx.updateAppMessageShareData({ 
+                            title: '全民话费疯狂砍降到0元，嗨到爆', // 分享标题
+                            desc: '分享给别人就能赚取高额话费，返现金额满50元可提现', // 分享描述
+                            link: localStorage.getItem('applyOrderUrl'), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: 'http://wx.chinat5.com/img/share.png', // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        }) 
+                        //分享到朋友圈
+                        wx.updateTimelineShareData({ 
+                            title: '全民话费疯狂砍降到0元，嗨到爆', // 分享标题
+                            link: localStorage.getItem('applyOrderUrl'), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: 'http://wx.chinat5.com/img/share.png', // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        })
+                    },
+                    fail: function (res) { // 检测getNetworkType该功能失败时处理
+                      
+                    }
+                  })
+                  
+                });
+              }else{
+                $toast.show(res.rspDesc);
+              }
+           },
+           error: function(res){
+                
+           },
+       })
+        
+    }
+    
+    
+</script>
+<style>
+    *{
+        padding: 0%;
+        margin: 0%;
+    }
+    html{
+        /*font-size: 16px;*/
+    }
+    .btnStnClass{
+        width: 11.95rem;
+        height: 2.05rem;
+        background: #f2f2f2;
+        border-radius:1.2rem;
+        font-size: 1rem;
+        color: rgba(29,192,124,1);
+        text-align: center;
+        line-height: 2.05rem; 
+        margin: 2.5rem auto 0 auto;
+        border:1px solid #e1e1e1;
+        display: none;
+    }
+    .mask{
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .jtbox{
+        width: 276px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .imgs1{
+        width: 276px;
+    }
+    .imgs0{
+        width: 70px;
+        position: absolute;
+        right: -20px;
+        top: -100px;
+    }
+    .imgs2{
+        width: 34px;
+        margin-top: 30px;
+    }
+    .box {
+        height: 100vh;
+        width: 100%;
+        background: rgba(102, 102, 102, 1);
+    }
+
+    .title {
+        height: 2.8rem;
+        background: #F7F7F7;
+        /* font-family: MicrosoftYaHei; */
+        color: rgba(102, 102, 102, 1);
+        padding: 0 0 0 0.75rem;
+        font-size: 1rem;
+        line-height: 2.8rem;
+    }
+    .title>img{
+        width: 0.76rem;
+        height: 1rem;
+        margin-top: 0.9rem;
+        margin-right: 0.7rem;
+    }
+    .boxBrn{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .sqcg{
+        margin-top: 2.5rem;
+        width: 11.95rem;
+        height: 2.05rem;
+        background:linear-gradient(90deg,rgba(43,187,137,1) 0%,rgba(29,192,124,1) 100%);
+        box-shadow:0px 2px 4px 0px rgba(16,164,105,0.73);
+        border-radius:1.2rem;
+        font-size: 1rem;
+        color: #FFFFFF;
+        text-align: center;
+        line-height: 2.05rem;
+    }
+    .phone{
+        width:100%;
+        height: 0.85rem;
+        margin-top: 1.1rem;
+        display: flex;
+        justify-content: center;
+    }
+    .phone>span:nth-of-type(1){
+        font-size: 0.8rem;
+        color: #333333;
+    }
+    .phone>span:nth-of-type(2){
+        font-size: 0.8rem;
+        color: #333333;
+    }
+    .taocan{
+        width: 80%;
+        height: 1.7rem;
+        margin-top: .8rem;
+        padding: 0 10%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .taocan>span:nth-of-type(1){
+        font-size: 0.7rem;
+        color: #333333;
+        font-weight: 600;
+    }
+    .taocan>span:nth-of-type(2){
+        width: 85%;
+        font-size: 0.7rem;
+        color: #333333;
+        text-align: center;
+        line-height: 1rem;
+    }
+</style>
+</html>

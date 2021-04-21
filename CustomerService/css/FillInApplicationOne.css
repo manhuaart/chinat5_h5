@@ -1,0 +1,188 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-size: 0.16rem;
+}
+/* 当页面小于768px的时候执行它下面的CSS */
+@media screen and (max-width: 960px){
+        body{
+            font-size:20px;
+        }
+    }
+    /* 当浏览器尺寸大于960px时候 */
+    @media screen and (min-width:960px){
+        body{
+            font-size:30px;
+        }
+        #bind-woCard{
+            margin:0 auto;
+            width:960px;
+        }   
+    }
+    /* 当浏览器尺寸大于1200px时候 */
+    @media screen and (min-width:1200px){
+        body{
+            font-size:10px;
+        }
+        #bind-woCard{
+            margin:0 auto;
+            width:1000px;
+            /* background: pink; */
+        }   
+    }
+    /* ----------------------------------- */
+.process{
+    margin: 0 auto;
+    width: 3.5rem;
+    height: 100%;
+}
+.processone{
+    height: 0.37rem;
+}
+.processone>p:nth-of-type(1){
+    margin-top: -0.06rem;
+    font-size: 0.14rem;
+    color: #333333;
+}
+.processone>p:nth-of-type(2){
+    margin-top: 0.05rem;
+    font-size: 0.09rem;
+    color: #BABABA;
+}
+/* 进度条 */
+/* 创建步骤数字计数器 */
+.steps {
+    width: 3.5rem;
+    margin: 0 auto;
+    position: relative;
+    margin-bottom:0.3rem;
+    counter-reset: step; 
+    background:#fff;
+    margin :0.05rem 0;
+    overflow: hidden;
+    margin-top: 0.25rem;
+    /* margin-left: -0.5rem; */
+}
+ 
+/* 步骤描述 */
+.steps li {
+    list-style-type: none;
+    font-size: 0.09rem;
+    text-align: center;
+    width: 33%;
+    position: relative;
+    float: left;
+    height:0.4rem;
+    /* line-height :0.4rem; */
+    padding :0.1rem 0;
+}
+/* 步骤数字 */
+.steps li:before {
+    display: block;
+    content: counter(step); /* 设定计数器内容 */
+    counter-increment: step; /* 计数器值递增 */
+    width: 0.1rem;
+    height: 0.1rem;
+    background-color:#ccc;
+    line-height: 0.1rem;
+    border-radius: 0.1rem;
+    font-size: 0;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    margin: 0 auto 0.09rem auto;
+}
+ 
+/* 连接线 */
+.steps li ~ li:after {
+    content: '';
+    width: 100%;
+    height: 0.03rem;
+    background-color:#ccc;
+    position: absolute;
+    left: -48%;
+    top: 0.14rem;
+    z-index: 0; 
+}
+/* 将当前/完成步骤之前的数字及连接线变绿 */
+.steps li.active:before, .steps li.active:after {
+    background-color:#6fb1bd;
+}
+.phonecon{
+    width: 3.5rem;
+    margin: 0 auto;
+}
+.phonecon>p{
+    font-size: 0.14rem;
+    color: #333333;
+}
+.phonecon>.phone{
+    display: flex;
+    margin-top: 0.21rem;
+    border-bottom: solid 0.5px #D8D8D8;
+    padding-bottom: 0.1rem;
+}
+.phonecon>.phone>img{
+    width: 0.11rem;
+    height: 0.15rem;
+    margin-right: 0.13rem;
+}
+.phonecon>.phone>p{
+    margin-right: 0.38rem;
+    font-size: 0.12rem;
+    color: #666666;
+}
+.phonecon>.phone>input{
+    width: 1.5rem;
+    font-size: 0.1rem;
+    color: #B3B3B3;
+    border: none;
+}
+.suocopy{
+    border-bottom: solid 0.5px #D8D8D8;
+    padding-bottom: 0.12rem;
+    display: flex;
+}
+.suocopy>img{
+    margin-top: 0.17rem;
+    width: 0.10rem;
+    height: 0.13rem;
+    margin-right: 0.13rem;
+}
+.suocopy>p{
+    margin-top: 0.16rem;
+    margin-right: 0.38rem;
+    font-size: 0.12rem;
+    color: #666666;
+}
+.suocopy>input{
+    margin-top: 0.16rem;
+    width: 1.5rem;
+    font-size: 0.1rem;
+    color: #B3B3B3;
+    border: none;
+}
+.suocopy>button{
+    margin-top: 0.11rem;
+    width: 0.9rem;
+    height: 0.22rem;
+    border: solid 1px #B3B3B3;
+    font-size: 0.09rem;
+    color: #B3B3B3;
+    background: #ffffff;
+    margin-left: 0.13rem;
+}
+.btn{
+    position: absolute;
+    font-size: 0.14rem;
+    color: #FFFFFF;
+    margin-top: 0.28rem;
+    bottom: 0.18rem;
+    width: 3.5rem;
+    height: 0.48rem;
+    background:linear-gradient(90deg,rgba(43,187,137,1) 0%,rgba(29,192,124,1) 100%);
+    border-radius:5px;
+    border: none;
+}

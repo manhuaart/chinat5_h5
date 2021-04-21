@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding:0;
+    font-family: "Microsoft YaHei";
+    background: none;
+}
+body{
+    background:#0f103b;  
+}  
+#app {
+    /* background: plum; */
+    -webkit-overflow-scrolling: touch; /*使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建一个新的堆栈上下文 */
+    line-height: normal;
+    font-size: .32rem;
+    font-family: PingFangSC-Regular, -apple-system-font, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif
+}
+#bind-woCard{
+    position: relative;
+    margin: 0 auto;
+    width: 9.99rem;
+    text-align: left;
+} 
+#bind-woCard>img{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+} 
+.img1{
+    width: 100%;    
+}
+body {
+    max-width: 10.24rem;
+    margin: 0 auto
+}
+html { font-size: 10vw }
+@media screen and (min-width:768px){
+    html {
+        font-size: 76.8px
+    }
+} 
+.input_name{
+    height:0.64rem;
+    width:5.8rem;
+    position: absolute;
+    bottom: 10.45rem;
+    left:2.61rem;
+    border: none;
+    outline: none;
+    font-size:0.45rem;     
+}
+.input_number{
+    height:0.64rem;
+    width:5.8rem;
+    position: absolute;
+    bottom: 8.89rem;
+    left:2.61rem;
+    border: none;
+    outline: none;
+    font-size:0.45rem;     
+}
+.input_email{
+    height:0.64rem;
+    width:5.8rem;
+    position: absolute;
+    bottom: 7.39rem;
+    left:2.61rem;
+    border: none;
+    outline: none;
+    font-size:0.45rem;     
+}
+.input_message{
+    height:0.64rem;
+    width:5.8rem;
+    position: absolute;
+    bottom: 4.19rem;
+    left:2.61rem;
+    border: none;
+    outline: none;
+    font-size:0.45rem;     
+} 
+.submit>img{
+    height:1.55rem;
+    width:7.16rem;
+    position: absolute;
+    bottom: 1.46rem;
+    left:1.42rem;
+} 

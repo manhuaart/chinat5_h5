@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>兑换结果</title>
+    <script src="./js/rem.js"></script>
+    <link rel="stylesheet" href="./css/PersonalCenter.css">
+</head>
+<body>
+    <div class="succ">
+        <div class="succbox">
+            <span class="s1">提现成功！</span>
+            <span class="s2">预计3-5个工作日到账</span>
+            <span class="s3">兑换记录</span>
+        </div>
+    </div>
+</body>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/environment.js"></script>
+<script src="../js/toast.js"></script>
+<script type="text/javascript">
+    $('.s3').click(function(){
+        location.href = "./txRecord.html";
+    })
+</script>
+</html>

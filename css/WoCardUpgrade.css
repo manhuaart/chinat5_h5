@@ -1,0 +1,153 @@
+*{
+   margin: 0;
+   padding:0;
+   font-family: "Microsoft YaHei";
+}
+#change {
+  position: relative;
+  margin: 0 auto;
+  padding-top: 0.32rem;
+  width: 9.15rem;
+  text-align: left;
+}
+/* body,html{ overflow-x: hidden;溢出了元素的内容区-剪辑div元素的左/右边缘内容} */
+body {
+   max-width: 10.24rem;
+   margin: 0 auto
+}
+html { font-size: 10vw }
+@media screen and (min-width:768px){
+  html {
+      font-size: 76.8px
+  }
+}
+/* ----------------------------------- */
+#change>.picture{
+  width:100%;
+  height:4.83rem;
+  margin:0 auto;
+  border-radius:0.32rem;
+  /* margin-top: 0.5rem; */
+  background: url('../img/taocan.png') no-repeat;
+  background-size:100% 100%;
+  overflow:hidden
+}
+#change>.picture>.picture-tit{
+   font-size:0.48rem;
+   /* font-weight: 600; */
+   margin-left:0.50rem;
+   margin-top: 0.56rem;
+   color:#FFFFFF;
+}
+#change>.picture>.picture-tit2{  
+   margin-left:0.48rem;
+   margin-top: 0.56rem;
+}
+#change>.picture>.picture-tit2>.picture-tit2-bind{  
+   width:2.45rem;
+   height:0.85rem;
+   background:#FFFFFF;
+   border-radius:0.48rem;
+   font-size:0.32rem;
+   text-align: center;
+   line-height:0.88rem;
+}
+#change>.picture>.picture-tit2>.picture-tit2-bind>a{  
+   text-decoration:none;
+   color:#333333;
+   font-size:0.32rem;  
+   -webkit-tap-highlight-color: transparent;
+}
+#change>.picture>.picture-tit2>.picture-tit2-xq{  
+   color:#FFFFFF;
+}
+#change>.picture>.picture-tit2>.picture-tit2-xq>div{  
+   font-size:0.27rem;  
+   margin-top: 0.03rem;
+}
+#change>.picture>.picture-tit2>.picture-tit2-xq>div:nth-of-type(1){  
+   font-size:0.29rem;  
+}
+#change>.picture>.picture-tit2>.picture-tit2-xq>div:nth-of-type(2){  
+   margin-top: 0.25rem;
+}
+#change>.total-title{
+   width:100%;
+   height:1.5rem;
+   text-align: center;
+   line-height: 1.5rem; 
+   font-size:0.43rem;
+   color:#333333;
+}
+#change>.all-plan>.plan{
+   width:100%;
+   height:8.70rem;
+   margin-top: 0.31rem;
+   background:#FFFFFF;
+   border-radius:0.32rem;
+   box-shadow:0rem 0rem 0.12rem 0rem rgba(0,0,0,0.1);
+}
+#change>.all-plan>.plan:nth-of-type(1){
+   margin-top: 0;
+} 
+#change>.all-plan>.plan>.tou{
+   width:8.3rem;
+   height:1.4rem;
+   margin:0 auto;
+   display: flex;
+   justify-content: space-between;
+   border-bottom:0.03rem solid #D8D8D8;
+}
+#change>.all-plan>.plan>.tou>span:nth-of-type(1){
+   margin-top:0.56rem;
+   font-size:0.40rem;
+   color:#4FA7E6;
+}
+#change>.all-plan>.plan>.tou>span:nth-of-type(2){
+   margin-top:0.53rem;
+   font-size:0.39rem;
+   color:#FF0000;
+}
+.plan-xq{
+   width:8.3rem;
+   margin:0 auto;
+}
+.plan-xq>.xq:nth-of-type(1){
+   margin-top:0.45rem; 
+}
+.plan-xq>.xq:nth-of-type(1),
+.plan-xq>.xq:nth-of-type(2){
+   /* font-size:0.12rem; */
+   font-size:0.32rem; 
+}
+.plan-xq>.xq{
+  /*font-size:0.11rem; */
+  font-size:0.31rem;
+  margin-top: 0.15rem;
+} .plan-xq>.xq>span:nth-of-type(2){
+  margin-left:0.40rem;
+}
+.choose{
+  width:8.2rem;
+  height:0.98rem;
+  margin:0 auto;
+  font-size:0.35rem;
+  color: #FFFFFF;
+  margin-top:0.35rem;
+  background:linear-gradient(90deg,rgba(43,187,137,1) 0%,rgba(29,192,124,1) 100%);
+  border-radius:0.88rem; 
+  text-align: center;
+  line-height: 0.9rem;
+} 
+#change>.di{
+  width:100%;
+  height:1.39rem;  
+  text-align: center;  
+  font-size:0.25rem;
+  line-height:1.39rem;
+  color:#B3B3B3;
+}
+#change>.di>span:nth-of-type(2){
+  margin-left: 0.05rem;
+  margin-right: 0.05rem;
+}

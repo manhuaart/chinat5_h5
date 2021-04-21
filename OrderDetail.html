@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>开卡列表</title>
+    <link rel="stylesheet" href="./css/sm.css">
+    <style type="text/css">
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      html{
+        font-size: 16px;
+      }
+      i,em{
+        font-style: normal;
+      }
+      ul,li{
+        list-style: none;
+      }
+      #box{
+        width: 92%;
+        background: #fff;
+        padding: 15px 4%;
+      }
+      .boxbutton{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+      }
+      .active{
+        color: #14BB95!important;
+        border: none!important;
+      }
+      .content-block {
+          margin: 0!important;
+          padding: 0!important;
+          color: #6d6d72;
+          position: absolute;
+          left: 0;
+          top: 2.2rem;
+          width: 100%;
+       }
+       .content-block ul li{
+         width: 100%;
+         padding: 10px 0;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         background: #EDEDED;
+       }
+       .content-block ul li:nth-child(2n+2){
+         background: #fff;
+       }
+       .content-block ul li:nth-child(2n+2) font{
+         color: #F5AF51;
+       }
+       .content-block ul li:nth-child(4n+4) font{
+         color: #6B51F5;
+       }
+       .content-block ul li span{
+          width: 27%;
+          padding-left: 3%;
+          font-size: .75rem;
+       }
+       .content-block ul li font{
+          width: 65%;
+          padding-right: 3%;
+          color: #1EC07E;
+          font-size: .75rem;
+          text-align: right;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+       }
+       .button{
+        font-size: .75rem!important;
+        height: 2.4rem!important;
+        line-height: 2.4rem!important;
+        padding: 0 .4rem!important;
+       }
+       .slect{
+        width: 3.875rem;
+        height: 1.625rem;
+        background: url(./img/jian.png) no-repeat 2.8rem center rgba(247,247,247,1);
+        border-radius:4px;
+        border:1px solid rgba(216,216,216,1);
+        position: relative;
+        line-height: 1.625rem;
+        font-size: 0.75rem;
+        padding-left: .2rem;
+        color: #666;
+       }
+       .slkebix{
+        width: 4.075rem;
+        background:rgba(255,255,255,1);
+        border-radius:1px;
+        opacity:0.8661;
+        border:1px solid rgba(220,220,220,1);
+        position: absolute;
+        left: 0;
+        top: 1.625rem;
+        display: none;
+        z-index: 9999;
+       }
+       .buttons-tab{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 9999999;
+        width: 100%;
+       }
+       .filter-disabled {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .filter-box {
+            position: relative;
+        }
+
+        .filter-box select {
+            display: none;
+        }
+        .filter-boxs {
+            position: relative;
+            margin-right: 5px;
+        }
+
+        .filter-boxs select {
+            display: none;
+        }
+        .filter-text {
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            position: relative;
+            line-height: 1.625rem;
+            font-size: 0.75rem;
+            width: 4.875rem;
+            height: 1.625rem;
+            background:rgba(247,247,247,1);
+            border-radius:4px;
+            border:1px solid rgba(216,216,216,1);
+        }
+
+        .filter-text input {
+            font-size: 14px;
+        }
+
+        .filter-text .filter-title {
+            width: 100%;
+            height: 1.625rem;
+            line-height: 1.625rem;
+            border: 0;
+            background-color: transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 0.2rem;
+            cursor: pointer;
+            font-size: .75rem;
+            color: #666;
+        }
+        .filter-text .filter-titles {
+            width: 100%;
+            height: 1.625rem;
+            line-height: 1.625rem;
+            border: 0;
+            background-color: transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 0.2rem;
+            cursor: pointer;
+            font-size: .75rem;
+            color: #666;
+        }
+        .filter-list {
+            display: none;
+            width: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: 1.625rem;
+            left: 0;
+            z-index: 99;
+            border: 1px solid #e6e6e6;
+            overflow: auto;
+        }
+
+        .filter-list li.filter-null a {
+            color: #333!important;
+        }
+
+        .filter-list li a {
+            display: block;
+            padding: 0 10px;
+            line-height: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: .75rem;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            line-height: 1.25rem;
+        }
+
+        .filter-list li a:hover {
+            background-color: #aacc00;
+        }
+
+        .filter-list li.filter-selected {
+            background:linear-gradient(180deg,rgba(171,222,201,1) 0%,rgba(66,199,145,1) 100%);
+        }
+
+        .filter-list li.filter-selected a{
+            display: block;
+            color: #fff;
+        }
+
+        .filter-list li.filter-disabled {
+            background-color: #aacc00;
+        }
+
+        .filter-list li.filter-disabled a{
+            display: block;
+            color: #d2d2d2;
+        }
+
+        .filter-list li.filter-disabled:hover a {
+            cursor: not-allowed!important;
+            background-color: #fff;
+        }
+
+        .icon {
+            position: absolute;
+        }
+
+        .icon-filter-arrow {
+            width: 9px;
+            height: 6px;
+            background-repeat: no-repeat;
+            background-image: url(./img/jian.png);
+            background-size: 100%;
+            right: .3125rem;
+            top: .625rem;
+            transition: all .2s;
+        }
+
+        .icon-filter-arrow.filter-show {
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+        }
+
+        .filter-list::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        .filter-list::-webkit-scrollbar-track {
+            background: #fff 
+        }
+
+        .filter-list::-webkit-scrollbar-thumb {
+            background: #CBCBCB;
+        }
+        .infinite-scroll-preloader {
+          margin-top:-20px;
+        }
+        #main0 {
+          position:absolute;
+          top:0;
+          left:0px;
+          right:0px;
+          overflow:auto;
+          height: 92vh;
+        }
+        #list_box0 span{
+          color: #333;
+        }
+        #main1 {
+          position:absolute;
+          top:0;
+          left:0px;
+          right:0px;
+          overflow:auto;
+          height: 92vh;
+        }
+        #list_box1 span{
+          color: #333;
+        }
+        #main2 {
+          position:absolute;
+          top:0;
+          left:0px;
+          right:0px;
+          overflow:auto;
+          height: 92vh;
+        }
+        #list_box2 span{
+          color: #333;
+        }
+        #main3 {
+          position:absolute;
+          top:0;
+          left:0px;
+          right:0px;
+          overflow:auto;
+          height: 92vh;
+        }
+        #list_box3 span{
+          color: #333;
+        }
+        .tabbox{
+          display: flex;
+        }
+    </style>
+</head>
+<body> 
+   <div id="box">
+        <div class="content">
+            <div class="buttons-tab">
+              <div class="tabbox">
+                <!-- <a href="#tab1" class="tab-link active button" onclick="orderList()">已开户</a>
+                <a href="#tab2" class="tab-link button" onclick="orderList()">已激活</a>
+                <a href="#tab3" class="tab-link button" onclick="orderList()">未激活</a>
+                <a href="#tab4" class="tab-link button" onclick="orderList()">退单</a> -->
+              </div>
+                <div class="filter-box">
+                    <div class="filter-text">
+                        <input class="filter-title" type="text" readonly value="" placeholder="选套餐" />
+                        <i class="icon icon-filter-arrow"></i>
+                    </div>
+                    <select name="filter">
+                        <option value="1">尝鲜版</option>
+                        <option value="2">基础版</option>
+                        <option value="3">Plus版</option>
+                        <option value="4">至尊版</option>
+                    </select>
+                </div>
+                <div class="filter-boxs">
+                    <div class="filter-text">
+                        <input class="filter-title" type="text" readonly placeholder="选日期" />
+                        <i class="icon icon-filter-arrow"></i>
+                    </div>
+                    <select name="filter">
+                        <option value="1">近一天</option>
+                        <option value="2">近一周</option>
+                        <option value="3">近一月</option>
+                    </select>
+                </div>
+            </div>
+          <div class="content-block">
+            <div class="tabs">
+              <div id="tab0" class="tab">
+                <section id="main0">
+                    <ul id="list_box0"></ul>
+                </section>
+              </div>
+              <div id="tab1" class="tab">
+                <section id="main1">
+                    <ul id="list_box1"></ul>
+                </section>
+              </div>
+              <div id="tab2" class="tab">
+                <section id="main2">
+                    <ul id="list_box2"></ul>
+                </section>
+              </div>
+              <div id="tab3" class="tab">
+                <section id="main3">
+                    <ul id="list_box3"></ul>
+                </section>
+              </div>
+
+            </div>
+          </div>
+        </div>                             
+   </div>
+</body>
+
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src='./js/sm.min.js'></script>
+<script src='./js/environment.js'></script>
+<script type="text/javascript" src="./js/selectFilter.js"></script>
+<script type="text/javascript">
+    //本小插件支持移动端哦
+    
+    
+    var page = 1, //分页码
+    off_on = false, //分页开关(滚动加载方法 1 中用的)
+    timers = null; //定时器(滚动加载方法 2 中用的)
+    function orderList(t){
+      $.ajax({
+          url:geturl()+"/api/card/list",
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "token": localStorage.getItem('token')
+          },
+          data:{
+            page:t,
+            size: 20,
+            days: localStorage.getItem('days'),
+            merchantId: 1,
+            state: localStorage.getItem('state'),
+            cardMealId: localStorage.getItem('cardMealId'),
+            goodsId: localStorage.getItem('goodsId'),
+          },
+          dataType:"json",
+          type:"post", 
+          success:function(res){
+              if(res.rspCode=="1001"){
+                    location.href='loginPage.html'  //登录失效请重新登录
+              }
+              if(res.rspCode==0){
+                //导航菜单
+                var tabHtml = '';
+                for(var i=0; i<res.body.stateList.length;i++){
+                  tabHtml += '<a href="#tab'+i+'" class="tab-link button" id='+res.body.stateList[i].code+'>'+res.body.stateList[i].msg+'</a>';
+                }
+                $('.tabbox').html(tabHtml);
+                //导航默认选中
+                if(localStorage.getItem('state')==0){
+                  $('.tabbox a:first-child').addClass('active')
+                  $('#tab0').addClass('active')
+                  //列表数据
+                  if(res.body.pageObj.content.length>0){
+                    var dom = '';
+                    for (var i = 0; i < res.body.pageObj.content.length; i++) {
+                        dom += '<li id='+res.body.pageObj.content[i].id+'><span>'+res.body.pageObj.content[i].phone_number+'</span><font>'+res.body.pageObj.content[i].goods_name+'</font></li>';
+                    }
+                    $('#list_box0').append(dom);
+                    off_on = true; 
+                  }else{
+                    $.toast("亲没有内容了~");
+                  } 
+                }
+                else if(localStorage.getItem('state')==1){
+                  $('.tabbox a:nth-child(2)').addClass('active')
+                  $('#tab1').addClass('active')
+                  //列表数据
+                  if(res.body.pageObj.content.length>0){
+                    var dom1 = '';
+                    for (var i = 0; i < res.body.pageObj.content.length; i++) {
+                        dom1 += '<li id='+res.body.pageObj.content[i].id+'><span>'+res.body.pageObj.content[i].phone_number+'</span><font>'+res.body.pageObj.content[i].goods_name+'</font></li>';
+                    }
+                    $('#list_box1').append(dom1);
+                    off_on = true; 
+                  }else{
+                    $.toast("亲没有内容了~");
+                  } 
+                }else if(localStorage.getItem('state')==2){
+                  $('.tabbox a:nth-child(3)').addClass('active')
+                  $('#tab2').addClass('active')
+                  //列表数据
+                  if(res.body.pageObj.content.length>0){
+                    var dom2 = '';
+                    for (var i = 0; i < res.body.pageObj.content.length; i++) {
+                        dom2 += '<li id='+res.body.pageObj.content[i].id+'><span>'+res.body.pageObj.content[i].phone_number+'</span><font>'+res.body.pageObj.content[i].goods_name+'</font></li>';
+                    }
+                    $('#list_box2').append(dom2);
+                    off_on = true; 
+                  }else{
+                    $.toast("亲没有内容了~");
+                  } 
+                }else if(localStorage.getItem('state')==6){
+                  $('.tabbox a:last-child').addClass('active')
+                  $('#tab3').addClass('active')
+                  //列表数据
+                  if(res.body.pageObj.content.length>0){
+                    var dom3 = '';
+                    for (var i = 0; i < res.body.pageObj.content.length; i++) {
+                        dom3 += '<li id='+res.body.pageObj.content[i].id+'><span>'+res.body.pageObj.content[i].phone_number+'</span><font>'+res.body.pageObj.content[i].goods_name+'</font></li>';
+                    }
+                    $('#list_box3').append(dom3);
+                    off_on = true; 
+                  }else{
+                    $.toast("亲没有内容了~");
+                  } 
+                }else{
+                  console.log('state');
+                  if(localStorage.getItem('goodsId')=='982003109153'){
+                    $('.filter-title').val('尝鲜版');
+                  }else if(localStorage.getItem('goodsId')=='982003109149'){
+                    $('.filter-title').val('基础版');
+                  }else if(localStorage.getItem('goodsId')=='982003109150'){
+                    $('.filter-title').val('Plus版');
+                  }else{
+                    $('.filter-title').val('至尊版');
+                  }
+                  
+                }
+              }else{
+                $.toast('请求失败')
+              }
+          },
+          error:function(){
+              
+          }
+      })
+    }
+
+
+    //初始化， 第一次加载
+    $(document).ready(function() {
+        orderList(page)
+    });
+    //这里是初始化
+    $('.filter-box').selectFilter({
+        callBack : function (val){
+            localStorage.setItem('cardMealId', val);
+            $('#list_box0').html('');
+            $('#list_box1').html('');
+            $('#list_box2').html('');
+            $('#list_box3').html('');
+            orderList(page);
+        }
+    });
+    $('.filter-boxs').selectFilter({
+        callBack : function (val){
+            localStorage.setItem('days', val);
+            $('#list_box0').html('');
+            $('#list_box1').html('');
+            $('#list_box2').html('');
+            $('#list_box3').html('');
+            orderList(page);
+        }
+    });
+
+    $('.tabbox').on('click','a',function(){
+      var page = 1;
+      localStorage.setItem('state', $(this).attr('id'))
+      $('#list_box0').html('');
+      $('#list_box1').html('');
+      $('#list_box2').html('');
+      $('#list_box3').html('');
+
+      orderList(page);
+    })
+
+    $('#list_box0').on('click', 'li', function(){
+      localStorage.setItem('stateId', $(this).attr('id'))
+      location.href='OrderDetails.html'
+    })
+    $('#list_box1').on('click', 'li', function(){
+      localStorage.setItem('stateId', $(this).attr('id'))
+      location.href='OrderDetails.html'
+    })
+    $('#list_box2').on('click', 'li', function(){
+      localStorage.setItem('stateId', $(this).attr('id'))
+      location.href='OrderDetails.html'
+    })
+    $('#list_box3').on('click', 'li', function(){
+      localStorage.setItem('stateId', $(this).attr('id'))
+      location.href='OrderDetails.html'
+    })
+    //滚动加载方法2
+    $('#main0').scroll(function() {
+        //当时滚动条离底部60px时开始加载下一页的内容
+        if (($(this)[0].scrollTop + $(this).height() + 60) >= $(this)[0].scrollHeight) {
+            clearTimeout(timers);
+            //这里还可以用 [ 延时执行 ] 来控制是否加载 （这样就解决了 当上页的条件满足时，一下子加载多次的问题啦）
+            timers = setTimeout(function() {
+                page++;
+                console.log("第" + page + "页");
+                orderList(page); //调用执行上面的加载方法
+            }, 300);
+        }
+    });
+    $('#main1').scroll(function() {
+        //当时滚动条离底部60px时开始加载下一页的内容
+        if (($(this)[0].scrollTop + $(this).height() + 60) >= $(this)[0].scrollHeight) {
+            clearTimeout(timers);
+            //这里还可以用 [ 延时执行 ] 来控制是否加载 （这样就解决了 当上页的条件满足时，一下子加载多次的问题啦）
+            timers = setTimeout(function() {
+                page++;
+                console.log("第" + page + "页");
+                orderList(page); //调用执行上面的加载方法
+            }, 300);
+        }
+    });
+    $('#main2').scroll(function() {
+        //当时滚动条离底部60px时开始加载下一页的内容
+        if (($(this)[0].scrollTop + $(this).height() + 60) >= $(this)[0].scrollHeight) {
+            clearTimeout(timers);
+            //这里还可以用 [ 延时执行 ] 来控制是否加载 （这样就解决了 当上页的条件满足时，一下子加载多次的问题啦）
+            timers = setTimeout(function() {
+                page++;
+                console.log("第" + page + "页");
+                orderList(page); //调用执行上面的加载方法
+            }, 300);
+        }
+    });
+    $('#main3').scroll(function() {
+        //当时滚动条离底部60px时开始加载下一页的内容
+        if (($(this)[0].scrollTop + $(this).height() + 60) >= $(this)[0].scrollHeight) {
+            clearTimeout(timers);
+            //这里还可以用 [ 延时执行 ] 来控制是否加载 （这样就解决了 当上页的条件满足时，一下子加载多次的问题啦）
+            timers = setTimeout(function() {
+                page++;
+                console.log("第" + page + "页");
+                orderList(page); //调用执行上面的加载方法
+            }, 300);
+        }
+    });
+
+    
+
+
+</script>
+</html>

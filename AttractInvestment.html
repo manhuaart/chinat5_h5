@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1"">
+    <title>招商</title>
+    <link rel="stylesheet" href="./css/AttractInvestment.css">
+    <style type="text/css">
+    </style>
+</head> 
+<body>   
+<div id="app">
+    <div id="bind-woCard"> 
+        <img class="img1" src="./img/AttractInvestment.jpg" alt="">  
+        <a class="red1" style="color: red;">*</a><input type="text" class="input_name"  id="name" maxlength="20" />
+        <a class="red2" style="color: red;">*</a><input type="tel" class="input_number" onkeyup="this.value=this.value.replace(/[^\d.]/g,'');" maxlength="11" id="number" />     
+        <input type="text" class="input_email"  id="email" /> 
+        <a class="red3" style="color: red;">*</a><a id="shengshi" class="textbox"  onclick="selectPro()"></a>
+        <div class="mask">
+            <div class="boxpox">
+                <div class="boxCon">
+                    <ul id="provice">
+                        <li onclick ="changCity()"></li>
+                    </ul>
+                    <ul id="city">
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <input type="text" class="input_message"  id="message" maxlength="500">  
+        <div class="submit">
+           <img src="./img/submit.png" id="submit-btn">     
+        </div>    
+    </div> 
+</div>
+</body>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src='./js/environment.js'></script>
+<script src='./js/toast.js'></script>
+<script src="./ziliaotianxie/placeOfOwnership.js"></script>
+<script type="text/javascript">
+var strUrl = window.location.href;
+var strUrlNew = decodeURIComponent(strUrl);
+console.log(strUrlNew)
+var numUrl=strUrlNew.indexOf("#") ;
+var merchantId="";
+if(numUrl!= -1){
+    var pdata=strUrlNew.substr(numUrl+1);
+    if(pdata){
+        var pdatas = JSON.parse(pdata);
+        merchantId=pdatas.merchantId
+    }
+}
+
+  // 获取用户输入姓名事件
+  var name = '';
+  $('#name').on('change', function(e){
+    var _this = $(e.currentTarget);
+    name = _this.val();
+  });
+  // 获取用户输入手机号事件
+  var number = '';
+  $('#number').on('change', function(e){
+    var _this = $(e.currentTarget);
+    number = _this.val();
+  });
+  // 获取用户输入邮箱事件
+  var email = '';
+  $('#email').on('change', function(e){
+    var _this = $(e.currentTarget);
+    email = _this.val();
+  });
+  // 获取用户输入所在地区事件
+  var shengshi = '';
+  $('#shengshi').on('change', function(e){
+    var _this = $(e.currentTarget);
+    shengshi = _this.html();
+  });
+  // 获取用户输入留言事件
+  var message = '';
+  $('#message').on('change', function(e){
+    var _this = $(e.currentTarget);
+    message = _this.val();
+  });
+
+// 点击提交按钮
+$('#submit-btn').click(function() {
+    // debugger;
+    var reg =/^(13[0-9]\d{8}|15[0-9]\d{8}|17[0-9]\d{8}|18[0-9]\d{8})$/;
+    var emailreg=/^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*\.[a-z]{2,}$/;
+    if(merchantId==""){
+        $toast.show("商户编码不能为空！");
+        return;    
+    }
+    if (name == '') {
+        $toast.show("姓名不能为空！");
+        return;
+    }else if(number == '') {
+        $toast.show("手机号码不能为空！");
+        return;
+    }else if(!reg.test(number)){
+        $toast.show('手机号格式不正确，请重新填写！');
+        return;
+    }else if(email){
+        if(!emailreg.test(email)) {
+            $toast.show("邮箱格式输入不正确！");
+            return;
+        }
+    }else if(!$('#shengshi').text()){
+        $toast.show("请选择所在地区");
+        return;
+    }else{
+         $.ajax({
+             type: 'POST',
+             url: geturl()+"/api/merchcant/join/add",
+             data:{
+                leaguerName:name,
+                leaguerTelphone:number,
+                leaguerMail:email,
+                leaguerProvince:proviceCode, //省
+                leaguerCity:cityCode, //市
+                leaveMessage:message,
+                merchantReferrerCode:merchantId
+             },
+             success: function(res){
+                if(res.rspCode==0){
+                    $toast.show('提交成功');
+                }else{
+                    $toast.show('提交失败');
+                }
+             },
+             error: function (){
+                $toast.show('网络错误');
+             },
+            })
+    }
+})
+  
+//  号码归属地选择开始
+    var proviceCode; //省code
+    var cityCode;//市code
+    var proviceName;
+    var cityName;
+    
+    initProvice();
+    //初始化省
+    function initProvice(){
+        var proviceHtml='';
+        for(var i=0;i<jsonList.length;i++){
+            
+            if(i==0){
+                proviceCode = jsonList[i].code;
+                proviceName = jsonList[i].provice;
+                proviceHtml += '<li data-index="'+jsonList[i].code+'" class="actives" >'+jsonList[i].provice+'</li>';
+            }else{
+                proviceHtml += '<li data-index="'+jsonList[i].code+'" >'+jsonList[i].provice+'</li>';
+            }
+        }
+        // console.log(proviceCode);
+        $('#provice').html(proviceHtml);
+        initCity()
+    }
+    //初始化市
+    function initCity(){
+        for(var i=0;i<jsonList.length;i++){
+            if(jsonList[i].code==proviceCode){
+                var ctiyHtml = '';
+                var cityItem = jsonList[i].cityItem;
+                for(var j=0;j<cityItem.length;j++){
+                    ctiyHtml += '<li data-index="'+cityItem[j].code+'">'+cityItem[j].provice+'</li>';
+                    if(j==0){
+                        cityCode = jsonList[i].code;
+                    }
+                }
+                // console.log(cityCode)
+                $('#city').html(ctiyHtml);
+                break;
+            }
+        }
+    }
+    function selectPro(){
+        $('.mask').show();      
+        unScroll();
+    }
+    $('#provice').on('click','li', function(e){
+        proviceCode = $(this).attr('data-index');
+        $('#provice li').removeClass('actives');
+        $(this).addClass('actives');
+        console.log($(this).text());
+        proviceName = $(this).text();
+        e.stopPropagation();
+        console.log(proviceCode)
+        initCity();
+    })
+
+    $('#city').on('click','li', function(){
+        cityCode = $(this).attr('data-index');
+        $('#city li').removeClass('actives');
+        $(this).addClass('actives');
+        cityName = $(this).text();
+        console.log(cityCode);
+        $('#shengshi').text(proviceName + '-'+ cityName);
+        $('.mask').hide();
+    })
+    
+    $('.boxpox').click(function(e){
+        $('.mask').hide();
+        removeUnScroll();
+    })
+    //禁止滚动条滚动
+    function unScroll(){
+        var top = $(document).scrollTop();
+        //console.log(top);
+        $(document).on('scroll', function(event) {
+            event.preventDefault();
+            $(document).scrollTop(top);
+        });
+    };
+    //恢复滚动条滚动
+    function removeUnScroll(){
+         $(document).off('scroll');
+    };
+    // 号码归属地选择结束//////
+</script>
+</html>
+<style>
+  .textbox {
+    height:0.7rem;
+    width:5rem;
+    line-height:0.7rem;
+    text-align: left;
+    font-size: 0.45rem;
+    position: absolute;
+    bottom: 5.76rem;
+    left:3.7rem;
+}
+.red1{
+  position: absolute;
+  bottom: 10.45rem;
+  left:0.7rem;
+  font-size: 0.45rem;
+}
+.red2{
+    position: absolute;
+    bottom: 8.89rem;
+    left:0.7rem;
+    font-size: 0.45rem;
+}
+.red3{
+    position: absolute;
+    bottom: 5.76rem;
+    left:0.7rem;
+    font-size: 0.45rem;
+}
+
+ .mask{
+    display: none;  
+}
+.boxpox{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+.boxCon{
+    width: 60%;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+}
+.boxCon ul{
+    width: 30%;
+    height: 98vh;
+    overflow-y: auto;
+    padding: 1vh 10%;
+    box-shadow: 0 2px 4px rgba(58,116,184,.22);
+    font-size: .34rem;
+    line-height: 1rem;
+}
+.boxCon ul li{
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.boxCon ul li.actives{
+    color: #e3c06f;
+}
+
+</style>

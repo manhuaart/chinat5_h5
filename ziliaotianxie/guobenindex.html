@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>云沃链卡</title>
+    <link rel="stylesheet" href="./index.css?v=20200910">
+</head>
+<body>
+    
+    <div id="box">
+        <div class="imgbox">
+            <img src="../img/guoben.png" class="img1" />
+            <img src="../img/tops.png" />
+            <div class="title">根据国家实名制要求，请准确的提供身份信息</div>
+        </div>
+        <div class="conbox">
+            <div class="concenbox">
+                <div class="input_block">
+                    <label for="name" class="label">姓名</label>
+                    <input type="text" placeholder="请输入姓名" maxlength="20" class="input" vlaue='' id="nameValue">
+                </div>
+                <div class="input_block">
+                    <label for="idCord" class="label">身份证</label>
+                    <input type="text" placeholder="请输入身份证" class="input" id="idCardNoValue">
+                </div>
+                <div class="input_block">
+                    <label for="phone" class="label">联系电话</label>
+                    <input type="text" maxlength="11" placeholder="请输入联系电话" class="input" id="phoneValue">
+                </div>
+                <div class="rema">请选择号码</div>
+                <div class="input_block codeNum">
+                    <label for="idCord" class="label">号码归属地</label>
+                    <a id="shengshi" class="textbox"  onclick="selectPro()">请选择号码归属地</a>
+                    <div class="mask">
+                        <div class="boxpox">
+                            <div class="boxCon">
+                                <ul id="provice">
+                                    <li onclick ="changCity()"></li>
+                                </ul>
+                                <ul id="city">
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input_block">
+                    <label for="" class="label">选择套餐</label>
+                    <a href="javascript:void(0);" class="btn-info btn-lg active textbox" role="button" id="real1" >请选择套餐</a>
+                    <input type="hidden" id="goosId">
+                </div>
+                <div class="input_block">
+                    <label for="" class="label">选择号码</label>
+                    <a href="javascript:void(0);" class="btn-info btn-lg active textbox textimg" role="button" id="real" alt="model test picture">请选择号码</a>
+                </div>
+                <div class="rema">
+                    <span class="remark">请填写配送地址（支持全国配送，新疆、西藏仅限省内配送）</span>
+                </div>
+                <div class="input_block">
+                    <label for="idCord" class="label">收货地址</label>
+                    <a id="Address" class="textbox" onclick="selectAddress()">请选择配送地址</a>
+                    <div class="mask1">
+                        <div class="boxpox1">
+                            <div class="ulbox">
+                                <ul id="province"></ul>
+                                <ul id="citys"></ul>
+                                <ul id="county"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input_block">
+                    <label for="address" class="label">详细地址</label>
+                    <input type="text" placeholder="街道/镇+村/小区/写字楼+门牌号" maxlength="50" class="input" id="detailedAddress">
+                </div>
+                <div style="display: flex; align-items: center; margin: 1rem 0;">
+                    <input type="checkbox"  onClick="check()" id="ch">
+                    <div class="agree">
+                        我已阅读并同意
+                        <a href="../UnicomAccessProtocol.html" class="agreement">《客户入网服务协议及业务协议》</a>
+                    </div>
+                </div>
+                <div class="btn">
+                    <input type="button" value="立即申请" disabled onclick="submit()" id="xz">
+                </div>
+                <img src="../img/bottss.png" class="imgtopxin" />
+            </div>
+        </div>
+        <!-- </form> -->
+        <!-- //套餐模态框 -->
+        <div class="motai" id="mo1">
+            <span class="close" id="close1">×</span>
+            <div class="motaikuang">
+                <h5 class="qxzhm">请您选择套餐</h5>
+                <div class="qnxztc" id="qnxztc">
+                </div>
+            </div>
+        </div>
+        <!-- 选择号码模态框代码 -->
+        <div class="motai" id="mo">
+            <span class="close" id="close">×</span>
+            <div class="motaikuang">
+                <h5 class="qxzhm">请选择号码</h5>
+                <div class="search">
+                    <input type="tel" placeholder="生日、意义数字，尾号后4位" maxlength="4"  id="myInput" value=""/>
+                    <button onclick="myFunction()">搜索</button>
+                </div>
+                <div class="xzphone" id="selectPhoneNumber">
+                </div>
+                <h4 id="forAnotherBatch">换一批</h4>                   
+            </div>
+        </div>
+        <div class="lodaing">
+            <div class="imgLoad">
+                <img src="../img/load.gif" />
+            </div>
+        </div>
+    </div>
+</body>
+<script src='../js/environment.js'></script>
+<script src='../js/toast.js'></script>
+<script src="./cityList.js"></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="./jquery.jsonp.js"></script>
+<script src="./placeOfOwnership.js"></script>
+<script>
+    localStorage.setItem('cardMealIds', ''); 
+    localStorage.setItem('merchantIdswd', '');
+    localStorage.setItem('provinceCodes', '');
+    localStorage.setItem('cityCodes', ''); 
+    localStorage.setItem('phoneNum', '');
+    localStorage.setItem('goodsName', '');
+    localStorage.setItem('applyOrderUrl', '');
+    var channelAppid = '';
+    // var strUrl = 'http://wx.chinat5.com/ApplicationForWoCard.html#%7B%22cardMealId%22:%5B%7B%22goods_name%22:%22%E6%B2%83%E9%93%BE%E5%87%BA%E8%A1%8C%E5%B0%9D%E9%B2%9C%E5%8D%A1%22,%22goods_id%22:%22982003109153%22%7D%5D,%22merchantId%22:%22txhzY7kHqJgzKKjG5wZiw+ZLsYJ8Yn93EL7NlCodT68+xc7iR0iCmc8cZ/f/UsIz7Ik/IvPgUknu%5Cr%5CnIjDUVtf5VUd//nT2LAnCOUoL+AJMWyl60JInnIwWfAYcqtMEbOcQ%22,%22provinceCode%22:%2211%22,%22cityCode%22:%22110%22%7D';
+    var strUrl = window.location.href;
+    var strUrlNew = decodeURIComponent(strUrl);
+    console.log(strUrlNew)
+    var numUrl=strUrlNew.indexOf("#") ;
+    if(numUrl!= -1){
+        var pdata=strUrlNew.substr(numUrl+1);
+        if(pdata){
+            var pdatas = JSON.parse(pdata);
+            var card = JSON.stringify(pdatas.cardMealId)
+            if(pdatas.cardMealId){
+                localStorage.setItem('cardMealIds', card); 
+            }
+            if(pdatas.merchantId){
+                localStorage.setItem('merchantIdswd', pdatas.merchantId);
+            }
+            if(pdatas.provinceCode && pdatas.provinceCode!='null'){
+                localStorage.setItem('provinceCodes', pdatas.provinceCode);
+            }
+            if(pdatas.cityCode && pdatas.cityCode!='null'){
+                localStorage.setItem('cityCodes', pdatas.cityCode); 
+            } 
+            if(pdatas.refererOrderId){
+                channelAppid = pdatas.refererOrderId
+            }
+        }
+    }
+
+    if(localStorage.getItem('provinceCodes') && localStorage.getItem('cityCodes')){
+        $('.codeNum').hide()
+    }else{
+        $('.codeNum').show()
+    }
+    //阅读同意
+    function check(){
+        //判断checkbox有没有被选中
+        if($("#ch").prop('checked')==true){
+            $("#xz").removeAttr("disabled");
+            $('#xz').css({'background':'linear-gradient(2deg,rgba(19,215,217,1) 0%,rgba(7,231,213,1) 98%)','color': 'white'})
+        }else{
+            $("#xz").attr("disabled","disabled");
+            $('#xz').css({'background':'#ccc', 'color': 'grey'})
+        }
+    }
+    // 立即提交接口
+    function submit(){  
+        var provinceWhere=proCode
+        var postCityCode=citCode
+        var postDistrictCode=couCode
+        var certName=$('#nameValue').val();
+        var certNo=$('#idCardNoValue').val();
+        var contactNum=$('#phoneValue').val();
+
+        if(localStorage.getItem('provinceCodes')){
+            var numberProvince=localStorage.getItem('provinceCodes')
+        }else{
+            var numberProvince= proviceCode
+        }
+        if(localStorage.getItem('cityCodes')){
+            var NumberCity=localStorage.getItem('cityCodes')
+        }else{
+            var NumberCity=cityCode
+        }
+        var testMsg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9X]$/;
+        var phoneMsg = /^(13[0-9]\d{8}|15[0-9]\d{8}|17[0-9]\d{8}|18[0-9]\d{8})$/;
+        var phoneNum=$("#real").text()
+        var goosId=$('#goosId').val()
+        var postAddr=$('#detailedAddress').val();
+        var len=$("input[type=checkbox]:checked()");
+        var submit=document.getElementById("buttonSubmit");
+        var loading = '<div id="loading"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504002746731&di=a7d82714e2b6a150ecb6ab45d2dc73b9&imgtype=0&src=http%3A%2F%2Falcastongallery.com.au%2Fassets%2Fimages%2Fajax-loader.gif"></div>';
+        var str=location.href; //取得整个地址栏
+        var num=str.indexOf("#") 
+        if(str.substr(num+1)==''){
+            alert('非法请求')
+        }else{
+            str=str.substr(num+1);
+            var nameValue = $('#nameValue').val();
+            if(!(/^[\u4E00-\u9FA5]{2,4}$/.test(nameValue))){
+                $toast.show('姓名格式有误！请重新输入');
+                return false;
+            }else if(!testMsg.test($('#idCardNoValue').val())){
+                $toast.show('身份证号码格式有误');
+                return false;
+            }else if(!phoneMsg.test($('#phoneValue').val())){
+                var goosId=$('#goosId').val();
+                $toast.show('手机号格式有误！请重新输入');
+                return false;
+                        
+            }else if(!numberProvince){
+                $toast.show('请选择号码归属地');
+                return false;
+            }else if(!goosId){
+                $toast.show('请选择套餐');
+                return false;
+            }else if(!$("#real").text() || $("#real").text()=="请选择号码"){
+                $toast.show('请选择号码');
+                return false;
+            }else if(!$("#Address").text()){
+                $toast.show('请选择收货地址');
+                return false;
+            }else if(!$('#detailedAddress').val()){
+                $toast.show('请填写详细地址');
+                return false;
+            }else{
+                $('.lodaing').show();
+                $.ajax({
+                    type:"POST",
+                    url: geturl()+"/api/card/preOrder/subOrder",
+                    data:{
+                        "goodsId":goosId,
+                        "provinceCode":numberProvince,
+                        "cityCode":NumberCity,
+                        "phoneNum":phoneNum,
+                        "certName":certName,
+                        "certNo":certNo,
+                        "contactNum":contactNum,
+                        "postProvinceCode":provinceWhere,
+                        "postCityCode":postCityCode,
+                        "postDistrictCode":postDistrictCode,
+                        "postAddr":postAddr,
+                        "refererOrderId": channelAppid,
+                        "merchantReferrerCode": localStorage.getItem('merchantIdswd') || 1, 
+                    },
+                    success:function(data){
+                        if(data.rspCode == 0){
+                            $('.lodaing').hide();
+                            var phoneNum=data.body.phoneNum
+                            var goodsName=data.body.goodsName
+                            var applyOrderUrl=data.body.applyOrderUrl
+
+                            localStorage.setItem('phoneNum', phoneNum);
+                            localStorage.setItem('goodsName', goodsName);
+                            localStorage.setItem('applyOrderUrl', applyOrderUrl);
+                            localStorage.setItem('insurance', JSON.stringify(data.body.insurance));
+                            window.location.href="./successfulApplication.html?";
+                        }else{
+                            $('.lodaing').hide();
+                            $toast.show(data.rspDesc);
+                        }
+                    },
+                    error:function(err){
+                        $('.lodaing').hide();
+                    }
+                })
+            }
+        }
+    }
+    ///号码归属地选择开始
+    ///
+    var proviceCode; //省code
+    var cityCode;//市code
+    var proviceName;
+    var cityName;
+    
+    initProvice();
+    //初始化省
+    function initProvice(){
+        var proviceHtml='';
+        for(var i=0;i<jsonList.length;i++){
+            
+            if(i==0){
+                proviceCode = jsonList[i].code;
+                proviceName = jsonList[i].provice;
+                proviceHtml += '<li data-index="'+jsonList[i].code+'" class="actives" >'+jsonList[i].provice+'</li>';
+            }else{
+                proviceHtml += '<li data-index="'+jsonList[i].code+'" >'+jsonList[i].provice+'</li>';
+            }
+        }
+        console.log(proviceCode);
+        $('#provice').html(proviceHtml);
+        initCity()
+    }
+    //初始化市
+    function initCity(){
+        for(var i=0;i<jsonList.length;i++){
+            if(jsonList[i].code==proviceCode){
+                var ctiyHtml = '';
+                var cityItem = jsonList[i].cityItem;
+                for(var j=0;j<cityItem.length;j++){
+                    ctiyHtml += '<li data-index="'+cityItem[j].code+'">'+cityItem[j].provice+'</li>';
+                    if(j==0){
+                        cityCode = jsonList[i].code;
+                    }
+                }
+                console.log(cityCode)
+                $('#city').html(ctiyHtml);
+                break;
+            }
+        }
+    }
+    
+    function selectPro(){
+        $('.mask').show();      
+        unScroll();
+    }
+    $('#provice').on('click','li', function(e){
+        proviceCode = $(this).attr('data-index');
+        $('#provice li').removeClass('actives');
+        $(this).addClass('actives');
+        console.log($(this).text());
+        proviceName = $(this).text();
+        e.stopPropagation();
+        console.log(proviceCode)
+        initCity();
+    })
+
+    $('#city').on('click','li', function(){
+        cityCode = $(this).attr('data-index');
+        $('#city li').removeClass('actives');
+        $(this).addClass('actives');
+        cityName = $(this).text();
+        console.log(cityCode);
+        $('#shengshi').text(proviceName + '-'+ cityName);
+        $('.mask').hide();
+    })
+    
+    $('.boxpox').click(function(e){
+        $('.mask').hide();
+        removeUnScroll();
+    })
+    //禁止滚动条滚动
+    function unScroll(){
+        var top = $(document).scrollTop();
+        //console.log(top);
+        $(document).on('scroll', function(event) {
+            event.preventDefault();
+            $(document).scrollTop(top);
+        });
+    };
+    //恢复滚动条滚动
+    function removeUnScroll(){
+         $(document).off('scroll');
+    };
+    // 号码归属地选择结束///////
+
+    //省市区配送地址
+    //
+    var proCode;
+    var citCode;
+    var couCode;
+    var proName;
+    var citName;
+    var couName;
+    function selectAddress(){
+        $('.mask1').show();      
+        unScroll();
+    }
+    $('.boxpox1').click(function(e){
+        $('.mask1').hide();
+        removeUnScroll();
+    })
+    $("#province").on('click','li',function(e){
+        $("#province li").removeClass('activesd');
+        $(this).addClass('activesd');
+        proName = $(this).text();
+        proCode = $(this).attr('value');
+        console.log(proCode);
+        e.stopPropagation();
+        doProvAndCityRelation($(this).attr('value'));
+    });
+    $("#citys").on('click','li',function(e){
+        $("#citys li").removeClass('activesd');
+        $(this).addClass('activesd');
+        citName = $(this).text();
+        citCode = $(this).attr('value');
+        console.log(citCode);
+        e.stopPropagation();
+        doCityAndCountyRelation($(this).attr('value'))
+    })
+    $("#county").on('click','li',function(){
+        $("#county li").removeClass('activesd');
+        $(this).addClass('activesd');
+        couName = $(this).text();
+        couCode = $(this).attr('value');
+        console.log(couCode);
+        $('.mask1').hide();
+        $('#Address').text(proName+'-'+citName+'-'+couName)
+    })
+    getListAdress();
+    function getListAdress(){
+      var ulPro = '';
+      for(var i=0;i<cityJson.length; i++){
+         if(i==0){
+            proCode = cityJson[i].item_code;
+            proName = cityJson[i].item_name;
+            if (cityJson[i].item_code.substr(2, 4) == '0000') {
+                ulPro += '<li value=' + cityJson[i].item_code + '  class="activesd">'+ cityJson[i].item_name +'</li>'
+            }
+         }else{
+            if (cityJson[i].item_code.substr(2, 4) == '0000') {
+                ulPro += '<li value=' + cityJson[i].item_code + ' >'+ cityJson[i].item_name +'</li>'
+            }
+         }
+         
+      }
+      $('#province').html(ulPro)
+      doProvAndCityRelation(proCode);
+    } // 省值变化时 处理市
+    function doProvAndCityRelation(e) {
+      var city = $("#citys");
+      var county = $("#county");
+      var ulCity = '';
+      var lival = e;
+      console.log(lival)
+      if (city.children().length > 1) {
+        city.empty();
+      }
+      if (county.children().length > 1) {
+        county.empty();
+      }
+      
+      $.each(cityJson,
+        function(i, val) {
+          if (val.item_code.substr(0, 2) == lival.substr(0, 2) && val.item_code.substr(2, 4) != '0000' && val.item_code.substr(4, 2) == '00') {
+            ulCity += '<li value=' + val.item_code + '>' + val.item_name + '</li>';
+            
+          }
+        });
+
+      $("#citys").html(ulCity);
+      $("#citys li:first-child").addClass('activesd');
+      citCode = $("#citys li:first-child").attr('value');
+      console.log(citCode);
+      citName = $("#citys li:first-child").text()
+     doCityAndCountyRelation(citCode);
+    } // 市值变化时 处理区/县
+    function doCityAndCountyRelation(e) {
+      var cityVal = e.toString();
+      var ulCoun = '';
+      var county = $("#county");
+      if (county.children().length > 1) {
+        county.empty();
+      }
+
+      $.each(cityJson,
+        function(i, val) {
+          if (cityVal == '110100' || cityVal == "120100" || cityVal == "310100" || cityVal == "500100") {
+            if (val.item_code.substr(0, 3) == cityVal.substr(0, 3) && val.item_code.substr(4, 2) != '00') {
+              ulCoun+='<li value=' + val.item_code + '>' + val.item_name + '</li>'
+            }
+          } else {
+            if (val.item_code.substr(0, 4) == cityVal.substr(0, 4) && val.item_code.substr(4, 2) != '00') {
+              ulCoun+='<li value=' + val.item_code + '>' + val.item_name + '</li>'
+            }
+          }
+        });
+      
+        $("#county").html(ulCoun);
+    }
+    
+    document.body.addEventListener('touchStart',function(){},false)
+    // 模态框js代码
+    //渲染选择手机号码
+    let newArray = [];
+    let pageCode = 0;
+    var iteratorNumberCode = function(pageCode){
+        var centHtml = '';
+        if((pageCode+1)<=newArray.length){
+            for(var i = 0; i < newArray[pageCode].length; i++) {
+                centHtml += "<p class='phone-data'>" +newArray[pageCode][i] + "</p>";
+            }
+        }
+        $("#selectPhoneNumber").html(centHtml)
+    }
+    // 换一批
+    forAnotherBatch.onclick=function(){
+        // pageCode = 0;
+        pageCode++;
+        if(pageCode==newArray.length){
+            $("#selectPhoneNumber").html();
+            pageCode--;
+            $toast.show('请点击搜索查找更多数据');
+            return false;
+        }else{
+            iteratorNumberCode(pageCode);
+        }      
+    }
+    var searchTypes = '';
+    function myFunction() {
+        var input= $('#myInput').val();
+        if(input.length>=4){
+            searchTypes = '02'
+        }else{
+            searchTypes = ''
+        }
+        searchPhone(input)
+    }
+    function searchPhone(searchValue){
+        if(localStorage.getItem('provinceCodes')){
+            var numberProvince=localStorage.getItem('provinceCodes')
+        }else{
+            var numberProvince=proviceCode
+        }
+        if(localStorage.getItem('cityCodes')){
+            var NumberCity=localStorage.getItem('cityCodes')
+        }else{
+            var NumberCity=cityCode
+        }
+        var goosId=$('#goosId').val() 
+        $.ajax({
+            type:"POST",
+            url: geturl()+"/api/card/preOrder/selectionNumber",
+            data:{
+                provinceCode:numberProvince,
+                cityCode:NumberCity,
+                goodsId:goosId,
+                searchType: searchTypes,
+                searchValue:searchValue,
+            },
+            success:function(body){
+                if(body.rspCode!=0){
+                    $toast.show(body.rspDesc);
+                }else{
+                    pageCode = 0;
+                    $('html,body').addClass('ovfHiden'); //使网页不可滚动
+                    $('#mo').show();
+                    var array=body.body.numArray;
+                    var splitLen = body.body.splitLen;
+                    if(newArray.length>0){
+                        newArray=[];
+                    }
+                    let splitIndex= 0;
+
+                    var tempArray=[];
+                    for(splitIndex;splitIndex<array.length;splitIndex++){
+                        if(splitIndex%splitLen==0){
+                            tempArray.push(array[splitIndex]);
+                        }
+                    }
+                    let i = 0;
+                    var ii = 0;
+                    var temp = [];
+                    for(i;i<tempArray.length;i++){
+                            ii = ii+1;
+                            if(ii%10==0){
+                                temp.push(tempArray[i]);  
+                                newArray.push(temp);
+                                temp = [];
+                            }else{
+                                temp.push(tempArray[i]);  
+                            }
+                                                          
+                    }
+                    if(newArray.length<10){
+                        newArray.push(temp);
+                    }
+                    if(newArray.length>0){
+                        iteratorNumberCode(0);
+                    }
+                    $('.phone-data').bind('click',function(){
+                        $('#real').text($(this).text())
+                        $('html,body').removeClass('ovfHiden');
+                        $('#mo').hide();
+                    });
+                }
+                
+            }
+        })
+    }
+    $('#selectPhoneNumber').on('click', 'p', function(){
+        $('#real').text($(this).text());
+        $('html,body').removeClass('ovfHiden');
+        $('#mo').hide();
+    })
+    //选择号码
+    $('#real').click(function(){
+        if(localStorage.getItem('provinceCodes')){
+            var numberProvince=localStorage.getItem('provinceCodes')
+        }else{
+            var numberProvince= proviceCode
+        }
+        if(localStorage.getItem('cityCodes')){
+            var NumberCity=localStorage.getItem('cityCodes')
+        }else{
+            var NumberCity=cityCode
+        }
+        var numberProvince=proviceCode;
+        var NumberCity=cityCode;
+        var nameValue = $('#nameValue').val();
+        var goosId=$('#goosId').val();
+        var nameCheck = /^[\u4E00-\u9FA5]{2,4}$/;
+        var idChcek = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9X]$/;
+        var phoneCheck = /^(13[0-9]\d{8}|15[0-9]\d{8}|17[0-9]\d{8}|18[0-9]\d{8})$/;
+        if(!nameCheck.test(nameValue)){
+            $toast.show('姓名格式有误！请重新输入');
+            return false;
+        }else if(!idChcek.test($('#idCardNoValue').val())){
+            $toast.show('身份证号码格式有误');
+            return false;
+        }else if(!phoneCheck.test($('#phoneValue').val())){
+            $toast.show('手机号格式有误！请重新输入');
+            return false;
+        }else if(!numberProvince){
+            $toast.show('请选择号码归属地');
+            return false;
+            
+        }else if(!goosId){
+            $toast.show('请选择套餐');
+            return false;
+        }else{
+            $("#myInput").val('');
+            searchPhone();
+        }
+    })
+    $('#close').click(function(){
+        $('html,body').removeClass('ovfHiden'); //使网页恢复可滚
+        $('#mo').hide();
+    })
+    //选择套餐模态框
+    if(localStorage.getItem('cardMealIds')){
+        var datas = JSON.parse(localStorage.getItem('cardMealIds'));
+        var qtcHtml = '';
+        if(datas.length==1){
+            qtcHtml+= "<p id="+datas[0].goods_id+" class='data_class active'>" +datas[0].goods_name + "</p>";
+            $('#qnxztc').html(qtcHtml);
+            $('#real1').text(datas[0].goods_name);
+            $('#goosId').val(datas[0].goods_id);
+        }else if(datas.length==0){
+            qtcHtml = "<p id="+dataJson[0].id+" class='data_class active'>" +dataJson[0].name + "</p>";
+            for(var i=1;i<dataJson.length;i++){
+                qtcHtml += "<p id="+dataJson[i].id+" class='data_class'>" +dataJson[i].name + "</p>";      
+            };
+            $('#qnxztc').html(qtcHtml);
+        }else{
+            for(var i=0;i<datas.length;i++){
+                qtcHtml += "<p id="+datas[i].goods_id+" class='data_class'>" +datas[i].goods_name + "</p>";      
+            }
+            $('#qnxztc').html(qtcHtml);
+        }
+    }else{
+        qtcHtml = "<p id="+dataJson[0].id+" class='data_class active'>" +dataJson[0].name + "</p>";
+        for(var i=1;i<dataJson.length;i++){
+            qtcHtml += "<p id="+dataJson[i].id+" class='data_class'>" +dataJson[i].name + "</p>";      
+        }
+        $('#qnxztc').html(qtcHtml);
+    }
+    
+    $('#real1').click(function(){
+        $('#mo1').show();
+        $('.data_class').bind('click',function(){
+
+            $(this).addClass("active").siblings().removeClass("active");
+            $('#real1').text($(this).text())
+            $('#goosId').val($(this).attr('id'))
+            $('#mo1').hide();
+        });
+    })
+    $('#close1').click(function(){
+        $('#mo1').hide();
+    });
+    //得到手机屏幕的宽度
+    let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    //得到html的Dom元素
+    let htmlDom = document.getElementsByTagName('html')[0];
+    //设置根元素字体大小
+    htmlDom.style.fontSize = htmlWidth / 20 + 'px';
+    
+    
+</script>
+</html>

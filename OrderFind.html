@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>云沃链卡订单查询</title>
+    <link rel="stylesheet" href="./css/OrderFind.css">
+    <style type="text/css">
+        /* .topOpp{
+            margin-top: 20px;
+        }
+        .topOpp button{
+            outline: none;
+        } */
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="bind-woCard">
+        <div class="bind-head">
+            云沃链卡订单查询
+        </div>    
+        <div class="bind-input">
+            <input type="tel"  id="telephone"  placeholder="收货人手机号码"   maxlength="11">
+        </div>  
+        <div class="bind-input2">   
+            <input type="tel" id="checkCode" placeholder="请输入验证码" maxlength="6">
+            <span id="captcha"> 获取验证码</span>
+         </div>
+         <div class="bind-input3">
+            <input type="tel" id="identity"  placeholder="入网证件号码后6位"  maxlength="6">
+        </div>    
+        <div class="bind-next-type">
+             <button id="submit-btn">下一步</button>
+        </div>  
+     </div>   
+</div>
+</body>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src='./js/toast.js'></script>
+<script src='./js/environment.js'></script>
+<script type="text/javascript">
+    $(function(){
+        if(localStorage.getItem('OrderFind_token')){
+            location.href='OrderManagement.html'
+        }
+        // 获取用户输入手机号事件
+        var number = '';
+        var captchaCode = '';
+        var identity = '';
+        $('#telephone').on('change', function(e){
+            var _this = $(e.currentTarget);
+            number = _this.val();
+            console.log(number.length)
+        });
+        // 获取用户输入验证码事件
+        $('#checkCode').on('change', function(e){
+            var _this = $(e.currentTarget);
+            captchaCode = _this.val();
+        });
+        // 获取用户输入入网证件号码后6位事件
+
+        $('#identity').on('change', function(e){
+            var _this = $(e.currentTarget);
+            identity = _this.val();
+            console.log(identity.length)
+        });
+        var captcha = 1;
+        // 点击获取验证码
+        $('#captcha').on('click', function(){
+            // 当电话号码为空时，跳出函数
+            if (number == '') {
+                $toast.show("手机号码号码不能为空！");
+                return;
+            }
+            var reg =/^((13|15|18|14|17|16|19)+\d{9})$/;
+            if(!reg.test(number)){
+                $toast.show('手机号码错误！请正确填写！');
+                return;
+            }
+            // 在定时器生效期间，不能再次点击发送验证码按钮
+            if(captcha === 0){
+                return;
+            }
+            // console.log(captcha); //1
+            // 验证码倒计时方法
+            var time = 60;
+            // 设置定时器
+            var setTime = setInterval(function(){
+                time -= 1;
+                captcha = 0;
+                // console.log(captcha);   //0
+                $('#captcha').empty().text('重新发送' + '('+ time+')').css("color","#FFFFFF");
+                if (time === 0) {
+                    $('#captcha').empty().text('获取验证码').css("color","#FFFFFF");
+                    clearInterval(setTime);
+                    captcha = 1;
+                }
+            }, 1000)
+            $.ajax({
+                type: 'POST',
+                url: geturl()+'/api/user/sendSearchOrderSms',
+                data:{
+                    phoneNumber:number,
+                },
+                success: function(res){
+                    if(res.rspCode==0){
+                        console.log(res);
+                        
+                    }else{
+                        $('#captcha').empty().text('获取验证码').css("color","#FFFFFF");
+                        clearInterval(setTime);
+                        captcha = 1;
+                    }
+                },
+                error: function(){
+                    $('#captcha').empty().text('获取验证码').css("color","#FFFFFF");
+                    clearInterval(setTime);
+                    captcha = 1;
+                    console.log("网络错误")
+                },
+            });
+        });
+        // 点击下一步
+        $('#submit-btn').click(function() {
+            console.log(captchaCode)
+            var reg =/^((13|15|18|14|17|16|19)+\d{9})$/;
+            if (number == '') {
+                $toast.show("手机号码号码不能为空！");
+                return;
+            }else if(captchaCode == '') {
+                $toast.show("验证码不能为空");
+                return false;
+            }else if(!reg.test(number)){
+                $toast.show('手机号码错误！请正确填写！');
+                return;
+            }else if (identity =='') {
+                $toast.show("请重新输入证件号后六位！");
+                return false;
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url:geturl()+'/api/user/orderCodeCheck',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    timeout: 6000,
+                    data:{
+                        phoneNumber: number,
+                        code: captchaCode,
+                        identity:identity
+                    },
+                    success: function(res){
+                        if(res.rspCode==0){
+                            console.log(res.body.orderDetails);
+                            localStorage.setItem('orderDetails',JSON.stringify(res.body.orderDetails))
+                            localStorage.setItem('OrderFind_token',res.body.token)
+                            location.href = "OrderManagement.html";
+                        }else{
+                            $toast.show(res.rspDesc);
+                        }
+                    },
+                    error: function (){
+                        $toast.show('网络错误');
+                    },
+                })
+            }
+        })
+    })
+</script>
+</html>
+
